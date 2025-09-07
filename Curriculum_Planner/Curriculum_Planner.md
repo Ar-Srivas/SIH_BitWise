@@ -1,0 +1,1 @@
+# Folder for Curriculum planner and its logic
