@@ -12,8 +12,9 @@ class Student(Base):
     __tablename__ = "students"
 
     id = Column(Integer, primary_key=True, index=True)
-    student_id = Column(String, unique=True, index=True)
-    grade_level = Column(String)
+    student_id = Column(String, unique=True, index=True)  # Email
+    grade_level = Column(String)  # Name
+    password = Column(String)  # Password
     marks = Column(JSON, nullable=True)
     quiz_answers = Column(JSON, nullable=True)
 
@@ -32,4 +33,4 @@ class StudentProfile(BaseModel):
     quiz_answers: Optional[List[str]] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True  # Changed from orm_mode to fix the warning

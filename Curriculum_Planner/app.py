@@ -1,18 +1,20 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, HTTPException, Form
+from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy.orm import Session
 from db import Base, engine, SessionLocal
-from models import Student, MarksInput, QuizResponse
+from models import Student
+from fastapi.staticfiles import StaticFiles
+import os
+
 '''
 THIS FILE IS THE ENTRY POINT OF THE APPLICATION
 MAKE YOUR ROUTES HERE AND LINK THEM TO THE APPROPRIATE FILES IN THE FOLDER
-
 '''
+
 app = FastAPI()
 
-# Create DB tables
 Base.metadata.create_all(bind=engine)
 
-# Dependency: get DB session
 def get_db():
     db = SessionLocal()
     try:
@@ -20,33 +22,32 @@ def get_db():
     finally:
         db.close()
 
-@app.get("/")
+# Mount static files
+app.mount("/frontend", StaticFiles(directory=os.path.join(os.path.dirname(__file__), "frontend")), name="frontend")
+
+@app.get("/", response_class=HTMLResponse)
 def root():
-    return {"message": "Hello from Curriculum Planning API"}
+    with open(os.path.join(os.path.dirname(__file__), "frontend/signin.html"), "r") as file:
+        return HTMLResponse(content=file.read())
 
-# Submit Quiz Answers
-@app.post("/onboarding/quiz")
-def submit_quiz(student_id: str, data: QuizResponse, db: Session = Depends(get_db)):
-    student = db.query(Student).filter(Student.student_id == student_id).first()
-    if not student:
-        student = Student(student_id=student_id, grade_level=data.grade_level, marks={}, quiz_answers=data.answers)
-        db.add(student)
-    else:
-        student.grade_level = data.grade_level
-        student.quiz_answers = data.answers
+@app.post("/signup")
+def signup(name: str = Form(...), email: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)):
+    existing_user = db.query(Student).filter(Student.student_id == email).first()
+    if existing_user:
+        raise HTTPException(status_code=400, detail="Email already registered")
+    new_user = Student(student_id=email, grade_level=name, password=password, marks={}, quiz_answers=[])
+    db.add(new_user)
     db.commit()
-    db.refresh(student)
-    return {"message": "Quiz submitted successfully", "student": student.student_id}
+    return RedirectResponse(url="/dashboard", status_code=303)
 
-# Get Profile
-@app.get("/profile/{student_id}")
-def get_profile(student_id: str, db: Session = Depends(get_db)):
-    student = db.query(Student).filter(Student.student_id == student_id).first()
-    if not student:
-        return {"error": "Student not found"}
-    return {
-        "student_id": student.student_id,
-        "grade_level": student.grade_level,
-        "marks": student.marks,
-        "quiz_answers": student.quiz_answers,
-    }
+@app.post("/login")
+def login(email: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)):
+    user = db.query(Student).filter(Student.student_id == email).first()
+    if not user or user.password != password:  # Simple password check without hashing
+        raise HTTPException(status_code=400, detail="Invalid email or password")
+    return RedirectResponse(url="/dashboard", status_code=303)
+
+@app.get("/dashboard", response_class=HTMLResponse)
+def dashboard():
+    with open(os.path.join(os.path.dirname(__file__), "frontend/dashboard.html"), "r") as file:
+        return HTMLResponse(content=file.read())

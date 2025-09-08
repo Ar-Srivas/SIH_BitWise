@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/frontend/style.css">
+</head>
+<body>
+    <div class="container dashboard-container">
+        <div class="dashboard-header">
+            <div>
+                <h1 class="heading">Student Dashboard</h1>
+                <p class="title">Welcome back! Ready to learn today?</p>
+            </div>
+            <button onclick="location.href='/'" class="signout-btn">Sign Out</button>
+        </div>
+
+        <div class="dashboard-section">
+            <h2>Quick Actions</h2>
+            <div class="dashboard-actions">
+                <button onclick="location.href='/frontend/quiz.html'" class="clkbtn">Take Quiz Survey</button>
+                <button onclick="viewProgress()" class="clkbtn secondary">View Progress</button>
+                <button onclick="viewProfile()" class="clkbtn secondary">My Profile</button>
+            </div>
+        </div>
+
+        <div class="dashboard-section">
+            <h2>Recent Activity</h2>
+            <div class="activity-feed">
+                <p class="activity-item">No recent quiz attempts</p>
+                <p class="activity-item">Ready to start your learning journey!</p>
+            </div>
+        </div>
+
+        <div class="dashboard-section">
+            <h2>Learning Stats</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Quizzes Taken</h3>
+                    <p class="stat-number">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Average Score</h3>
+                    <p class="stat-number">-</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Learning Streak</h3>
+                    <p class="stat-number">0 days</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/frontend/dashboard.js"></script>
+</body>
+</html>
