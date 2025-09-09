@@ -1,5 +1,7 @@
 venv
-.env
+.venv
+*.env
+credentials.json
 
 students.db
 __pycache__
