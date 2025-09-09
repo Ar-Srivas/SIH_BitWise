@@ -4,4 +4,6 @@ from api import attendance
 
 app = FastAPI(title="dashboard")
 
-app.include_router(attendance.router, prefix="/api", tags=["Attendance"])
+app.include_router(attendance.router)
+
+app.mount("/", StaticFiles(directory="../frontend", html=True), name="frontend")
