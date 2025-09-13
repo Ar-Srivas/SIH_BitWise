@@ -18,7 +18,7 @@ def login(teacher_email: str, teacher_password: str):
         else:
             return None
     except Exception as e:
-        print("error logging in", e)
+        print("login logic error", e)
         return None
     
 def dashboard(teacher_email):
@@ -43,7 +43,7 @@ def start_session(teahcer_id: str):
             }
         # return student_map
     except Exception as e:
-        print("error fetchin students", e)
+        print("fetching students logic error", e)
     
     attendance_doc_path = db.collection("teachers").document(teahcer_id).collection("attendance_records").document(today)
     data = {
@@ -55,7 +55,7 @@ def start_session(teahcer_id: str):
         attendance_doc_path.set(data)
         return data
     except Exception as e:
-        print("error creating session data", e)
+        print("creating session data logic error", e)
 
 def hello_world():
     return {"message": "hello world"}

@@ -17,7 +17,6 @@ async def login():
         return None
 
 @router.post("/session/start")
-
 async def start_session():
     try:
         result = attendance_logic.start_session("t_teacher1")
