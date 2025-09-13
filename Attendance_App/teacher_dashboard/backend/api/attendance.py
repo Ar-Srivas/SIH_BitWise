@@ -3,13 +3,27 @@ from logic import attendance_logic
 
 router = APIRouter()
 
-@router.get("/session/start")
+@router.get("/login")
+async def login():
+    try:
+        result = attendance_logic.login("teacherdummy@example.com", "teacherdummy123")
+        if result:
+            print(result)
+            return result
+        print(result)
+        return None
+    except Exception as e:
+        print("login router error", e)
+        return None
+
+@router.post("/session/start")
+
 async def start_session():
     try:
-        result = attendance_logic.start_session()
+        result = attendance_logic.start_session("t_teacher1")
         return result
     except Exception as e:
-        print("router error", e)
+        print("session start router error", e)
 
 @router.get("/hello")
 async def hello_world():
