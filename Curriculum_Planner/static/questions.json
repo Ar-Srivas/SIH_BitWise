@@ -1,0 +1,176 @@
+[
+  {
+    "id": "q1",
+    "question": "Do you enjoy solving logical problems?",
+    "options": [
+      { "text": "Yes", "next": "q2_math" },
+      { "text": "No", "next": "q2_creative" }
+    ]
+  },
+
+  {
+    "id": "q2_math",
+    "question": "Which do you find more fun?",
+    "options": [
+      { "text": "Solving equations", "next": "q3_logic" },
+      { "text": "Analyzing patterns", "next": "q3_data" }
+    ]
+  },
+  {
+    "id": "q2_creative",
+    "question": "When working on a project, what excites you most?",
+    "options": [
+      { "text": "Designing visuals or art", "next": "q3_art" },
+      { "text": "Writing stories or content", "next": "q3_language" }
+    ]
+  },
+
+  {
+    "id": "q3_logic",
+    "question": "Do you enjoy puzzles and brain teasers?",
+    "options": [
+      { "text": "Yes", "next": "q4_logic" },
+      { "text": "No", "next": "q4_math_general" }
+    ]
+  },
+  {
+    "id": "q3_data",
+    "question": "Would you rather work with numbers or people?",
+    "options": [
+      { "text": "Numbers", "next": "q4_data_numbers" },
+      { "text": "People", "next": "q4_data_people" }
+    ]
+  },
+  {
+    "id": "q3_art",
+    "question": "Which appeals to you more?",
+    "options": [
+      { "text": "Painting or sketching", "next": "q4_art_visual" },
+      { "text": "Music or dance", "next": "q4_art_performance" }
+    ]
+  },
+  {
+    "id": "q3_language",
+    "question": "Do you enjoy reading or writing more?",
+    "options": [
+      { "text": "Reading", "next": "q4_language_reading" },
+      { "text": "Writing", "next": "q4_language_writing" }
+    ]
+  },
+
+  {
+    "id": "q4_logic",
+    "question": "Do you prefer structured math problems or open-ended challenges?",
+    "options": [
+      { "text": "Structured math problems", "next": "q5_logic_math" },
+      { "text": "Open-ended challenges", "next": "q5_logic_creative" }
+    ]
+  },
+  {
+    "id": "q4_math_general",
+    "question": "Which subject do you enjoy more?",
+    "options": [
+      { "text": "Geometry", "category": "Spatial Reasoning" },
+      { "text": "Algebra", "category": "Analytical Thinking" }
+    ]
+  },
+  {
+    "id": "q5_logic_math",
+    "question": "Do you like proving theorems?",
+    "options": [
+      { "text": "Yes", "category": "Mathematical Reasoning" },
+      { "text": "No", "category": "Applied Problem Solving" }
+    ]
+  },
+  {
+    "id": "q5_logic_creative",
+    "question": "Do you like strategy games (like chess)?",
+    "options": [
+      { "text": "Yes", "category": "Strategic Thinking" },
+      { "text": "No", "category": "General Reasoning" }
+    ]
+  },
+
+  {
+    "id": "q4_data_numbers",
+    "question": "Do you like working with spreadsheets and graphs?",
+    "options": [
+      { "text": "Yes", "next": "q5_data_numbers" },
+      { "text": "No", "category": "Basic Numeracy" }
+    ]
+  },
+  {
+    "id": "q4_data_people",
+    "question": "Do you enjoy public speaking or writing reports?",
+    "options": [
+      { "text": "Public speaking", "category": "Verbal Communication" },
+      { "text": "Writing reports", "category": "Written Communication" }
+    ]
+  },
+  {
+    "id": "q5_data_numbers",
+    "question": "Do you enjoy finding trends in data?",
+    "options": [
+      { "text": "Yes", "category": "Data Analysis" },
+      { "text": "No", "category": "Basic Math" }
+    ]
+  },
+
+  {
+    "id": "q4_art_visual",
+    "question": "Do you enjoy working with digital tools (Photoshop, Illustrator)?",
+    "options": [
+      { "text": "Yes", "next": "q5_art_visual" },
+      { "text": "No", "category": "Traditional Artist" }
+    ]
+  },
+  {
+    "id": "q4_art_performance",
+    "question": "Do you prefer singing or dancing?",
+    "options": [
+      { "text": "Singing", "category": "Music Expression" },
+      { "text": "Dancing", "category": "Performing Arts" }
+    ]
+  },
+  {
+    "id": "q5_art_visual",
+    "question": "Do you prefer designing websites or illustrations?",
+    "options": [
+      { "text": "Websites", "category": "Digital Design" },
+      { "text": "Illustrations", "category": "Visual Art" }
+    ]
+  },
+
+  {
+    "id": "q4_language_reading",
+    "question": "Do you enjoy analyzing stories or learning new vocabulary?",
+    "options": [
+      { "text": "Analyzing stories", "next": "q5_language_story" },
+      { "text": "Learning new vocabulary", "category": "Linguistics" }
+    ]
+  },
+  {
+    "id": "q4_language_writing",
+    "question": "Do you prefer creative writing or academic writing?",
+    "options": [
+      { "text": "Creative writing", "next": "q5_language_creative" },
+      { "text": "Academic writing", "category": "Research Skills" }
+    ]
+  },
+  {
+    "id": "q5_language_story",
+    "question": "Do you like debating themes in books?",
+    "options": [
+      { "text": "Yes", "category": "Literary Analysis" },
+      { "text": "No", "category": "Reading Comprehension" }
+    ]
+  },
+  {
+    "id": "q5_language_creative",
+    "question": "Do you like writing poetry or short stories?",
+    "options": [
+      { "text": "Poetry", "category": "Poetic Writing" },
+      { "text": "Short stories", "category": "Narrative Writing" }
+    ]
+  }
+]

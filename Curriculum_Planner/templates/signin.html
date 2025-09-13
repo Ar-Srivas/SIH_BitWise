@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Quiz App</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="signin-page">
+    <header>
+        <h1 class="heading">Student Quiz App</h1>
+        <p class="title">Discover your learning strengths</p>
+    </header>
+
+    <div class="container">
+        <div class="btn">
+            <button class="login">Login</button>
+            <button class="signup">Signup</button>
+            <div class="slider"></div>
+        </div>
+
+        <div class="form-section">
+            <!-- Login Form -->
+            <form action="/login" method="post" class="login-box">
+                <input type="email" name="email" placeholder="your@email.com" required>
+                <input type="password" name="password" placeholder="password" required>
+                <button type="submit" class="clkbtn">Login</button>
+            </form>
+
+            <!-- Signup Form -->
+            <form action="/signup" method="post" class="signup-box">
+                <input type="text" name="name" placeholder="Enter your name" required>
+                <input type="email" name="email" placeholder="your@email.com" required>
+                <input type="password" name="password" placeholder="password" required>
+                <button type="submit" class="clkbtn">Signup</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/static/signin.js">
+
+    </script>
+</body>
+</html>

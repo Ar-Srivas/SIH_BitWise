@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="dashboard-page">
+    <div class="container dashboard-container">
+        <div class="dashboard-header">
+            <div>
+                <h1 class="heading">Student Dashboard</h1>
+                <p class="title" id="greeting">Welcome back!</p>
+            </div>
+            <div>
+                <button onclick="goToProfile()" class="clkbtn secondary">My Profile</button>
+                <button onclick="signOut()" class="signout-btn">Sign Out</button>
+            </div>
+        </div>
+
+        <div class="dashboard-section">
+            <h2>Quick Actions</h2>
+            <div class="dashboard-actions">
+                <button id="take-quiz-btn" class="clkbtn">Take Quiz Survey</button>
+                <button onclick="alert('Coming soon!')" class="clkbtn secondary">View Progress</button>
+            </div>
+        </div>
+
+        <div class="dashboard-section">
+            <h2>Your Quiz Results</h2>
+            <div id="quiz-results">
+                <p class="loading">Loading your results...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src='/static/dashboard.js'></script>
+</body>
+</html>
