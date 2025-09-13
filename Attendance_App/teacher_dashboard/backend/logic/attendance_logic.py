@@ -20,6 +20,9 @@ def login(teacher_email: str, teacher_password: str):
     except Exception as e:
         print("error logging in", e)
         return None
+    
+def dashboard(teacher_email):
+    pass
 
 def start_session(teahcer_id: str):
     today = datetime.now().strftime("%Y-%m-%d")
