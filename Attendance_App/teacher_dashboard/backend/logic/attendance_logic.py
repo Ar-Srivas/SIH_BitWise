@@ -27,6 +27,7 @@ def dashboard(teacher_email):
 def start_session(teahcer_id: str):
     today = datetime.now().strftime("%Y-%m-%d")
     print(today)
+    print(teahcer_id)
 
     student_map = {}
     try:
@@ -41,7 +42,7 @@ def start_session(teahcer_id: str):
                 "status": "absent",
                 "timestamp": None,
             }
-        # return student_map
+        print(student_map)
     except Exception as e:
         print("fetching students logic error", e)
     

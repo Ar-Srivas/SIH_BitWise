@@ -16,10 +16,10 @@ async def login():
         print("login router error", e)
         return None
 
-@router.post("/session/start")
+@router.get("/session/start")
 async def start_session():
     try:
-        result = attendance_logic.start_session("t_teacher1")
+        result = attendance_logic.start_session("teacherdummy@example.com")
         return result
     except Exception as e:
         print("session start router error", e)
