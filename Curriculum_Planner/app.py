@@ -71,10 +71,11 @@ def get_profile(email: str, db: Session = Depends(get_db)):
     user = db.query(Student).filter(Student.student_id == email).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
+
     return {
         "name": user.grade_level,
         "email": user.student_id,
-        "quiz_results": user.quiz_answers
+        "quiz_results": user.quiz_answers or {}
     }
 
 @app.get("/profile", response_class=HTMLResponse)
@@ -88,8 +89,19 @@ def submit_quiz(email: str = Form(...), quiz_result: str = Form(...), db: Sessio
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    # Save quiz results
-    user.quiz_answers = json.loads(quiz_result)
-    db.commit()
+    try:
+        new_results = json.loads(quiz_result)
 
-    return {"status": "success"}
+        if user.quiz_answers:
+            for category, count in new_results.items():
+                if category in user.quiz_answers:
+                    user.quiz_answers[category] += count
+                else:
+                    user.quiz_answers[category] = count
+        else:
+            user.quiz_answers = new_results
+
+        db.commit()
+        return {"status": "success", "message": "Quiz results saved successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error saving quiz results: {str(e)}")

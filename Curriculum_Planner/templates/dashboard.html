@@ -3,32 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Dashboard</title>
+    <title>Dashboard - EduHelp Pro</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body class="dashboard-page">
-    <div class="container dashboard-container">
-        <div class="dashboard-header">
-            <div>
-                <h1 class="heading">Student Dashboard</h1>
-                <p class="title" id="greeting">Welcome back!</p>
+    <!-- Professional Header -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">EH</div>
+                <span class="logo-text">EduHelp Pro</span>
             </div>
+            <nav class="nav-links">
+                <a href="/dashboard?email=${userEmail}" class="nav-link active">Dashboard</a>
+                <a href="/quiz?email=${userEmail}" class="nav-link">Take Quiz</a>
+                <a href="profile?email=${userEmail}" class="nav-link">Profile</a>
+                <button onclick="signOut()" class="btn-danger">Sign Out</button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="dashboard-content">
+        <!-- Page Header -->
+        <div class="page-header">
             <div>
-                <button onclick="goToProfile()" class="clkbtn secondary">My Profile</button>
-                <button onclick="signOut()" class="signout-btn">Sign Out</button>
+                <h1 class="page-title">Student Dashboard</h1>
+                <p class="page-subtitle" id="greeting">Welcome back! Ready to continue your learning journey?</p>
+            </div>
+            <div class="header-actions">
+                <button onclick="goToProfile()" class="btn-secondary">My Profile</button>
             </div>
         </div>
 
-        <div class="dashboard-section">
-            <h2>Quick Actions</h2>
-            <div class="dashboard-actions">
-                <button id="take-quiz-btn" class="clkbtn">Take Quiz Survey</button>
-                <button onclick="alert('Coming soon!')" class="clkbtn secondary">View Progress</button>
+        <!-- Quick Actions Section -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">⚡</span>
+                Quick Actions
+            </h2>
+            <div class="action-grid">
+                <div class="action-card" onclick="document.getElementById('take-quiz-btn').click()">
+                    <h3>Take Assessment</h3>
+                    <p>Start a new quiz to test your knowledge and track your progress</p>
+                    <button id="take-quiz-btn" class="btn-primary">Start Quiz</button>
+                </div>
+                <div class="action-card" onclick="alert('Coming soon!')">
+                    <h3>View Progress</h3>
+                    <p>Check your learning analytics and performance insights</p>
+                    <button class="btn-secondary">View Progress</button>
+                </div>
             </div>
         </div>
 
-        <div class="dashboard-section">
-            <h2>Your Quiz Results</h2>
+        <!-- Quiz Results Section -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">📊</span>
+                Your Assessment Results
+            </h2>
             <div id="quiz-results">
                 <p class="loading">Loading your results...</p>
             </div>

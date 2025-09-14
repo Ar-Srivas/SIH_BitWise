@@ -92,13 +92,12 @@ function endQuiz() {
         optionsEl.appendChild(noResults);
     }
 
-    // Save results to database
+    // Save results to the database
     saveQuizResults();
 }
 
 function saveQuizResults() {
     if (Object.keys(quizResult).length === 0) {
-        addReturnButton();
         return;
     }
 
@@ -115,27 +114,16 @@ function saveQuizResults() {
             successMsg.style.color = 'green';
             successMsg.style.marginTop = '1rem';
             optionsEl.appendChild(successMsg);
+        } else {
+            throw new Error('Failed to save results');
         }
-        addReturnButton();
     })
     .catch(error => {
         console.error('Error saving results:', error);
         const errorMsg = document.createElement('p');
-        errorMsg.textContent = 'Failed to save results, but you can still return to dashboard.';
+        errorMsg.textContent = 'Failed to save results, but you can still return to the dashboard.';
         errorMsg.style.color = 'red';
         errorMsg.style.marginTop = '1rem';
         optionsEl.appendChild(errorMsg);
-        addReturnButton();
     });
-}
-
-function addReturnButton() {
-    const dashboardBtn = document.createElement('button');
-    dashboardBtn.textContent = "Return to Dashboard";
-    dashboardBtn.className = "clkbtn";
-    dashboardBtn.style.marginTop = "20px";
-    dashboardBtn.onclick = () => {
-        location.href = `/dashboard?email=${userEmail}`;
-    };
-    optionsEl.appendChild(dashboardBtn);
 }

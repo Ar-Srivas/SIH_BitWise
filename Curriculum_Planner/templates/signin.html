@@ -3,42 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Quiz App</title>
+    <title>EduHelp Pro - Sign In</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body class="signin-page">
-    <header>
-        <h1 class="heading">Student Quiz App</h1>
-        <p class="title">Discover your learning strengths</p>
+    <!-- Professional Header -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">EH</div>
+                <span class="logo-text">EduHelp Pro</span>
+            </div>
+            <nav class="nav-links">
+                <a href="#" class="nav-link">Features</a>
+                <a href="#" class="nav-link">About</a>
+                <a href="#" class="nav-link">Contact</a>
+            </nav>
+        </div>
     </header>
 
-    <div class="container">
-        <div class="btn">
-            <button class="login">Login</button>
-            <button class="signup">Signup</button>
-            <div class="slider"></div>
-        </div>
+    <!-- Hero Section -->
+    <section class="signin-hero">
+        <h1 class="hero-title">Welcome to EduHelp Pro</h1>
+        <p class="hero-subtitle">Discover your learning potential with intelligent assessments and personalized insights</p>
+    </section>
 
-        <div class="form-section">
-            <!-- Login Form -->
-            <form action="/login" method="post" class="login-box">
-                <input type="email" name="email" placeholder="your@email.com" required>
-                <input type="password" name="password" placeholder="password" required>
-                <button type="submit" class="clkbtn">Login</button>
-            </form>
+    <!-- Sign In Content -->
+    <div class="signin-content">
+        <div class="signin-container">
+            <div class="auth-toggle">
+                <button class="login active">Sign In</button>
+                <button class="signup">Sign Up</button>
+                <div class="toggle-slider"></div>
+            </div>
 
-            <!-- Signup Form -->
-            <form action="/signup" method="post" class="signup-box">
-                <input type="text" name="name" placeholder="Enter your name" required>
-                <input type="email" name="email" placeholder="your@email.com" required>
-                <input type="password" name="password" placeholder="password" required>
-                <button type="submit" class="clkbtn">Signup</button>
-            </form>
+            <div class="form-wrapper">
+                <!-- Login Form -->
+                <form action="/login" method="post" class="auth-form login-box">
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" name="email" class="form-input" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="password" class="form-input" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Sign In</button>
+                </form>
+
+                <!-- Signup Form -->
+                <form action="/signup" method="post" class="auth-form signup-box">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" name="name" class="form-input" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" name="email" class="form-input" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="password" class="form-input" placeholder="Create a password" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Create Account</button>
+                </form>
+            </div>
         </div>
     </div>
 
-    <script src="/static/signin.js">
+    <script>
+        // Toggle between login and signup forms
+        const loginBtn = document.querySelector('.login');
+        const signupBtn = document.querySelector('.signup');
+        const slider = document.querySelector('.toggle-slider');
+        const formWrapper = document.querySelector('.form-wrapper');
 
+        signupBtn.addEventListener('click', () => {
+            slider.classList.add('move');
+            formWrapper.classList.add('move');
+            signupBtn.classList.add('active');
+            loginBtn.classList.remove('active');
+        });
+
+        loginBtn.addEventListener('click', () => {
+            slider.classList.remove('move');
+            formWrapper.classList.remove('move');
+            loginBtn.classList.add('active');
+            signupBtn.classList.remove('active');
+        });
     </script>
+    <script src="/static/signin.js"></script>
 </body>
 </html>

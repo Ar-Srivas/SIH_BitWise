@@ -3,28 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile</title>
+    <title>My Profile - EduQuiz Pro</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body class="dashboard-page">
-    <div class="container dashboard-container">
-        <div class="dashboard-header">
-            <div>
-                <h1 class="heading">My Profile</h1>
-                <p class="title">Your personal information</p>
+    <!-- Professional Header -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">EQ</div>
+                <span class="logo-text">EduQuiz Pro</span>
             </div>
-            <button onclick="goBackToDashboard()" class="clkbtn">Back to Dashboard</button>
+            <nav class="nav-links">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="quiz.html" class="nav-link">Take Quiz</a>
+                <a href="profile.html" class="nav-link active">Profile</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="dashboard-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">My Profile</h1>
+                <p class="page-subtitle">Your personal information and learning statistics</p>
+            </div>
+            <div class="header-actions">
+                <button onclick="goBackToDashboard()" class="btn-primary">Back to Dashboard</button>
+            </div>
         </div>
 
-        <div class="dashboard-section">
+        <!-- Profile Content -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">👤</span>
+                Profile Information
+            </h2>
             <div id="profile-content">
                 <p class="loading">Loading your profile...</p>
             </div>
         </div>
     </div>
 
-    <script src='/static/profile.js'>
-
+    <script src="/static/profile.js">
     </script>
 </body>
 </html>

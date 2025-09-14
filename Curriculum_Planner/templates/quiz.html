@@ -3,18 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Survey</title>
+    <title>Assessment - EduQuiz Pro</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
-<body>
+<body class="quiz-page">
+    <!-- Professional Header -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">EQ</div>
+                <span class="logo-text">EduQuiz Pro</span>
+            </div>
+            <nav class="nav-links">
+                <a href="/dashboard?email=${userEmail}" class="nav-link active">Dashboard</a>
+                <a href="/quiz?email=${userEmail}" class="nav-link">Take Quiz</a>
+                <a href="/profile?email=${userEmail}" class="nav-link">Profile</a>
+                <button onclick="signOut()" class="btn-danger">Sign Out</button>
+            </nav>
+        </div>
+    </header>
+
     <div class="quiz-container">
-        <div class="question" id="question">Loading question...</div>
-        <div class="options" id="options"></div>
-        <button id="back-to-dashboard" class="clkbtn secondary">Back to Dashboard</button>
+        <!-- Quiz Header -->
+        <div class="quiz-header">
+            <h1 class="quiz-title">Knowledge Assessment</h1>
+            <p class="quiz-subtitle">Test your understanding and track your progress</p>
+        </div>
+
+        <!-- Quiz Content -->
+        <div class="quiz-content">
+            <div class="question" id="question">Loading your assessment...</div>
+            <div class="options" id="options"></div>
+        </div>
+
+        <!-- Quiz Actions -->
+        <div class="quiz-actions">
+            <button id="back-to-dashboard" class="btn-secondary">Back to Dashboard</button>
+            <button id="next-question" class="btn-primary" style="display: none;">Next Question</button>
+        </div>
     </div>
 
-    <script src="/static/quiz.js">
-
-    </script>
+    <script src="/static/quiz.js"> </script>
 </body>
 </html>
