@@ -20,7 +20,17 @@ def login(teacher_email: str, teacher_password: str):
     except Exception as e:
         print("login logic error", e)
         return None
-    
+
+def get_dates(teacher_email):
+    try:
+        date_docs = db.collection("teachers").document(teacher_email).collection("attendance_records").stream()
+        dates = [date.id for date in date_docs]
+        print(dates)
+        return dates
+    except Exception as e:
+        print("get dates logic error", e)
+        return None
+
 def dashboard(teacher_email):
     pass
 

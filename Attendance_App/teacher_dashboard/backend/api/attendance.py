@@ -16,6 +16,20 @@ async def login():
         print("login router error", e)
         return None
 
+@router.get("/dates")
+async def get_dates():
+    try:
+        result = attendance_logic.get_dates("teacherdummy@example.com")
+        print(result)
+        if not result:
+            print("no dates found")
+            return None
+        return result
+    except Exception as e:
+        print("get dates router error", e)
+        return None
+        
+
 @router.get("/session/start")
 async def start_session():
     try:
