@@ -3,7 +3,7 @@ from logic import attendance_logic
 
 router = APIRouter()
 
-@router.get("/login")
+@router.post("/login")
 async def login():
     try:
         result = attendance_logic.login("teacherdummy@example.com", "teacherdummy123")
@@ -28,7 +28,16 @@ async def get_dates():
     except Exception as e:
         print("get dates router error", e)
         return None
-        
+
+@router.get("/dashboard")
+def dashboard():
+    try:
+        result = attendance_logic.dashboard("teacherdummy@example.com", "2025-09-13")
+        print(result)
+        return result
+    except Exception as e:
+        print("dashboard router error", e)
+        return None
 
 @router.get("/session/start")
 async def start_session():

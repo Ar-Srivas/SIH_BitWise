@@ -1,6 +1,11 @@
 from datetime import datetime
+import random
+import string
 
 from firebase_config.config import db
+
+def generate_rand_string_helper(length):
+    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
 
 def login(teacher_email: str, teacher_password: str):
     try:
@@ -31,13 +36,24 @@ def get_dates(teacher_email):
         print("get dates logic error", e)
         return None
 
-def dashboard(teacher_email):
-    pass
+def dashboard(teacher_email, date):
+    try:
+        data = db.collection("teachers").document(teacher_email).collection("attendance_records").document(date).get()
+        data = data.to_dict()
+        print(data)
+        if not data:
+            print("this date or email does not exits")
+            return None
+        return data
+    except Exception as e:
+        print("dashboard logic error", e)
+        return None
 
 def start_session(teahcer_id: str):
     today = datetime.now().strftime("%Y-%m-%d")
     print(today)
     print(teahcer_id)
+    qrvalue = teahcer_id + "#" + generate_rand_string_helper(5)
 
     student_map = {}
     try:
@@ -55,7 +71,8 @@ def start_session(teahcer_id: str):
         print(student_map)
     except Exception as e:
         print("fetching students logic error", e)
-    
+
+    db.collection("teachers").document(teahcer_id).set({"qrvalue": qrvalue}, merge=True)
     attendance_doc_path = db.collection("teachers").document(teahcer_id).collection("attendance_records").document(today)
     data = {
         "date": today,
