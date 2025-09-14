@@ -12,3 +12,11 @@ app.mount("/static", StaticFiles(directory="../frontend", html=True), name="stat
 @app.get("/", response_class=FileResponse)
 async def serve_login_page():
     return "../frontend/login.html"
+
+@app.get("/dashboard", response_class=FileResponse)
+async def serve_login_page():
+    return "../frontend/dashboard.html"
+
+@app.get("/session/start", response_class=FileResponse)
+async def serve_login_page():
+    return "../frontend/startSession.html"
