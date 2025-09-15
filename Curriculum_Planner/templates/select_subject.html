@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Subject</title>
+    <link rel="stylesheet" href="/static/style_recommend.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main-container">
+        <header class="header">
+            <h1 class="header-title">Student Recommendation System</h1>
+            <p class="header-subtitle">Your personalized learning path starts here.</p>
+        </header>
+        <div class="card subject-card">
+            <h2 class="card-title">Choose a Subject</h2>
+            <p class="card-subtitle">Select a subject to get tailored recommendations.</p>
+            <div class="form-group">
+                <label for="subjectSelect" class="form-label">Subject:</label>
+                <select id="subjectSelect" class="form-select">
+                    <option value="">-- Select a Subject --</option>
+                    <option value="ML">ML</option>
+                    <option value="AI">AI</option>
+                    <option value="DSA">DSA</option>
+                    <option value="DBMS">DBMS</option>
+                    <option value="Time Series">Time Series</option>
+                    <option value="Cloud Computing">Cloud Computing</option>
+                </select>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="goToRecommendations()">Get Recommendations</button>
+        </div>
+    </div>
+    <script src="/static/subject.js"></script>
+</body>
+</html>

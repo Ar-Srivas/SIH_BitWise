@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Recommendations</title>
+    <link rel="stylesheet" href="/static/style_recommend.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main-container">
+        <header class="header">
+            <h1 class="header-title">Recommended Resources for <span>{{ student.name }}</span></h1>
+            <p class="header-subtitle">{{ student.course }}</p>
+        </header>
+        
+        <div class="recommendations-section">
+            <h2 class="section-title">Resources for {{ selected_subject }}</h2>
+            {% if recommendations %}
+                <div class="resource-grid">
+                    {% for rec in recommendations %}
+                    <div class="resource-card">
+                        <h3 class="resource-title">{{ rec.title }}</h3>
+                        <div class="resource-details">
+                            <span class="detail-badge subject-badge">{{ rec.subject }}</span>
+                            <span class="detail-badge difficulty-badge">{{ rec.difficulty }}</span>
+                        </div>
+                        <div class="btn-group">
+                            <a href="{{ rec.article_link }}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Article</a>
+                            <a href="{{ rec.youtube_link }}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">YT</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="empty-message">No recommendations available for this subject.</p>
+            {% endif %}
+        </div>
+
+        <div class="back-link-container">
+            <a href="/" class="back-link">
+                <span class="arrow">←</span> Back to Subject Selection
+            </a>
+        </div>
+    </div>
+</body>
+</html>
