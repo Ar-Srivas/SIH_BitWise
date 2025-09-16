@@ -70,13 +70,14 @@ def start_session(teahcer_id: str, date):
         print(student_map)
     except Exception as e:
         print("fetching students logic error", e)
-
-    db.collection("teachers").document(teahcer_id).collection("attendance_records").document(date).set({"qrvalue": initial_qrvalue}, merge=True)
+    print(initial_qrvalue)
+    # db.collection("teachers").document(teahcer_id).collection("attendance_records").document(date).update({"qrvalue": initial_qrvalue})
     attendance_doc_path = db.collection("teachers").document(teahcer_id).collection("attendance_records").document(today)
     data = {
         "date": today,
         "is_session_active": True,
         "students": student_map,
+        "qrvalue": initial_qrvalue,
     }
     try:
         attendance_doc_path.set(data)
