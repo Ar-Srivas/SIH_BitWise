@@ -1,12 +1,21 @@
 from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
 from logic import attendance_logic
 
 router = APIRouter()
 
+class TeacherLogin(BaseModel):
+    email: str
+    password: str
+
+class SessionInfo(BaseModel):
+    teacher_id: str
+    date: str
+
 @router.post("/login")
-def login():
+def login(teacher_data: TeacherLogin):
     try:
-        result = attendance_logic.login("teacherdummy@example.com", "teacherdummy123")
+        result = attendance_logic.login(teacher_data.email, teacher_data.password)
         if result:
             print(result)
             return result
@@ -40,18 +49,18 @@ def dashboard():
         return None
 
 @router.post("/session/start")
-def start_session():
+def start_session(session_data: SessionInfo):
     try:
-        result = attendance_logic.start_session("teacherdummy@example.com")
+        result = attendance_logic.start_session(session_data.teacher_id, session_data.date)
         return result
     except Exception as e:
         print("session start router error", e)
         return None
 
 @router.post("/session/update-qrvalue")
-def update_qrvalue():
+def update_qrvalue(session_data: SessionInfo):
     try:
-        result = attendance_logic.update_qrvalue("teacherdummy@example.com")
+        result = attendance_logic.update_qrvalue(session_data.teacher_id, session_data.date)
         return result
     except Exception as e:
         print("update qrvalue router error", e)

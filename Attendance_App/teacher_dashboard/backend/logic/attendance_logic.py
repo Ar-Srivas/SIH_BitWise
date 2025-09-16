@@ -1,12 +1,10 @@
 from datetime import datetime
-import random
-import string
 import uuid
 
 from firebase_config.config import db
 
 def _generate_live_token():
-    return (uuid.uuid4())[:8]
+    return str(uuid.uuid4())[:8]
 
 def login(teacher_email: str, teacher_password: str):
     try:

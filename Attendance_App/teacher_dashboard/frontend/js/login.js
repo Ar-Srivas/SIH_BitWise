@@ -22,7 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
             if (response.ok) {
                 const result = await response.json();
                 console.log("login successful", result);
-                window.location.href("/dashboard");
+                // console.log(result.email);
+                sessionStorage.setItem("teacherId", result.email);
+                sessionStorage.setItem("teacherName", result.name);
+                window.location.href = "/session/start";
             } else {
                 const errorData = await response.json();
                 loginError.textContent = errorData.detail || "login failed"
