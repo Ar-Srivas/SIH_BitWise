@@ -1,11 +1,12 @@
 from datetime import datetime
 import random
 import string
+import uuid
 
 from firebase_config.config import db
 
-def generate_rand_string_helper(length):
-    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
+def _generate_live_token():
+    return (uuid.uuid4())[:8]
 
 def login(teacher_email: str, teacher_password: str):
     try:
@@ -49,11 +50,11 @@ def dashboard(teacher_email, date):
         print("dashboard logic error", e)
         return None
 
-def start_session(teahcer_id: str):
+def start_session(teahcer_id: str, date):
     today = datetime.now().strftime("%Y-%m-%d")
     print(today)
     print(teahcer_id)
-    qrvalue = teahcer_id + "#" + generate_rand_string_helper(5)
+    initial_qrvalue = teahcer_id + "#" + _generate_live_token()
 
     student_map = {}
     try:
@@ -72,7 +73,7 @@ def start_session(teahcer_id: str):
     except Exception as e:
         print("fetching students logic error", e)
 
-    db.collection("teachers").document(teahcer_id).set({"qrvalue": qrvalue}, merge=True)
+    db.collection("teachers").document(teahcer_id).collection("attendance_records").document(date).set({"qrvalue": initial_qrvalue}, merge=True)
     attendance_doc_path = db.collection("teachers").document(teahcer_id).collection("attendance_records").document(today)
     data = {
         "date": today,
@@ -81,9 +82,19 @@ def start_session(teahcer_id: str):
     }
     try:
         attendance_doc_path.set(data)
-        return data
+        return {"teacher_id": teahcer_id, "date": date, "initial_qrvalue": initial_qrvalue}
     except Exception as e:
         print("creating session data logic error", e)
+        return None
+
+def update_qrvalue(teacher_id, date):
+    try:
+        new_qrvalue = teacher_id + "#" + _generate_live_token()
+        db.collection("teachers").document(teacher_id).collection("attendance_records").document(date).update({"qrvalue": new_qrvalue})
+        return {"new_qrvalue": new_qrvalue}
+    except Exception as e:
+        print("update qrvalue logic error", e)
+        return None
 
 def hello_world():
     return {"message": "hello world"}

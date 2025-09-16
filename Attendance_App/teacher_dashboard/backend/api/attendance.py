@@ -4,7 +4,7 @@ from logic import attendance_logic
 router = APIRouter()
 
 @router.post("/login")
-async def login():
+def login():
     try:
         result = attendance_logic.login("teacherdummy@example.com", "teacherdummy123")
         if result:
@@ -17,7 +17,7 @@ async def login():
         return None
 
 @router.get("/dates")
-async def get_dates():
+def get_dates():
     try:
         result = attendance_logic.get_dates("teacherdummy@example.com")
         print(result)
@@ -39,13 +39,23 @@ def dashboard():
         print("dashboard router error", e)
         return None
 
-@router.get("/session/start")
-async def start_session():
+@router.post("/session/start")
+def start_session():
     try:
         result = attendance_logic.start_session("teacherdummy@example.com")
         return result
     except Exception as e:
         print("session start router error", e)
+        return None
+
+@router.post("/session/update-qrvalue")
+def update_qrvalue():
+    try:
+        result = attendance_logic.update_qrvalue("teacherdummy@example.com")
+        return result
+    except Exception as e:
+        print("update qrvalue router error", e)
+        return None
 
 @router.get("/hello")
 async def hello_world():

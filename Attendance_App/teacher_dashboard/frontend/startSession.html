@@ -8,6 +8,29 @@
     <link rel="stylesheet" href="static/css/styles.css">
 </head>
 <body>
-    
+    <div class="session-container">
+        <h2>Live Attendance Session</h2>
+        <p>Click the button to start the session and generate the first QR code.</p>
+
+        <!-- The button that triggers the session start -->
+        <button id="start-session-btn" class="btn">Start Session</button>
+
+        <!-- This div will hold the dynamically generated QR code -->
+        <div id="qr-code">
+            <p>QR code will appear here...</p>
+        </div>
+
+        <!-- This will show status updates to the teacher -->
+        <p id="status-message">Session has not started.</p>
+
+        <a href="/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+
+    <!-- 
+      - QR Code Generation Library: Fetched from a CDN for simplicity.
+      - Session Logic: Your custom JavaScript that handles the session.
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator/qrcode.min.js"></script>
+    <script src="/static/js/session.js"></script>
 </body>
 </html>
