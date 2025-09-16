@@ -50,8 +50,8 @@ def dashboard(teacher_email, date):
 
 def start_session(teahcer_id: str, date):
     today = datetime.now().strftime("%Y-%m-%d")
-    print(today)
-    print(teahcer_id)
+    # print(today)
+    # print(teahcer_id)
     initial_qrvalue = teahcer_id + "#" + _generate_live_token()
 
     student_map = {}
@@ -61,13 +61,13 @@ def start_session(teahcer_id: str, date):
             student_id = student.id
             student_data = student.to_dict()
             student_name = student_data["name"]
-            print(student_id, student_name)
+            # print(student_id, student_name)
             student_map[student_id] = {
                 "name": student_name,
                 "status": "absent",
                 "timestamp": None,
             }
-        print(student_map)
+        # print(student_map)
     except Exception as e:
         print("fetching students logic error", e)
     print(initial_qrvalue)
@@ -94,6 +94,13 @@ def update_qrvalue(teacher_id, date):
     except Exception as e:
         print("update qrvalue logic error", e)
         return None
+    
+def end_session(teacher_id, date):
+    try:
+        db.collection("teachers").document(teacher_id).collection("attendance_records").document(date).update({"is_session_active": False})
+        return {"is_session_active": False}
+    except Exception as e:
+        print("end session logic error")
 
 def hello_world():
     return {"message": "hello world"}

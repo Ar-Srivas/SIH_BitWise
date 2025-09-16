@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const statusMessage = document.getElementById("status-message");
     let qrUpdateInterval;
     const teacherId = sessionStorage.getItem("teacherId");
+    const date = new Date().toISOString().split('T')[0];
     console.log(teacherId);
     if (!teacherId) {
         window.location.href = "/";
@@ -21,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     async function startSession() {
         try {
             console.log("hello there");
-            const date = new Date().toISOString().split('T')[0];
+            // const date = new Date().toISOString().split('T')[0];
             const response = await fetch("/api/session/start", {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
@@ -70,5 +71,26 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    async function endSession() {
+        try {
+            const response = await fetch("/api/session/end", {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    teacher_id: teacherId,
+                    date: date,
+                }),
+            })
+            console.log(response);
+            if (!response.ok) {
+                throw new Error("failed to end session");
+            }
+            const result = await response.json();
+        } catch (error) {
+            statusMessage.textContent = `error ending session: ${error.message}`;
+        }
+    }
+
     document.getElementById('start-session-btn').addEventListener('click', startSession);
+    document.getElementById('end-session-btn').addEventListener('click', endSession);
 });
