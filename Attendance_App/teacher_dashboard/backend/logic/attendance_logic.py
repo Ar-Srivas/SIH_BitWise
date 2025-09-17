@@ -87,13 +87,22 @@ def start_session(teahcer_id: str, date):
         return None
 
 def update_qrvalue(teacher_id, date):
-    try:
-        new_qrvalue = teacher_id + "#" + _generate_live_token()
-        db.collection("teachers").document(teacher_id).collection("attendance_records").document(date).update({"qrvalue": new_qrvalue})
-        return {"new_qrvalue": new_qrvalue}
-    except Exception as e:
-        print("update qrvalue logic error", e)
-        return None
+    session_doc_ref = db.collection("teachers").document(teacher_id).collection("attendance_records").document(date)
+    print(teacher_id, date)
+    session_doc = session_doc_ref.get()
+    is_session_active = session_doc.get("is_session_active")
+    print(is_session_active)
+    if is_session_active:
+        try:
+            new_qrvalue = teacher_id + "#" + _generate_live_token()
+            db.collection("teachers").document(teacher_id).collection("attendance_records").document(date).update({"qrvalue": new_qrvalue})
+            return {"new_qrvalue": new_qrvalue}
+        except Exception as e:
+            print("update qrvalue logic error", e)
+            return None
+    else:
+        print("talkinabeetdonny")
+        return {"new_qrvalue": "session_ended"}
     
 def end_session(teacher_id, date):
     try:

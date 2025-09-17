@@ -3,8 +3,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const statusMessage = document.getElementById("status-message");
     let qrUpdateInterval;
     const teacherId = sessionStorage.getItem("teacherId");
-    const date = new Date().toISOString().split('T')[0];
+    // const date = new Date().toISOString().split('T')[0];
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const date = `${year}-${month}-${day}`;
     console.log(teacherId);
+    console.log(date);
     if (!teacherId) {
         window.location.href = "/";
         return;
@@ -43,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             qrUpdateInterval = setInterval(() => {
                 updateQrValue(teacherId, date);
-            }, 60000);
+            }, 6000);
         } catch (error) {
             statusMessage.textContent = `Error: ${error}`;
         }
@@ -64,6 +70,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             const data = await response.json();
             const {new_qrvalue} = data;
+            console.log(new_qrvalue);
+            if (new_qrvalue === "session_ended") {
+                window.location.href = "/dashboard";
+                return;
+            }
             generateQrCode(new_qrvalue);
         } catch (error) {
             statusMessage.textContent = `Error updating token: ${error.message}`;
