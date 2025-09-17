@@ -29,7 +29,7 @@ def login(teacher_data: TeacherLogin):
 def get_dates(teacher_id: str = Query(...)):
     try:
         result = attendance_logic.get_dates(teacher_id)
-        print(result)
+        # print(result)
         return result if result is not None else []
     except Exception as e:
         print("get dates router error", e)
