@@ -1,0 +1,19 @@
+body {
+    font-family: Arial;
+    max-width: 500px;
+    margin: 30px auto;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+h1 {
+    text-align: center;
+}
+
+input, select, button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+}
