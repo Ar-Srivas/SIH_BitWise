@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 // console.log(result.email);
                 sessionStorage.setItem("teacherId", result.email);
                 sessionStorage.setItem("teacherName", result.name);
-                window.location.href = "/session/start";
+                window.location.href = "/dashboard";
             } else {
                 const errorData = await response.json();
                 loginError.textContent = errorData.detail || "login failed"

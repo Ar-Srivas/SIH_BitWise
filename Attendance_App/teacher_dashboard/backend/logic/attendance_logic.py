@@ -88,10 +88,10 @@ def start_session(teahcer_id: str, date):
 
 def update_qrvalue(teacher_id, date):
     session_doc_ref = db.collection("teachers").document(teacher_id).collection("attendance_records").document(date)
-    print(teacher_id, date)
+    # print(teacher_id, date)
     session_doc = session_doc_ref.get()
     is_session_active = session_doc.get("is_session_active")
-    print(is_session_active)
+    # print(is_session_active)
     if is_session_active:
         try:
             new_qrvalue = teacher_id + "#" + _generate_live_token()
@@ -101,7 +101,7 @@ def update_qrvalue(teacher_id, date):
             print("update qrvalue logic error", e)
             return None
     else:
-        print("talkinabeetdonny")
+        # print("talkinabeetdonny")
         return {"new_qrvalue": "session_ended"}
     
 def end_session(teacher_id, date):

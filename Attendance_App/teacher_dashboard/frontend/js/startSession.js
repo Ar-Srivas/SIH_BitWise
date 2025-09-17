@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const day = String(today.getDate()).padStart(2, '0');
     const date = `${year}-${month}-${day}`;
     console.log(teacherId);
-    console.log(date);
+    // console.log(date);
     if (!teacherId) {
         window.location.href = "/";
         return;

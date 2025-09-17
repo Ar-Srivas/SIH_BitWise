@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 from logic import attendance_logic
 
@@ -26,22 +26,19 @@ def login(teacher_data: TeacherLogin):
         return None
 
 @router.get("/dates")
-def get_dates():
+def get_dates(teacher_id: str = Query(...)):
     try:
-        result = attendance_logic.get_dates("teacherdummy@example.com")
+        result = attendance_logic.get_dates(teacher_id)
         print(result)
-        if not result:
-            print("no dates found")
-            return None
-        return result
+        return result if result is not None else []
     except Exception as e:
         print("get dates router error", e)
         return None
 
 @router.get("/dashboard")
-def dashboard():
+def dashboard(teacher_id: str = Query(...), date: str = Query(...)):
     try:
-        result = attendance_logic.dashboard("teacherdummy@example.com", "2025-09-13")
+        result = attendance_logic.dashboard(teacher_id, date)
         print(result)
         return result
     except Exception as e:

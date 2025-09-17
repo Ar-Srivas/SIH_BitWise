@@ -4,10 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attendance Dashboard</title>
-    <link rel="icon", type="image/png", href="assets/icon.png">
-    <link rel="stylesheet" href="static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="icon" type="image/png" href="/static/assets/icon.png">
 </head>
 <body>
-    <h1>Anadya is my favourite</h1>   
+    <div class="dashboard-container">
+        <aside id="sidebar" class="sidebar">
+            <h2>Session Dates</h2>
+            <nav id="date-list">
+                <p>Loading dates...</p>
+            </nav>
+            <div class="sidebar-actions">
+                <a href="/session/start" class="btn">Start New Session</a>
+                <button id="logout-btn" class="btn btn-secondary">Logout</button>
+            </div>
+        </aside>
+
+        <main id="main-content" class="main-content">
+            <header>
+                <h1>Attendance Dashboard</h1>
+                <p id="welcome-message">Welcome! Please select a date from the sidebar to view attendance records.</p>
+            </header>
+            <div id="attendance-details">
+                <!-- Student attendance table will be rendered here by JavaScript -->
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/js/dashboard.js"></script>
 </body>
 </html>
