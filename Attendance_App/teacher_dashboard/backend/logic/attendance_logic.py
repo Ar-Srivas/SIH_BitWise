@@ -29,7 +29,7 @@ def get_dates(teacher_email):
     try:
         date_docs = db.collection("teachers").document(teacher_email).collection("attendance_records").stream()
         dates = [date.id for date in date_docs]
-        print(dates)
+        # print(dates)
         return dates
     except Exception as e:
         print("get dates logic error", e)
@@ -39,7 +39,7 @@ def dashboard(teacher_email, date):
     try:
         data = db.collection("teachers").document(teacher_email).collection("attendance_records").document(date).get()
         data = data.to_dict()
-        print(data)
+        # print(data)
         if not data:
             print("this date or email does not exits")
             return None
