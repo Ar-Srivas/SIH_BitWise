@@ -39,7 +39,7 @@ def get_dates(teacher_id: str = Query(...)):
 def dashboard(teacher_id: str = Query(...), date: str = Query(...)):
     try:
         result = attendance_logic.dashboard(teacher_id, date)
-        print(result)
+        # print(result)
         return result
     except Exception as e:
         print("dashboard router error", e)
