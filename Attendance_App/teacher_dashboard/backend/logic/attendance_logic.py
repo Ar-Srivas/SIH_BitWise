@@ -49,7 +49,7 @@ def dashboard(teacher_email, date):
         return None
 
 def start_session(teahcer_id: str, date):
-    today = datetime.now().strftime("%Y-%m-%d")
+    # today = datetime.now().strftime("%Y-%m-%d")
     # print(today)
     # print(teahcer_id)
     initial_qrvalue = teahcer_id + "#" + _generate_live_token()
@@ -72,9 +72,9 @@ def start_session(teahcer_id: str, date):
         print("fetching students logic error", e)
     print(initial_qrvalue)
     # db.collection("teachers").document(teahcer_id).collection("attendance_records").document(date).update({"qrvalue": initial_qrvalue})
-    attendance_doc_path = db.collection("teachers").document(teahcer_id).collection("attendance_records").document(today)
+    attendance_doc_path = db.collection("teachers").document(teahcer_id).collection("attendance_records").document(date)
     data = {
-        "date": today,
+        "date": date,
         "is_session_active": True,
         "students": student_map,
         "qrvalue": initial_qrvalue,
