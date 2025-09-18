@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "306963889495",
+    "project_id": "facescan-3e667",
+    "storage_bucket": "facescan-3e667.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:306963889495:android:f46bf5ef10d986f8b49212",
+        "android_client_info": {
+          "package_name": "com.example.attapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPnUgyojrzVRY0HhdBFSMD2_xKP3wc6E8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
