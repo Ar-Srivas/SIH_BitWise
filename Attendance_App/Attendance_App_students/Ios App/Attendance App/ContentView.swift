@@ -12,8 +12,8 @@ import FirebaseCore
 import FirebaseFirestore
 import KeychainAccess
 struct ContentView: View {
-    @State private var username="divy@example.com"
-    @State private var password="12345"
+    @State private var username=""
+    @State private var password=""
     @State private var isloggedin=false
     @State private var showpass=false
     @State private var wrongcred=false
