@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import List, Dict, Optional
 from sqlalchemy import Column, Integer, String, JSON, Date, Time, ForeignKey, Boolean
-from db import Base
+from backend.db import Base
 
 # SQL Models
 class Student(Base):
