@@ -1,11 +1,7 @@
 from pydantic import BaseModel
 from typing import List, Dict, Optional
-from sqlalchemy import Column, Integer, String, JSON
+from sqlalchemy import Column, Integer, String, JSON, Date, Time, ForeignKey, Boolean
 from db import Base
-'''
-FOR DB MANAGEMENT
-'''
-
 
 # SQL Models
 class Student(Base):
@@ -18,7 +14,30 @@ class Student(Base):
     marks = Column(JSON, nullable=True)
     quiz_answers = Column(JSON, nullable=True)
 
+class User(Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True, index=True)
+    userid = Column(String, unique=True, index=True)
+    password = Column(String, nullable=False)
+    role = Column(String, nullable=False)  # "teacher" or "student"
 
+class Slot(Base):
+    __tablename__ = "slots"
+    id = Column(Integer, primary_key=True, index=True)
+    teacher_id = Column(Integer, ForeignKey("users.id"))
+    date = Column(Date)
+    start_time = Column(Time)
+    end_time = Column(Time)
+    booked = Column(Boolean, default=False)
+    booked_by = Column(Integer, ForeignKey("users.id"), nullable=True)
+
+class Teacher(Base):
+    __tablename__ = "teachers"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    subject = Column(String, nullable=False)
+
+# Pydantic Models
 class MarksInput(BaseModel):
     grade_level: str
     subjects: Dict[str, int]
@@ -33,4 +52,4 @@ class StudentProfile(BaseModel):
     quiz_answers: Optional[List[str]] = None
 
     class Config:
-        from_attributes = True  # Changed from orm_mode to fix the warning
+        from_attributes = True

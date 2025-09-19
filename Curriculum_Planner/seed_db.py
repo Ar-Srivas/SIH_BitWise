@@ -1,5 +1,5 @@
-from .database import SessionLocal, engine
-from .models_faculty import Base, User, Teacher
+from database import SessionLocal, engine
+from models_faculty import Base, User, Teacher
 
 Base.metadata.create_all(bind=engine)
 

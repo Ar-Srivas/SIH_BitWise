@@ -72,3 +72,19 @@ function goToProfile() {
 function signOut() {
     location.href = '/';
 }
+
+function goToProfile() {
+    location.href = `/profile?email=${userEmail}`;
+}
+
+function goToRecommendations() {
+    location.href = `/select_subject?email=${userEmail}`;
+}
+
+function goToSlotBooking() {
+    location.href = `/slot_booking_students?email=${userEmail}`;
+}
+
+function signOut() {
+    location.href = '/';
+}

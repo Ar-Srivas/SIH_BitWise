@@ -1,19 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Student Dashboard</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Slots - EduHelp Pro</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
-<body>
-  <h1>Book a Slot</h1>
-  <input type="date" id="date">
-  <button id="loadBtn">Load Slots</button>
+<body class="dashboard-page">
+    <header class="main-header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">EH</div>
+                <span class="logo-text">EduHelp Pro</span>
+            </div>
+            <nav class="nav-links">
+                <a href="/dashboard?email=${userEmail}" class="nav-link">Dashboard</a>
+                <a href="/quiz?email=${userEmail}" class="nav-link">Take Quiz</a>
+                <a href="/profile?email=${userEmail}" class="nav-link">Profile</a>
+                <button onclick="signOut()" class="btn-danger">Sign Out</button>
+            </nav>
+        </div>
+    </header>
 
-  <select id="slotSelect"></select>
-  <button id="bookBtn">Book</button>
+    <div class="dashboard-content">
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Book Teaching Slots</h1>
+                <p class="page-subtitle">Schedule one-on-one sessions with teachers</p>
+            </div>
+            <div class="header-actions">
+                <button onclick="goBackToDashboard()" class="btn-secondary">Back to Dashboard</button>
+            </div>
+        </div>
 
-<script src="scripts/student.js"></script>
+        <div class="content-section">
+            <h2 class="section-title">Available Slots</h2>
+            <div class="form-group">
+                <label for="date" class="form-label">Select Date:</label>
+                <input type="date" id="date" class="form-input">
+                <button id="loadBtn" class="btn-primary">Load Slots</button>
+            </div>
 
+            <div class="form-group">
+                <select id="slotSelect" class="form-select">
+                    <option value="">Select a slot...</option>
+                </select>
+                <button id="bookBtn" class="btn-primary">Book Slot</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function goBackToDashboard() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const email = urlParams.get('email');
+            location.href = `/dashboard?email=${email}`;
+        }
+
+        function signOut() {
+            location.href = '/';
+        }
+    </script>
+    <script src="/static/student.js"></script>
 </body>
 </html>

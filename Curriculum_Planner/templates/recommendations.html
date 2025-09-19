@@ -13,8 +13,11 @@
             <h1 class="header-title">Recommended Resources for <span>{{ student.name }}</span></h1>
             <p class="header-subtitle">{{ student.course }}</p>
         </header>
-        
+
         <div class="recommendations-section">
+            <div class="header-actions">
+                <button onclick="goBackToDashboard()" class="btn-primary">Back to Dashboard</button>
+            </div>
             <h2 class="section-title">Resources for {{ selected_subject }}</h2>
             {% if recommendations %}
                 <div class="resource-grid">
