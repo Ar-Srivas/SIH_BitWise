@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             qrUpdateInterval = setInterval(() => {
                 updateQrValue(teacherId, date);
-            }, 6000);
+            }, 60000);
         } catch (error) {
             statusMessage.textContent = `Error: ${error}`;
         }
