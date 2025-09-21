@@ -26,7 +26,7 @@ client = Mistral(api_key=MISTRAL_API_KEY)
 async def search_chat(user_message:str):
     params = {
     "engine": "google",
-    "q": "Best colleges for computer science MUMBAI",
+    "q": user_message,
     "api_key": SERPAPI_API_KEY
     }
     search = GoogleSearch(params)
