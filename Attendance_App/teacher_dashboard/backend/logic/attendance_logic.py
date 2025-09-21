@@ -1,7 +1,10 @@
 from datetime import datetime
 import uuid
+try:
+    from firebase_config.config import db
+except Exception as e:
+    print(e)
 
-from firebase_config.config import db
 
 def _generate_live_token():
     return str(uuid.uuid4())[:8]
