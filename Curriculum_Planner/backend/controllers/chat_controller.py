@@ -45,8 +45,11 @@ async def send_chat(search_result, user_message):
                         Answer to the point and be postive and motivating in your response. Do not mention the search in the answer.
                         If you are unable to find the answer then politely say that you are unable to find the answer.
                         Give some form of structured steps to achieve the stuedents goal.
+                        Do not use markdown format
+                        Do not include any emojis and make it formal.
+                        Keep the answer concise on fluff and more on the data.
                         """}
         ]
     )
-    return chat_res
+    return chat_res.choices[0].message.content
 #print(organic_results)    #CRAZY OUTPUT HAI ISKA

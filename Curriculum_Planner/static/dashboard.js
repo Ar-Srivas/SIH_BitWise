@@ -88,3 +88,7 @@ function goToSlotBooking() {
 function signOut() {
     location.href = '/';
 }
+
+function goToChatBot(){
+    location.href = `/chat?email=${userEmail}`;
+}

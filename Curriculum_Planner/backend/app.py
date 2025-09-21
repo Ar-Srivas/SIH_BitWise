@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
+from fastapi import Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from backend.db import Base, engine, SessionLocal
 from backend.models import User
-from backend.routers import auth_routes, student_routes, quiz_routes, slot_routes, recommend_routes
+from backend.routers import auth_routes, student_routes, quiz_routes, slot_routes, recommend_routes, chat_routes
 
 app = FastAPI()
 Base.metadata.create_all(bind=engine)
@@ -18,6 +19,14 @@ app.add_middleware(
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
+
+# include routers
+app.include_router(auth_routes.router)
+app.include_router(student_routes.router)
+app.include_router(quiz_routes.router)
+app.include_router(slot_routes.router)
+app.include_router(recommend_routes.router)
+app.include_router(chat_routes.router)
 
 @app.on_event("startup")
 def seed_data():
@@ -57,9 +66,7 @@ def slot_booking_students():
     with open("templates/slot_booking_students.html") as f:
         return HTMLResponse(content=f.read())
 
-# include routers
-app.include_router(auth_routes.router)
-app.include_router(student_routes.router)
-app.include_router(quiz_routes.router)
-app.include_router(slot_routes.router)
-app.include_router(recommend_routes.router)
+@app.get("/chat", response_class=HTMLResponse)
+async def chat_page(request: Request):
+    return templates.TemplateResponse("dummy_chat.html", {"request": request})
+
