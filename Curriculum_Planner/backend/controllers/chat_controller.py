@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import os
 from mistralai import Mistral
 from fastapi import FastAPI
-from serpapi import GoogleSearch
+import serpapi
 
 
 
@@ -29,7 +29,7 @@ async def search_chat(user_message:str):
     "q": user_message,
     "api_key": SERPAPI_API_KEY
     }
-    search = GoogleSearch(params)
+    search = serpapi.GoogleSearch(params)
     results = search.get_dict()
     organic_results = results.get("organic_results")
     return organic_results

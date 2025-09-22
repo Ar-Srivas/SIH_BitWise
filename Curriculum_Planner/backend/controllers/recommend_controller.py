@@ -1,14 +1,10 @@
-from fastapi import Request
+# recommend_controller.py
+import random
+from fastapi import Request, HTTPException
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse
 
-templates = Jinja2Templates(directory="templates")
-
-students = [
-    {"id": "DS07", "name": "Siddh Shah", "course": "Data Science",
-     "subjects": {"ML": 82, "AI": 78, "DSA": 75, "DBMS": 68, "Time Series": 90, "Cloud Computing": 85}},
-]
-
+# NOTE: The templates instance will be passed from the router
+# Static resources list is fine, no need to change
 resources = [
     {"id": 1, "title": "ML Basics (Google Crash Course)", "subject": "ML", "difficulty": "Easy", "article_link": "https://developers.google.com/machine-learning/crash-course", "youtube_link": "https://www.youtube.com/results?search_query=machine+learning+basics"},
     {"id": 2, "title": "Machine Learning (Andrew Ng)", "subject": "ML", "difficulty": "Medium", "article_link": "https://www.coursera.org/learn/machine-learning", "youtube_link": "https://www.youtube.com/results?search_query=Andrew+Ng+machine+learning"},
@@ -28,28 +24,86 @@ resources = [
     {"id": 16, "title": "AWS Getting Started", "subject": "Cloud Computing", "difficulty": "Easy", "article_link": "https://aws.amazon.com/getting-started/", "youtube_link": "https://www.youtube.com/results?search_query=AWS+getting+started"},
     {"id": 17, "title": "Azure Fundamentals learning path", "subject": "Cloud Computing", "difficulty": "Medium", "article_link": "https://learn.microsoft.com/en-us/training/paths/azure-fundamentals/", "youtube_link": "https://www.youtube.com/results?search_query=Azure+fundamentals+learning+path"},
     {"id": 18, "title": "CNCF Cloud Native Certified", "subject": "Cloud Computing", "difficulty": "Hard", "article_link": "https://www.cncf.io/certification/cka/", "youtube_link": "https://www.youtube.com/results?search_query=CNCF+cloud+native+certified"},
+    {"id": 19, "title": "Financial Markets", "subject": "Finance", "difficulty": "Easy", "article_link": "https://www.investopedia.com/terms/f/financial-market.asp", "youtube_link": "https://www.youtube.com/watch?v=Xh0y_M2D4Dk"},
+    {"id": 20, "title": "Introduction to Marketing", "subject": "Marketing", "difficulty": "Easy", "article_link": "https://www.ama.org/the-definition-of-marketing-what-is-marketing/", "youtube_link": "https://www.youtube.com/watch?v=D-t3yT1gQ9o"}
 ]
 
-def recommend(student_id):
-    student = next((s for s in students if s["id"] == student_id), None)
-    if not student: return []
-    recs = []
-    for subject, score in student["subjects"].items():
-        if score < 70:
-            recs += [r for r in resources if r["subject"] == subject and r["difficulty"] in ["Easy","Medium"]]
-        elif 70 <= score < 85:
-            recs += [r for r in resources if r["subject"] == subject]
-        else:
-            recs += [r for r in resources if r["subject"] == subject and r["difficulty"] in ["Medium","Hard"]]
-    return recs
+# Mapping of courses to their core subjects
+COURSE_SUBJECTS = {
+    "B.Tech": ["ML", "AI", "DSA", "DBMS", "Time Series", "Cloud Computing"],
+    "BBA": ["Finance", "Marketing", "Human Resources", "Business Strategy"],
+    "B.Sc. Finance": ["Finance", "Economics", "Statistics", "Derivatives", "Risk Management"],
+}
 
-async def select_subject_page(request: Request):
-    return templates.TemplateResponse("select_subject.html", {"request": request})
+# Mock database for existing students
+mock_students_db = {
+    "s1": {"id": "s1", "name": "Siddh Shah", "course": "B.Tech"},
+    "s2": {"id": "s2", "name": "Test Student", "course": "BBA"},
+}
 
-async def get_recommendations_by_subject(request: Request, student_id: str, subject_name: str):
-    student = next((s for s in students if s["id"] == student_id), None)
-    if not student:
-        return HTMLResponse("Student not found.", status_code=404)
-    subject_recs = [r for r in recommend(student_id) if r["subject"] == subject_name]
-    return templates.TemplateResponse("recommendations.html",
-        {"request": request, "student": student, "recommendations": subject_recs, "selected_subject": subject_name})
+def generate_student_data(student_id: str, course: str):
+    """
+    Generates a student profile with random scores based on their course.
+    """
+    subjects = COURSE_SUBJECTS.get(course, [])
+    if not subjects:
+        raise HTTPException(status_code=400, detail=f"Course '{course}' not found.")
+    
+    student_profile = {
+        "id": student_id,
+        "name": student_id.split('@')[0], # Use the email prefix as a name
+        "course": course,
+        "subjects": {subject: random.randint(50, 100) for subject in subjects}
+    }
+    return student_profile
+
+def get_recommendations_for_subject(student_id: str, subject: str):
+    """
+    Determines recommendations based on a student's score for a specific subject.
+    """
+    # Look up the student. If they don't exist, assume a course.
+    student_profile = mock_students_db.get(student_id)
+    course = student_profile["course"] if student_profile else "B.Tech"
+    
+    student_data = generate_student_data(student_id, course)
+    score = student_data["subjects"].get(subject)
+    
+    if score is None:
+        return []
+
+    if score < 70:
+        difficulties = ["Easy"]
+    elif 70 <= score < 85:
+        difficulties = ["Easy", "Medium"]
+    else:  # score >= 85
+        difficulties = ["Medium", "Hard"]
+
+    return [r for r in resources if r["subject"] == subject and r["difficulty"] in difficulties]
+
+async def select_subject_page(request: Request, student_id: str, templates: Jinja2Templates):
+    # If the student doesn't exist, a profile will be generated for them
+    student_profile = mock_students_db.get(student_id)
+    course = student_profile["course"] if student_profile else "B.Tech"
+    
+    student_data = generate_student_data(student_id, course)
+    
+    return templates.TemplateResponse("select_subject.html", {
+        "request": request,
+        "student_id": student_id,
+        "subjects": list(student_data["subjects"].keys())
+    })
+
+async def get_recommendations_page(request: Request, student_id: str, subject_name: str, templates: Jinja2Templates):
+    # If the student doesn't exist, a profile will be generated for them
+    student_profile = mock_students_db.get(student_id)
+    course = student_profile["course"] if student_profile else "B.Tech"
+    
+    student_data = generate_student_data(student_id, course)
+    subject_recs = get_recommendations_for_subject(student_id, subject_name)
+    
+    return templates.TemplateResponse("recommendations.html", {
+        "request": request, 
+        "student": student_data, 
+        "recommendations": subject_recs, 
+        "selected_subject": subject_name
+    })

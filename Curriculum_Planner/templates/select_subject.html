@@ -23,18 +23,32 @@
                 <label for="subjectSelect" class="form-label">Subject:</label>
                 <select id="subjectSelect" class="form-select">
                     <option value="">-- Select a Subject --</option>
-                    <option value="ML">ML</option>
-                    <option value="AI">AI</option>
-                    <option value="DSA">DSA</option>
-                    <option value="DBMS">DBMS</option>
-                    <option value="Time Series">Time Series</option>
-                    <option value="Cloud Computing">Cloud Computing</option>
+                    {% for subject in subjects %}
+                    <option value="{{ subject }}">{{ subject }}</option>
+                    {% endfor %}
                 </select>
             </div>
             <button type="button" class="btn btn-primary" onclick="goToRecommendations()">Get Recommendations</button>
         </div>
     </div>
-    <script src="/static/subject.js"></script>
-    <script src="/static/profile.js"></script>
+    <script>
+        // The student ID is passed correctly from the back end template
+        const studentId = "{{ student_id }}";
+        
+        function goBackToDashboard() {
+            // Correctly builds the URL with the student ID
+            window.location.href = `/dashboard?email=${studentId}`;
+        }
+
+        function goToRecommendations() {
+            const subject = document.getElementById('subjectSelect').value;
+            if (subject) {
+                // Correctly builds the URL for the next page
+                window.location.href = `/recommend/${studentId}/${subject}`;
+            } else {
+                alert("Please select a subject.");
+            }
+        }
+    </script>
 </body>
 </html>

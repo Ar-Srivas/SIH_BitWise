@@ -1,3 +1,4 @@
+// dashboard.js
 let userEmail = '';
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -20,15 +21,16 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         greeting.textContent = "Good evening!";
     }
-   // Setup quiz button
+    // Setup quiz button
     const quizButton = document.getElementById('take-quiz-btn');
     quizButton.onclick = function() {
         location.href = `/quiz?email=${userEmail}`;
     };
-     // Load user profile and quiz results
+    // Load user profile and quiz results
     loadQuizResults();
-    });
-    function loadQuizResults() {
+});
+
+function loadQuizResults() {
     fetch(`/api/profile?email=${userEmail}`)
     .then(response => response.json())
     .then(data => {
@@ -46,24 +48,26 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
         }
 
-            resultsHtml += '</div>';
-            quizResults.innerHTML = resultsHtml;
-        } else {
-            quizResults.innerHTML = `
-                <p class="no-results">
-                    You haven't taken any quizzes yet.
-                    <a href="/quiz?email=${userEmail}" style="color: var(--primary-color);">Take a quiz</a>
-                    to see your results here.
-                </p>
-            `;
-        }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('quiz-results').innerHTML =
-                        '<p class="error">Failed to load your results. Please try again later.</p>';
-                });
-        }
+        resultsHtml += '</div>';
+        quizResults.innerHTML = resultsHtml;
+    } else {
+        quizResults.innerHTML = `
+            <p class="no-results">
+                You haven't taken any quizzes yet.
+                <a href="/quiz?email=${userEmail}" style="color: var(--primary-color);">Take a quiz</a>
+                to see your results here.
+            </p>
+        `;
+    }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('quiz-results').innerHTML =
+            '<p class="error">Failed to load your results. Please try again later.</p>';
+    });
+}
+
+// All navigation functions are now correct and non-duplicated
 
 function goToProfile() {
     location.href = `/profile?email=${userEmail}`;
@@ -73,20 +77,12 @@ function signOut() {
     location.href = '/';
 }
 
-function goToProfile() {
-    location.href = `/profile?email=${userEmail}`;
-}
-
 function goToRecommendations() {
-    location.href = `/select_subject?email=${userEmail}`;
+    location.href = `/select_subject/${userEmail}`;
 }
 
 function goToSlotBooking() {
     location.href = `/slot_booking_students?email=${userEmail}`;
-}
-
-function signOut() {
-    location.href = '/';
 }
 
 function goToChatBot(){
