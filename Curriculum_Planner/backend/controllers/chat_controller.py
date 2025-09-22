@@ -3,7 +3,7 @@ import os
 from mistralai import Mistral
 from fastapi import FastAPI
 import serpapi
-
+from openai import OpenAI
 
 
 '''
@@ -18,9 +18,15 @@ load_dotenv()
 
 MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
 SERPAPI_API_KEY = os.getenv("SERPAPI_API_KEY")
+# OPENROUTER_API_KEY=os.getenv("OPENROUTER_API_KEY")
 model = "mistral-large-latest"
 
 client = Mistral(api_key=MISTRAL_API_KEY)
+
+# client = OpenAI(
+#   base_url="https://openrouter.ai/api/v1",
+#   api_key=OPENROUTER_API_KEY,
+# )
 
 # SerpApi search
 async def search_chat(user_message:str):
@@ -53,3 +59,20 @@ async def send_chat(search_result, user_message):
     )
     return chat_res.choices[0].message.content
 #print(organic_results)    #CRAZY OUTPUT HAI ISKA
+
+# async def send_chat(search_result, user_message):
+#     completion = client.chat.completions.create(
+#     model="openai/gpt-4o",
+#     messages=[
+#         {"role": "user",
+#             "content": f"""You are a expert counselor and have to guide students for their {user_message} and with the following current search : {search_result}
+#                         Answer to the point and be postive and motivating in your response. Do not mention the search in the answer.
+#                         If you are unable to find the answer then politely say that you are unable to find the answer.
+#                         Give some form of structured steps to achieve the stuedents goal.
+#                         Do not use markdown format
+#                         Do not include any emojis and make it formal.
+#                         Keep the answer concise on fluff and more on the data.
+#                         """}
+#             ]
+#             )
+#     print(completion.choices[0].message.content)
