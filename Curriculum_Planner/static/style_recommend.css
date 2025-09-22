@@ -1,250 +1,246 @@
-/* General Body and Main Layout */
+/* static/style_recommend.css */
+
+/* General Body Styling */
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #f8f9fa; /* Lighter background */
-    color: #495057;
+    background-color: #f0f2f5; /* Light gray background for the whole page */
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: flex-start; /* Align to top to prevent page jumping */
     min-height: 100vh;
+    box-sizing: border-box;
+    padding-top: 40px; /* Add some space from the top */
+    padding-bottom: 40px; /* Add some space from the bottom */
 }
 
+/* Main Container */
 .main-container {
-    width: 100%;
-    max-width: 960px; /* Slightly wider container */
-    padding: 40px 20px;
+    background-color: #ffffff; /* White background for the main content area */
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 30px;
+    width: 90%;
+    max-width: 900px;
+    text-align: center;
     box-sizing: border-box;
 }
 
-/* Header Styles */
+/* Header Styling */
 .header {
-    text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
 }
 
 .header-title {
-    font-size: 2.8rem;
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 10px;
     font-weight: 700;
-    color: #343a40;
-    margin-bottom: 0.5rem;
 }
 
 .header-subtitle {
-    font-size: 1.1rem;
-    font-weight: 400;
-    color: #6c757d;
+    font-size: 1.1em;
+    color: #666;
     margin-top: 0;
 }
 
-.header-title span {
-    color: #007bff; /* Primary blue color */
-}
-
-/* Card Styles */
+/* Card Styling (General for subject selection and recommendations) */
 .card {
-    background-color: #ffffff;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); /* More subtle shadow */
-    text-align: center;
+    background-color: #fff; /* White background for cards */
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
 }
 
 .card-title {
-    font-size: 2rem;
-    font-weight: 600;
-    color: #343a40;
-    margin-top: 0;
+    font-size: 1.8em;
+    color: #333;
     margin-bottom: 10px;
+    font-weight: 600;
 }
 
 .card-subtitle {
-    font-size: 1rem;
-    color: #6c757d;
-    margin-bottom: 30px;
+    font-size: 1em;
+    color: #777;
+    margin-bottom: 20px;
 }
 
-/* Form Styles */
-.form-group {
-    margin-bottom: 25px;
-}
-
-.form-label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: 500;
-    color: #495057;
-}
-
-.form-select {
-    width: 100%;
-    max-width: 350px;
-    padding: 12px 15px;
-    border-radius: 8px;
-    border: 1px solid #ced4da;
-    font-size: 1rem;
-    background-color: #f1f3f5;
-    color: #495057;
-    transition: all 0.3s ease;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23666%22%20d%3D%22M287%20197.8L154.2%2065c-6.2-6.2-16.4-6.2-22.6%200L5.4%20197.8c-6.2%206.2-6.2%2016.4%200%2022.6l9.6%209.6c6.2%206.2%2016.4%206.2%2022.6%200l94.6-94.6l94.6%2094.6c6.2%206.2%2016.4%206.2%2022.6%200l9.6-9.6c6.2-6.2%206.2-16.4%200-22.6z%22%2F%3E%3C%2Fsvg%3E');
-    background-repeat: no-repeat;
-    background-position: right 15px center;
-    background-size: 10px;
-    cursor: pointer;
-}
-
-.form-select:hover {
-    border-color: #a4b0be;
-}
-
-.form-select:focus {
-    outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
-}
-
-/* Button Styles */
-.btn {
-    padding: 12px 30px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    text-align: center;
-    border: none;
-}
-
+/* Button Styling */
 .btn-primary {
-    background-color: #007bff;
-    color: #fff;
-    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+    background-color: #007bff; /* Blue */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 5px; /* Add margin for spacing between buttons */
 }
 
 .btn-primary:hover {
     background-color: #0056b3;
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(0, 123, 255, 0.3);
 }
 
-.btn-secondary {
-    background-color: #e9ecef;
-    color: #495057;
-    border: 1px solid #dee2e6;
-    margin: 0 5px;
+/* Header Actions (for buttons at the top) */
+.header-actions {
+    display: flex; /* Use flexbox for horizontal alignment */
+    justify-content: flex-end; /* Align to the right */
+    gap: 10px; /* Space between buttons */
+    margin-bottom: 20px;
 }
 
-.btn-secondary:hover {
-    background-color: #dae0e5;
-    transform: translateY(-1px);
+/* Form Group Styling */
+.form-group {
+    margin-bottom: 20px;
 }
 
-/* Recommendations Section */
-.recommendations-section {
-    margin-bottom: 30px;
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 500;
 }
 
-.section-title {
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: #343a40;
-    text-align: center;
-    margin-bottom: 30px;
+.form-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    color: #333;
+    background-color: #f9f9f9;
+    box-sizing: border-box; /* Include padding in width calculation */
 }
 
-.resource-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 25px;
+/* Recommendations List */
+.resources-list {
+    margin-top: 30px;
+    display: grid; /* Use grid for a clean layout of resources */
+    gap: 25px; /* Space between resource items */
+    text-align: left; /* Align text within resource items */
 }
 
-.resource-card {
-    background-color: #ffffff;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+.resource-item {
+    /* Removed background-color: #f9ff; */
+    background-color: #fdfdfd; /* A very light off-white for subtle distinction */
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease;
 }
 
-.resource-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+.resource-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
 }
 
-.resource-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #343a40;
+.resource-item h3 {
+    font-size: 1.4em;
+    color: #007bff; /* Blue for titles */
     margin-top: 0;
     margin-bottom: 10px;
-}
-
-.resource-details {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-}
-
-.detail-badge {
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: #fff;
-    white-space: nowrap;
-}
-
-.subject-badge {
-    background-color: #007bff;
-}
-
-.difficulty-badge {
-    background-color: #28a745;
-}
-
-.btn-group {
-    display: flex;
-    justify-content: flex-start;
-    gap: 10px;
-    margin-top: auto;
-}
-
-/* Empty State Message */
-.empty-message {
-    text-align: center;
-    color: #adb5bd;
-    font-size: 1.1rem;
-    margin-top: 50px;
-}
-
-/* Back Link */
-.back-link-container {
-    text-align: center;
-    margin-top: 40px;
-}
-
-.back-link {
-    display: inline-flex;
-    align-items: center;
-    font-size: 1rem;
     font-weight: 600;
-    color: #007bff;
+}
+
+.resource-item p {
+    font-size: 0.95em;
+    color: #555;
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.resource-item strong {
+    color: #333;
+}
+
+.resource-links {
+    margin-top: 15px;
+    display: flex; /* Arrange links horizontally */
+    gap: 10px; /* Space between links */
+}
+
+.resource-btn {
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: 5px;
     text-decoration: none;
-    transition: color 0.3s ease;
+    font-weight: 500;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.back-link:hover {
-    color: #0056b3;
+.article-btn {
+    background-color: #28a745; /* Green */
+    color: white;
 }
 
-.back-link .arrow {
-    margin-right: 8px;
-    font-size: 1.2rem;
+.article-btn:hover {
+    background-color: #218838;
+}
+
+.youtube-btn {
+    background-color: #dc3545; /* Red */
+    color: white;
+}
+
+.youtube-btn:hover {
+    background-color: #c82333;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .main-container {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .header-title {
+        font-size: 2em;
+    }
+
+    .card-title {
+        font-size: 1.5em;
+    }
+
+    .header-actions {
+        flex-direction: column; /* Stack buttons vertically on small screens */
+        align-items: stretch; /* Stretch buttons to full width */
+        gap: 8px;
+    }
+
+    .btn-primary {
+        margin: 0; /* Remove horizontal margin when stacked */
+        width: 100%;
+    }
+
+    .resources-list {
+        grid-template-columns: 1fr; /* Single column layout for resources */
+    }
+}
+
+@media (max-width: 480px) {
+    .header-title {
+        font-size: 1.8em;
+    }
+
+    .header-subtitle {
+        font-size: 0.9em;
+    }
+
+    .card-title {
+        font-size: 1.3em;
+    }
+
+    .resource-btn {
+        padding: 6px 12px;
+        font-size: 0.85em;
+    }
 }

@@ -3,48 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Recommendations</title>
+    <title>Recommendations</title>
     <link rel="stylesheet" href="/static/style_recommend.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="main-container">
         <header class="header">
-            <h1 class="header-title">Recommended Resources for <span>{{ student.name }}</span></h1>
-            <p class="header-subtitle">{{ student.course }}</p>
+            <h1 class="header-title">Student Recommendation System</h1>
+            <p class="header-subtitle">Tailored Resources for You</p>
         </header>
-
-        <div class="recommendations-section">
+        <div class="card recommendations-card">
             <div class="header-actions">
                 <button onclick="goBackToDashboard()" class="btn-primary">Back to Dashboard</button>
+                <button onclick="goBackToSelection()" class="btn-primary">Back to Selection Page</button>
             </div>
-            <h2 class="section-title">Resources for {{ selected_subject }}</h2>
-            {% if recommendations %}
-                <div class="resource-grid">
-                    {% for rec in recommendations %}
-                    <div class="resource-card">
-                        <h3 class="resource-title">{{ rec.title }}</h3>
-                        <div class="resource-details">
-                            <span class="detail-badge subject-badge">{{ rec.subject }}</span>
-                            <span class="detail-badge difficulty-badge">{{ rec.difficulty }}</span>
+            <h2 class="card-title">Recommendations for {{ selected_subject }}</h2>
+            
+            {% if recommendations.Easy or recommendations.Medium or recommendations.Difficult %}
+                {% for difficulty, recs in recommendations.items() %}
+                    {% if recs %}
+                        <h3 class="difficulty-heading">{{ difficulty }}</h3>
+                        <div class="resources-list">
+                            {% for rec in recs %}
+                            <div class="resource-item">
+                                <h3>{{ rec.title }}</h3>
+                                <p><strong>Subject:</strong> {{ rec.subject }}</p>
+                                <p><strong>Difficulty:</strong> {{ rec.difficulty }}</p>
+                                <div class="resource-links">
+                                    <a href="{{ rec.article_link }}" target="_blank" class="resource-btn article-btn">Article</a>
+                                    <a href="{{ rec.youtube_link }}" target="_blank" class="resource-btn youtube-btn">YouTube</a>
+                                </div>
+                            </div>
+                            {% endfor %}
                         </div>
-                        <div class="btn-group">
-                            <a href="{{ rec.article_link }}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Article</a>
-                            <a href="{{ rec.youtube_link }}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">YT</a>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
+                    {% endif %}
+                {% endfor %}
             {% else %}
-                <p class="empty-message">No recommendations available for this subject.</p>
+            <p>No recommendations found for this subject.</p>
             {% endif %}
         </div>
-
-        <div class="back-link-container">
-            <a href="/" class="back-link">
-                <span class="arrow">←</span> Back to Subject Selection
-            </a>
-        </div>
     </div>
+    <script>
+        const studentId = "{{ student.id }}";
+        
+        function goBackToDashboard() {
+            window.location.href = `/dashboard?email=${studentId}`;
+        }
+        
+        function goBackToSelection() {
+            window.location.href = `/select_subject/${studentId}`;
+        }
+    </script>
 </body>
 </html>
