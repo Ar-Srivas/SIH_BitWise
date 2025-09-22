@@ -2,83 +2,72 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Simple Chat</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    #chat { border: 1px solid #ccc; padding: 10px; height: 300px; width: 300px; overflow-y: auto; }
-    .message { margin: 5px 0; }
-    .user { color: blue; }
-    .bot { color: green; }
-    #inputForm { margin-top: 10px; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduHelp Pro - AI Assistant</title>
+  <link rel="stylesheet" href="/static/chat.css">
 </head>
 <body>
-    <header class="main-header">
-        <div class="header-content">
-            <div class="logo">
-                <div class="logo-icon">EH</div>
-                <span class="logo-text">EduHelp Pro</span>
-            </div>
-            <nav class="nav-links">
-                <button onclick="signOut()" class="btn-danger">Sign Out</button>
-            </nav>
+  <header class="main-header">
+    <div class="header-content">
+      <div class="logo">
+        <div class="logo-icon">EH</div>
+        <span class="logo-text">EduHelp Pro</span>
+      </div>
+      <nav class="nav-links">
+        <button onclick="signOut()" class="btn-danger">Sign Out</button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="chat-container">
+    <div class="chat-messages" id="chatMessages">
+      <div class="welcome-container" id="welcomeContainer">
+        <div class="welcome-icon">🤖</div>
+        <h1 class="welcome-title">Welcome to EduHelp Pro</h1>
+        <p class="welcome-subtitle">How can I assist you with your learning today?</p>
+        <div class="welcome-suggestions">
+          <div class="suggestion-card" onclick="sendSuggestion('Explain quantum physics concepts')">
+            <div class="suggestion-title">📚 Study Help</div>
+            <div class="suggestion-text">Explain quantum physics concepts</div>
+          </div>
+          <div class="suggestion-card" onclick="sendSuggestion('Help me solve this math problem')">
+            <div class="suggestion-title">🧮 Math Assistance</div>
+            <div class="suggestion-text">Help me solve this math problem</div>
+          </div>
+          <div class="suggestion-card" onclick="sendSuggestion('Create a study schedule for finals')">
+            <div class="suggestion-title">📅 Study Planning</div>
+            <div class="suggestion-text">Create a study schedule for finals</div>
+          </div>
+          <div class="suggestion-card" onclick="sendSuggestion('Review my essay for grammar')">
+            <div class="suggestion-title">✍️ Writing Help</div>
+            <div class="suggestion-text">Review my essay for grammar</div>
+          </div>
         </div>
-    </header>
-<h3>Simple Chat</h3>
-<div id="chat"></div>
+      </div>
+    </div>
 
-<form id="inputForm">
-  <input type="text" id="userInput" placeholder="Type a message" autocomplete="off" style="width: 200px;">
-  <button type="submit">Send</button>
-</form>
+    <div class="input-area">
+      <div class="input-container">
+        <form class="input-form" id="inputForm">
+          <div class="input-wrapper">
+            <textarea
+              class="message-input"
+              id="userInput"
+              placeholder="Send a message..."
+              rows="1"
+              autocomplete="off"
+            ></textarea>
+            <button type="submit" class="send-button" id="sendButton">
+              <svg class="send-icon" viewBox="0 0 24 24">
+                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+              </svg>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
-<script>
-  const chat = document.getElementById('chat');
-  const inputForm = document.getElementById('inputForm');
-  const userInput = document.getElementById('userInput');
-
-  function appendMessage(sender, text) {
-    const msg = document.createElement('div');
-    msg.className = 'message ' + sender;
-    msg.textContent = text;
-    chat.appendChild(msg);
-    chat.scrollTop = chat.scrollHeight; // scroll to bottom
-  }
-
-  inputForm.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const text = userInput.value.trim();
-    if (!text) return;
-
-    appendMessage('user', text);
-    userInput.value = '';
-
-    // Show loading message
-    appendMessage('bot', 'Thinking...');
-
-    try {
-      // Connect to your backend chat API
-      const response = await fetch('/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user_message: text })
-      });
-
-      const data = await response.json();
-
-      // Remove the "Thinking..." message
-      chat.removeChild(chat.lastChild);
-
-      // Add the actual bot response
-      appendMessage('bot', data.response);
-    } catch (error) {
-      // Remove the "Thinking..." message
-      chat.removeChild(chat.lastChild);
-      appendMessage('bot', 'Sorry, there was an error processing your request.');
-      console.error('Chat error:', error);
-    }
-  });
-</script>
-
+  <script src='/static/chat.js'></script>
 </body>
 </html>

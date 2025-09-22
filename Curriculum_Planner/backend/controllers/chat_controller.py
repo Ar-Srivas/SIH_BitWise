@@ -54,6 +54,7 @@ async def send_chat(search_result, user_message):
                         Do not use markdown format
                         Do not include any emojis and make it formal.
                         Keep the answer concise on fluff and more on the data.
+                        Restrict your answers down to 500 to 600 words.
                         """}
         ]
     )
