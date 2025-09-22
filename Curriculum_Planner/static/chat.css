@@ -513,3 +513,128 @@
   ::selection {
     background: rgba(102, 126, 234, 0.2);
   }
+
+/* Enhanced Mermaid diagram styles for different types */
+.mermaid-container {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 15px 0;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    overflow-x: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    animation: diagramSlideIn 0.6s ease forwards;
+  }
+
+  /* Specific styles for different diagram types */
+  .timeline-diagram {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-left: 4px solid #667eea;
+  }
+
+  .journey-diagram {
+    background: linear-gradient(135deg, #fef7ff 0%, #f3e8ff 100%);
+    border-left: 4px solid #8b5cf6;
+  }
+
+  .mindmap-diagram {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    border-left: 4px solid #22c55e;
+    border-radius: 20px;
+  }
+
+  .flowchart-diagram {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border-left: 4px solid #3b82f6;
+  }
+
+  .comparison-diagram {
+    background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%);
+    border-left: 4px solid #f59e0b;
+  }
+
+  /* Enhanced hover effects for different types */
+  .timeline-diagram:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+  }
+
+  .journey-diagram:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.15);
+  }
+
+  .mindmap-diagram:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(34, 197, 94, 0.15);
+  }
+
+  .flowchart-diagram:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+  }
+
+  /* Enhanced error styling */
+  .diagram-error {
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 10px;
+    border-radius: 6px;
+    border-left: 4px solid #ef4444;
+  }
+
+  /* Dark mode enhancements */
+  @media (prefers-color-scheme: dark) {
+    .timeline-diagram {
+      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    }
+
+    .journey-diagram {
+      background: linear-gradient(135deg, #2d1b69 0%, #4c1d95 100%);
+    }
+
+    .mindmap-diagram {
+      background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+    }
+
+    .flowchart-diagram {
+      background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+    }
+  }
+
+  /* Responsive diagram adjustments */
+  @media (max-width: 768px) {
+    .mermaid-container {
+      margin: 16px 0;
+      padding: 16px;
+      border-radius: 8px;
+    }
+
+    .mermaid-container svg {
+      font-size: 11px;
+      max-width: 100%;
+    }
+  }
+
+  .typing-dots {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .typing-dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #667eea;
+    animation: typing 1.4s infinite ease-in-out;
+  }
+
+  .typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+  .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+  @keyframes typing {
+    0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+    40% { transform: scale(1); opacity: 1; }
+  }
