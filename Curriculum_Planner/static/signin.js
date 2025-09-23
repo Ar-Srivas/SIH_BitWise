@@ -1,19 +1,11 @@
-const loginBtn = document.querySelector(".login");
-const signupBtn = document.querySelector(".signup");
-const formSection = document.querySelector(".form-section");
-const slider = document.querySelector(".slider");
+const signUpButton = document.getElementById('signUp');
+const signInButton = document.getElementById('signIn');
+const container = document.getElementById('container');
 
-// Initially show login form
-loginBtn.classList.add("active");
-loginBtn.addEventListener("click", () => {
-formSection.classList.remove("move");
-slider.classList.remove("move");
-loginBtn.classList.add("active");
-    signupBtn.classList.remove("active");
+signUpButton.addEventListener('click', () => {
+	container.classList.add("right-panel-active");
 });
-signupBtn.addEventListener("click", () => {
-formSection.classList.add("move");
-slider.classList.add("move");
-signupBtn.classList.add("active");
-loginBtn.classList.remove("active");
+
+signInButton.addEventListener('click', () => {
+	container.classList.remove("right-panel-active");
 });

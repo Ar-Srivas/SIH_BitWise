@@ -4,67 +4,77 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EduHelp Pro - AI Assistant</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/static/chat.css">
 </head>
-<body>
-  <header class="main-header">
-    <div class="header-content">
-      <div class="logo">
-        <div class="logo-icon">EH</div>
-        <span class="logo-text">EduHelp Pro</span>
-      </div>
-      <nav class="nav-links">
-        <button onclick="signOut()" class="btn-danger">Sign Out</button>
-      </nav>
+<body class="bg-gray-100 dark:bg-gray-900 dark:text-white text-gray-600 h-screen flex flex-col">
+
+  <!-- Header / Top Navigation -->
+  <header class="h-16 bg-white dark:bg-gray-900 dark:border-gray-800 border-b border-gray-200 flex items-center justify-between px-6">
+    <div class="flex items-center space-x-3">
+      <div class="logo-icon text-2xl font-bold w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center">EH</div>
+      <span class="text-xl font-semibold text-gray-900 dark:text-white">EduHelp Pro</span>
     </div>
+    <button onclick="signOut()" class="text-gray-600 dark:text-gray-400 hover:text-red-500 flex items-center">
+      <span>Sign Out</span>
+      <svg viewBox="0 0 24 24" class="w-4 ml-1 flex-shrink-0" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+        <polyline points="16 17 21 12 16 7"></polyline>
+        <line x1="21" y1="12" x2="9" y2="12"></line>
+      </svg>
+    </button>
   </header>
 
-  <div class="chat-container">
-    <div class="chat-messages" id="chatMessages">
-      <div class="welcome-container" id="welcomeContainer">
-        <div class="welcome-icon">🤖</div>
-        <h1 class="welcome-title">Welcome to EduHelp Pro</h1>
-        <p class="welcome-subtitle">How can I assist you with your learning today?</p>
-        <div class="welcome-suggestions">
-          <div class="suggestion-card" onclick="sendSuggestion('Explain quantum physics concepts')">
-            <div class="suggestion-title">Study Help</div>
-            <div class="suggestion-text">Explain quantum physics concepts</div>
+  <!-- Chat Content -->
+  <div class="flex-grow flex flex-col overflow-hidden">
+    <div class="flex-grow overflow-y-auto p-6">
+
+      <!-- Welcome Section -->
+      <div id="welcomeContainer" class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-6 text-center">
+        <div class="text-4xl mb-4">🤖</div>
+        <h1 class="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Welcome to EduHelp Pro</h1>
+        <p class="text-gray-600 dark:text-gray-400 mb-6">How can I assist you with your learning today?</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="bg-blue-100 dark:bg-blue-900 p-4 rounded-lg cursor-pointer hover:shadow-md transition" onclick="sendSuggestion('Explain quantum physics concepts')">
+            <h3 class="font-medium text-blue-700 dark:text-blue-300 mb-1">Study Help</h3>
+            <p class="text-gray-700 dark:text-gray-300 text-sm">Explain quantum physics concepts</p>
           </div>
-          <div class="suggestion-card" onclick="sendSuggestion('Help me solve this math problem')">
-            <div class="suggestion-title">Math Assistance</div>
-            <div class="suggestion-text">Help me solve this math problem</div>
+          <div class="bg-green-100 dark:bg-green-900 p-4 rounded-lg cursor-pointer hover:shadow-md transition" onclick="sendSuggestion('Help me solve this math problem')">
+            <h3 class="font-medium text-green-700 dark:text-green-300 mb-1">Math Assistance</h3>
+            <p class="text-gray-700 dark:text-gray-300 text-sm">Help me solve this math problem</p>
           </div>
-          <div class="suggestion-card" onclick="sendSuggestion('Create a study schedule for finals')">
-            <div class="suggestion-title">Study Planning</div>
-            <div class="suggestion-text">Create a study schedule for finals</div>
+          <div class="bg-purple-100 dark:bg-purple-900 p-4 rounded-lg cursor-pointer hover:shadow-md transition" onclick="sendSuggestion('Create a study schedule for finals')">
+            <h3 class="font-medium text-purple-700 dark:text-purple-300 mb-1">Study Planning</h3>
+            <p class="text-gray-700 dark:text-gray-300 text-sm">Create a study schedule for finals</p>
           </div>
-          <div class="suggestion-card" onclick="sendSuggestion('Review my essay for grammar')">
-            <div class="suggestion-title">Writing Help</div>
-            <div class="suggestion-text">Review my essay for grammar</div>
+          <div class="bg-orange-100 dark:bg-orange-900 p-4 rounded-lg cursor-pointer hover:shadow-md transition" onclick="sendSuggestion('Review my essay for grammar')">
+            <h3 class="font-medium text-orange-700 dark:text-orange-300 mb-1">Writing Help</h3>
+            <p class="text-gray-700 dark:text-gray-300 text-sm">Review my essay for grammar</p>
           </div>
         </div>
       </div>
+
+      <!-- Chat Messages -->
+      <div id="chatMessages" class="flex flex-col space-y-4"></div>
+
     </div>
 
-    <div class="input-area">
-      <div class="input-container">
-        <form class="input-form" id="inputForm">
-          <div class="input-wrapper">
-            <textarea
-              class="message-input"
-              id="userInput"
-              placeholder="Send a message..."
-              rows="1"
-              autocomplete="off"
-            ></textarea>
-            <button type="submit" class="send-button" id="sendButton">
-              <svg class="send-icon" viewBox="0 0 24 24">
-                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-              </svg>
-            </button>
-          </div>
-        </form>
-      </div>
+    <!-- Input Area -->
+    <div class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 p-4 flex items-center">
+      <form id="inputForm" class="flex flex-grow">
+        <textarea
+          id="userInput"
+          class="flex-grow resize-none border border-gray-300 dark:border-gray-700 rounded-md px-3 py-2 text-gray-900 dark:text-white bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Send a message..."
+          rows="1"
+          autocomplete="off"
+        ></textarea>
+        <button type="submit" class="ml-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md flex items-center">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+        </button>
+      </form>
     </div>
   </div>
 
