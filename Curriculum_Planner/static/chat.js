@@ -5,209 +5,213 @@ const userInput = document.getElementById('userInput');
 const sendButton = document.getElementById('sendButton');
 let isThinking = false;
 
-// Initialize Mermaid with proper configuration
-mermaid.initialize({
-  startOnLoad: false,
-  theme: 'default',
-  themeVariables: {
-    primaryColor: '#667eea',
-    primaryTextColor: '#374151',
-    primaryBorderColor: '#667eea',
-    lineColor: '#6b7280',
-    sectionBkgColor: '#f8fafc',
-    altSectionBkgColor: '#e2e8f0',
-    gridColor: '#e5e7eb',
-    tertiaryColor: '#f1f5f9',
-    background: '#ffffff',
-    secondaryColor: '#f3f4f6',
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-  },
-  flowchart: {
-    htmlLabels: true,
-    curve: 'basis',
-    padding: 15
-  }
-});
-
 // Auto-resize textarea
-userInput.addEventListener('input', function() {
-  this.style.height = 'auto';
-  this.style.height = Math.min(this.scrollHeight, 120) + 'px';
-});
+if (userInput) {
+    userInput.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+    });
+}
 
 function addMessage(sender, content) {
-  const messageDiv = document.createElement('div');
-  messageDiv.className = `message ${sender}`;
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${sender}`;
 
-  if (sender === 'user') {
-    messageDiv.textContent = content;
-    chatMessages.appendChild(messageDiv);
-  } else {
-    // For bot messages, process mermaid diagrams
-    renderMermaidContent(messageDiv, content);
-  }
+    // Create message header
+    const header = document.createElement('div');
+    header.className = 'message-header';
 
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-}
+    const avatar = document.createElement('div');
+    avatar.className = 'message-avatar';
+    avatar.textContent = sender === 'user' ? 'U' : 'AI';
+    header.appendChild(avatar);
 
-async function renderMermaidContent(element, content) {
-  const mermaidRegex = /```mermaid\n([\s\S]*?)\n```/g;
-  let processedContent = content;
-  const matches = [...content.matchAll(mermaidRegex)];
+    const senderLabel = document.createElement('div');
+    senderLabel.className = 'message-sender';
+    senderLabel.textContent = sender === 'user' ? 'You' : 'EduHelp Pro';
+    header.appendChild(senderLabel);
 
-  if (matches.length > 0) {
-    for (let i = 0; i < matches.length; i++) {
-      const fullMatch = matches[i][0];
-      const mermaidCode = matches[i][1];
-      const diagramId = `mermaid-diagram-${Date.now()}-${i}`;
+    messageDiv.appendChild(header);
 
-      try {
-        const { svg } = await mermaid.render(diagramId, mermaidCode);
-        const diagramType = detectDiagramType(mermaidCode);
-        const diagramContainer = `<div class="mermaid-container ${diagramType}-diagram">${svg}</div>`;
-        processedContent = processedContent.replace(fullMatch, diagramContainer);
-      } catch (error) {
-        console.error('Mermaid render error:', error);
-        processedContent = processedContent.replace(fullMatch,
-          `<div class="code-block diagram-error">Diagram could not be rendered</div>`);
-      }
+    // Create content
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'message-content';
+
+    if (sender === 'user') {
+        contentDiv.textContent = content;
+    } else {
+        // For bot messages, process HTML content and handle diagrams
+        contentDiv.innerHTML = content.replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
+
+        // Handle Kroki diagrams
+        setTimeout(() => {
+            const krokiImages = contentDiv.querySelectorAll('.kroki-diagram img');
+            krokiImages.forEach((img, index) => {
+                img.style.opacity = '0.6';
+                img.style.transition = 'opacity 0.3s ease';
+
+                img.onload = function() {
+                    console.log(`Diagram ${index + 1} loaded successfully`);
+                    this.style.opacity = '1';
+                };
+
+                img.onerror = function() {
+                    console.error(`Failed to load diagram ${index + 1}`);
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'diagram-error';
+                    errorDiv.innerHTML = '⚠️ Diagram could not be loaded';
+                    this.parentElement.replaceChild(errorDiv, this);
+                };
+
+                setTimeout(() => {
+                    if (!img.complete) {
+                        img.onerror();
+                    }
+                }, 10000);
+            });
+        }, 100);
     }
-  }
 
-  // Format the text content with proper line breaks
-  processedContent = processedContent.replace(/\n/g, '<br>');
-  element.innerHTML = processedContent;
-  chatMessages.appendChild(element);
-
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-function detectDiagramType(mermaidCode) {
-  const code = mermaidCode.toLowerCase().trim();
-
-  if (code.startsWith('flowchart') || code.startsWith('graph')) {
-    return 'flowchart';
-  } else if (code.startsWith('timeline')) {
-    return 'timeline';
-  } else if (code.startsWith('journey')) {
-    return 'journey';
-  } else if (code.startsWith('mindmap')) {
-    return 'mindmap';
-  } else if (code.startsWith('sequencediagram') || code.startsWith('sequenceDiagram')) {
-    return 'sequence';
-  } else if (code.startsWith('classDiagram')) {
-    return 'class';
-  } else if (code.startsWith('stateDiagram')) {
-    return 'state';
-  } else if (code.startsWith('pie')) {
-    return 'pie';
-  } else if (code.startsWith('gantt')) {
-    return 'gantt';
-  }
-
-  return 'flowchart';
+    messageDiv.appendChild(contentDiv);
+    chatMessages.appendChild(messageDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
 function showTypingIndicator() {
-  if (isThinking) return;
+    if (isThinking) return;
 
-  isThinking = true;
-  const typingDiv = document.createElement('div');
-  typingDiv.className = 'message bot typing';
-  typingDiv.id = 'typing-indicator';
-  typingDiv.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
-  chatMessages.appendChild(typingDiv);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
+    isThinking = true;
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'message bot';
+    typingDiv.id = 'typing-indicator';
+
+    // Create header for typing indicator
+    const header = document.createElement('div');
+    header.className = 'message-header';
+
+    const avatar = document.createElement('div');
+    avatar.className = 'message-avatar';
+    avatar.textContent = 'AI';
+    header.appendChild(avatar);
+
+    const senderLabel = document.createElement('div');
+    senderLabel.className = 'message-sender';
+    senderLabel.textContent = 'EduHelp Pro';
+    header.appendChild(senderLabel);
+
+    typingDiv.appendChild(header);
+
+    // Create content with typing dots
+    const content = document.createElement('div');
+    content.className = 'message-content';
+    content.innerHTML = '<div class="thinking-indicator"><span>Thinking</span><div class="thinking-dots"><div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div></div></div>';
+    typingDiv.appendChild(content);
+
+    chatMessages.appendChild(typingDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
 function hideTypingIndicator() {
-  const typingIndicator = document.getElementById('typing-indicator');
-  if (typingIndicator) {
-    typingIndicator.remove();
-  }
-  isThinking = false;
+    const typingIndicator = document.getElementById('typing-indicator');
+    if (typingIndicator) {
+        typingIndicator.remove();
+    }
+    isThinking = false;
 }
 
 function sendSuggestion(suggestion) {
-  if (welcomeContainer) {
-    welcomeContainer.style.display = 'none';
-  }
-  sendMessage(suggestion);
+    if (welcomeContainer) {
+        welcomeContainer.style.display = 'none';
+    }
+    sendMessage(suggestion);
 }
 
 async function sendMessage(message) {
-  if (isThinking) return;
+    if (isThinking) return;
 
-  const text = message || userInput.value.trim();
-  if (!text) return;
+    const text = message || (userInput ? userInput.value.trim() : '');
+    if (!text) return;
 
-  // Hide welcome container if it exists
-  if (welcomeContainer) {
-    welcomeContainer.style.display = 'none';
-  }
-
-  // Add user message
-  addMessage('user', text);
-
-  // Clear input
-  if (!message) {
-    userInput.value = '';
-  }
-
-  // Show typing indicator
-  showTypingIndicator();
-
-  try {
-    const response = await fetch('/chat', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ user_message: text })
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    // Hide welcome container
+    if (welcomeContainer) {
+        welcomeContainer.style.display = 'none';
     }
 
-    const data = await response.json();
+    // Add user message
+    addMessage('user', text);
 
-    // Hide typing indicator
-    hideTypingIndicator();
+    // Clear input
+    if (!message && userInput) {
+        userInput.value = '';
+        userInput.style.height = 'auto';
+    }
 
-    // Add bot response
-    addMessage('bot', data.response);
+    // Show typing indicator
+    showTypingIndicator();
 
-  } catch (error) {
-    console.error('Chat error:', error);
-    hideTypingIndicator();
-    addMessage('bot', 'Sorry, I encountered an error. Please try again.');
-  }
+    try {
+        const response = await fetch('/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ user_message: text })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        hideTypingIndicator();
+
+        if (data.response) {
+            addMessage('bot', data.response);
+        } else {
+            addMessage('bot', 'Sorry, I received an empty response. Please try again.');
+        }
+
+    } catch (error) {
+        console.error('Chat error:', error);
+        hideTypingIndicator();
+        addMessage('bot', 'Sorry, I encountered an error. Please try again.');
+    }
 }
 
 function signOut() {
-  window.location.href = '/';
+    window.location.href = '/';
 }
 
-// Event listeners
+// Event listeners with null checks
 if (inputForm) {
-  inputForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    sendMessage();
-  });
+    inputForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        sendMessage();
+    });
 }
 
 if (userInput) {
-  userInput.addEventListener('keypress', function(e) {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
-  });
+    userInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+        }
+    });
 }
 
 if (sendButton) {
-  sendButton.addEventListener('click', function() {
-    sendMessage();
-  });
+    sendButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        sendMessage();
+    });
 }
+
+// Debug: Log when script loads
+console.log('Chat.js loaded successfully');
+console.log('Elements found:', {
+    chatMessages: !!chatMessages,
+    welcomeContainer: !!welcomeContainer,
+    inputForm: !!inputForm,
+    userInput: !!userInput,
+    sendButton: !!sendButton
+});
