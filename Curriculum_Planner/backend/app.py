@@ -5,7 +5,10 @@ from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from backend.db import Base, engine, SessionLocal
 from backend.models import User
-from backend.routers import auth_routes, student_routes, quiz_routes, slot_routes, recommend_routes, chat_routes
+from backend.routers import (
+    auth_routes, student_routes, quiz_routes, 
+    slot_routes, recommend_routes, chat_routes, prediction_routes
+)
 
 app = FastAPI()
 Base.metadata.create_all(bind=engine)
@@ -27,6 +30,7 @@ app.include_router(slot_routes.router)
 # THIS LINE IS THE FIX. IT CALLS THE FUNCTION.
 app.include_router(recommend_routes.create_router(templates))
 app.include_router(chat_routes.router)
+app.include_router(prediction_routes.router)
 
 @app.on_event("startup")
 def seed_data():
@@ -65,3 +69,7 @@ def slot_booking_students(request: Request):
 @app.get("/chat", response_class=HTMLResponse)
 async def chat_page(request: Request):
     return templates.TemplateResponse("dummy_chat.html", {"request": request})
+
+@app.get("/predict", response_class=HTMLResponse)
+def predict(request: Request):
+    return templates.TemplateResponse("prediction.html", {"request": request})
