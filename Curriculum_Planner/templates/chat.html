@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduHelp Pro - AI Assistant</title>
+  <link rel="stylesheet" href="/static/chat.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-content">
+      <div class="logo">
+        <div class="logo-icon">EH</div>
+        <span class="logo-text">EduHelp Pro</span>
+      </div>
+      <nav class="nav-links">
+        <button onclick="signOut()" class="btn-danger">Sign Out</button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="chat-container">
+    <div class="chat-messages" id="chatMessages">
+      <div class="welcome-container" id="welcomeContainer">
+        <div class="welcome-icon">🤖</div>
+        <h1 class="welcome-title">Welcome to EduHelp Pro</h1>
+        <p class="welcome-subtitle">How can I assist you with your learning today?</p>
+        <div class="welcome-suggestions">
+          <div class="suggestion-card" onclick="sendSuggestion('Explain quantum physics concepts')">
+            <div class="suggestion-title">📚 Study Help</div>
+            <div class="suggestion-text">Explain quantum physics concepts</div>
+          </div>
+          <div class="suggestion-card" onclick="sendSuggestion('Help me solve this math problem')">
+            <div class="suggestion-title">🧮 Math Assistance</div>
+            <div class="suggestion-text">Help me solve this math problem</div>
+          </div>
+          <div class="suggestion-card" onclick="sendSuggestion('Create a study schedule for finals')">
+            <div class="suggestion-title">📅 Study Planning</div>
+            <div class="suggestion-text">Create a study schedule for finals</div>
+          </div>
+          <div class="suggestion-card" onclick="sendSuggestion('Review my essay for grammar')">
+            <div class="suggestion-title">✏️ Writing Help</div>
+            <div class="suggestion-text">Review my essay for grammar</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="input-area">
+      <div class="input-container">
+        <form class="input-form" id="inputForm">
+          <div class="input-wrapper">
+            <textarea
+              class="message-input"
+              id="userInput"
+              placeholder="Send a message..."
+              rows="1"
+              autocomplete="off"
+            ></textarea>
+            <button type="submit" class="send-button" id="sendButton">
+              <svg class="send-icon" viewBox="0 0 24 24">
+                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+              </svg>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src='/static/chat.js'></script>
+</body>
+</html>

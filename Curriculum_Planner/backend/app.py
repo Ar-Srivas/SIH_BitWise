@@ -27,7 +27,6 @@ app.include_router(auth_routes.router)
 app.include_router(student_routes.router)
 app.include_router(quiz_routes.router)
 app.include_router(slot_routes.router)
-# THIS LINE IS THE FIX. IT CALLS THE FUNCTION.
 app.include_router(recommend_routes.create_router(templates))
 app.include_router(chat_routes.router)
 app.include_router(prediction_routes.router)
@@ -68,8 +67,9 @@ def slot_booking_students(request: Request):
 
 @app.get("/chat", response_class=HTMLResponse)
 async def chat_page(request: Request):
-    return templates.TemplateResponse("dummy_chat.html", {"request": request})
+    return templates.TemplateResponse("chat.html", {"request": request})
 
 @app.get("/predict", response_class=HTMLResponse)
 def predict(request: Request):
     return templates.TemplateResponse("prediction.html", {"request": request})
+
