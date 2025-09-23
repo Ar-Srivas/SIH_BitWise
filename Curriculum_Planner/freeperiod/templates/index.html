@@ -1,4 +1,3 @@
-<!--please remove my comments💦-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,89 +5,141 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Academic Assistant</title>
 <style>
-    /*some shitty css for some shitty html*/
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #121212;
+    color: #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.main-container {
+    max-width: 600px;
+    width: 100%;
+    padding: 2rem;
+    background-color: #1e1e1e;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+}
 
 .mainheading {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
 }
 
-.body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    background-color: #f5f5f5;
+.input-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
 }
 
 .input {
-    border-radius: 40px;
-    padding: 0.5rem;
-    width: 300px;
-    border: 2px solid #ddd;
+    border-radius: 50px;
+    padding: 0.75rem 1.5rem;
+    width: 100%;
+    max-width: 350px;
+    background-color: #2a2a2a;
+    border: 2px solid #5a5a5a;
+    color: #ffffff;
     outline: none;
     margin-right: 10px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input:focus {
+    border-color: #9c27b0;
+    box-shadow: 0 0 10px rgba(156, 39, 176, 0.5);
 }
 
 .button {
-    border-radius: 40px;
-    padding: 0.5rem 1rem;
-    background-color: #007bff;
+    border-radius: 50px;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(45deg, #8a2be2, #9c27b0);
     color: white;
+    font-weight: bold;
     border: none;
     cursor: pointer;
+    box-shadow: 0 5px 15px rgba(140, 0, 255, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 .button:hover {
-    background-color: #0056b3;
+    background: linear-gradient(45deg, #9c27b0, #8a2be2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(140, 0, 255, 0.6);
 }
 
 .result {
     margin-top: 20px;
-    padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 2rem;
+    background-color: #1e1e1e;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid #333;
 }
 
 .result h2 {
-    color: #333;
-    margin-bottom: 10px;
+    color: #ffffff;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #555;
+    padding-bottom: 10px;
 }
 
 .result a {
     display: block;
-    margin-bottom: 8px;
-    color: #007bff;
+    margin-bottom: 12px;
+    color: #bb86fc;
     text-decoration: none;
-    padding: 5px 0;
+    padding: 10px;
+    background-color: #2a2a2a;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    /* Added CSS to handle long links */
+    overflow-wrap: break-word;
+    word-break: break-all;
 }
 
 .result a:hover {
-    text-decoration: underline;
+    background-color: #383838;
+    transform: translateX(5px);
 }
 </style>
 </head>
-<body class="body">
-<h1 class="mainheading">Academic Assistant for Beginners</h1>
-<form method="POST">
-<input class="input" type="text" name="query" placeholder="Enter a topic (e.g., Python, Cloud Computing)" value="{{ query }}">
-<input class="button" type="submit" value="Get Resources">
-</form>
- {% if docs_links or yt_links %}
-<div class="result">
- {% if docs_links %}
-<h2>Documentation / Tutorials:</h2>
- {% for link in docs_links %}
-<a href="{{ link }}" target="_blank">{{ link }}</a>
- {% endfor %}
- {% endif %}
- {% if yt_links %}
-<h2>YouTube Videos:</h2>
- {% for link in yt_links %}
-<a href="{{ link }}" target="_blank">{{ link }}</a>
- {% endfor %}
- {% endif %}
+<body>
+<div class="main-container">
+    <h1 class="mainheading">Academic Assistant for Beginners</h1>
+    <form method="POST" class="input-group">
+        <input class="input" type="text" name="query" placeholder="Enter a topic (e.g., Python, Cloud Computing)" value="{{ query }}">
+        <button class="button" type="submit">Get Resources</button>
+    </form>
+    {% if docs_links or yt_links %}
+        <div class="result">
+            {% if docs_links %}
+                <h2>Documentation / Tutorials:</h2>
+                {% for link in docs_links %}
+                    <a href="{{ link }}" target="_blank">{{ link }}</a>
+                {% endfor %}
+            {% endif %}
+            {% if yt_links %}
+                <h2>YouTube Videos:</h2>
+                {% for link in yt_links %}
+                    <a href="{{ link }}" target="_blank">{{ link }}</a>
+                {% endfor %}
+            {% endif %}
+        </div>
+    {% endif %}
 </div>
- {% endif %}
 </body>
 </html>

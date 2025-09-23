@@ -3,16 +3,12 @@ from ddgs import DDGS
 
 app = Flask(__name__)
 
-def academic_assistant(query): #keep this in string or else die you fool
+def academic_assistant(query):
     ddgs = DDGS()
     docs_results = ddgs.text(f"{query} beginner tutorial site:docs.python.org OR site:microsoft.com OR site:cloud.google.com", max_results=6)
-    docs_links = [r['href'] for r in docs_results if 'href' in r]
+    docs_links = [r['href'] for r in docs_results if 'href' in r and r['href'].startswith(('http', 'https'))]
     yt_results = ddgs.text(f"{query} beginner tutorial site:youtube.com", max_results=6)
-    yt_links = [r['href'] for r in yt_results if 'href' in r]
-    for i in yt_links:
-        if 'youtube.com' not in i:
-            yt_links.remove(i)
-            docs_links.append(i)
+    yt_links = [r['href'] for r in yt_results if 'href' in r and 'youtube.com' in r['href'] and r['href'].startswith(('http', 'https'))]
     return docs_links, yt_links
 
 @app.route("/", methods=["GET", "POST"])
