@@ -53,7 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll('input[type="radio"]').forEach(radio => radio.checked = false);
     });
 
-    // --- API Call Function ---
     async function getPrediction() {
         try {
             const response = await fetch("/predict", {
@@ -71,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const result = await response.json();
             // console.log(result);
             const prediction = (parseFloat(result.prediction) * 100).toFixed(2);
-            // console.log(admissionChance);
+            // console.log(prediction);
             predictionText.textContent = `${prediction}% Chance of Admission`;
 
         } catch (error) {
