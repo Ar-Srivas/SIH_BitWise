@@ -255,6 +255,37 @@ def extract_steps_from_response(response: str) -> list:
             steps.append(step)
     return steps
 
+def clean_response(response: str) -> str:
+    response = re.sub(r'\*\*(.*?)\*\*', r'\1', response)  # Remove **bold**
+    response = re.sub(r'\*(.*?)\*', r'\1', response)      # Remove *italic*
+    response = re.sub(r'`(.*?)`', r'\1', response)        # Remove `code`
+    response = re.sub(r'```[\s\S]*?```', '', response)    # Remove code blocks
+    response = re.sub(r'#{1,6}\s*', '', response)         # Remove headers
+    response = re.sub(r'^\s*[-*+]\s*', '', response, flags=re.MULTILINE)  # Remove bullet points
+    response = re.sub(r'^\s*\d+\.\s*', lambda m: f"{m.group().strip()} ", response, flags=re.MULTILINE)  # Clean numbered lists
+
+    # Remove extra whitespace and newlines
+    response = re.sub(r'\n\s*\n\s*\n+', '\n\n', response)  # Multiple newlines to double
+    response = re.sub(r'^\s+|\s+$', '', response)          # Trim whitespace
+
+    # Remove common AI phrases
+    ai_phrases = [
+        r'I\'d be happy to\s*',
+        r'Absolutely[,!]*\s*',
+        r'Certainly[,!]*\s*',
+        r'Of course[,!]*\s*',
+        r'I\'m here to help\s*',
+        r'Let me explain\s*',
+        r'Here\'s what you need to know\s*',
+        r'As an AI\s*',
+        r'I can help you with that\s*'
+    ]
+
+    for phrase in ai_phrases:
+        response = re.sub(phrase, '', response, flags=re.IGNORECASE)
+
+    return response.strip()
+
 async def send_chat(search_result, user_message):
     try:
         chat_res = client.chat.complete(
@@ -273,6 +304,7 @@ RULES:
 - Be encouraging but direct
 - Don't mention searching or being an AI
 - Avoid phrases like "I'd be happy to" or "Absolutely"
+- NO MARKDOWN formatting
 
 Example: "The study process involves 3 key steps: 1. Review materials..."
 """
@@ -281,11 +313,14 @@ Example: "The study process involves 3 key steps: 1. Review materials..."
 
         response_content = chat_res.choices[0].message.content
 
+        # Clean the response first
+        response_content = clean_response(response_content)
+
         # Add diagram generation back
         if should_include_diagram(user_message, response_content):
             print(f"Generating diagram for: {user_message}")  # Debug log
             diagram_html = await generate_dynamic_diagram(user_message, response_content)
-            if (diagram_html):
+            if diagram_html:
                 print("Diagram generated successfully")  # Debug log
                 response_content = f"{diagram_html}\n\n{response_content}"
             else:
