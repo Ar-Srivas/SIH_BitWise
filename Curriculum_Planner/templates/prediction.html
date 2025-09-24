@@ -1,121 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admission Chance Predictor</title>
-<link rel="stylesheet" href="/static/prediction.css">
-<style>
-    /* Accent button styling */
-    .slider-form button {
-        background-color: #ff8066;
-        color: white;
-        font-weight: 600;
-        padding: 0.75rem 1rem;
-        border-radius: 0.5rem;
-        border: none;
-        cursor: pointer;
-        transition: background-color 0.2s ease;
-        width: 100%;
-    }
-
-    .slider-form button:hover {
-        background-color: #ff8066cc; /* slightly transparent hover */
-    }
-
-    /* Dark mode overrides */
-    body.dark-mode {
-        background-color: #111827;
-        color: #f5f5f5;
-    }
-
-    body.dark-mode h2,
-    body.dark-mode h3,
-    body.dark-mode p,
-    body.dark-mode label {
-        color: #f5f5f5;
-    }
-
-    body.dark-mode .input input {
-        background-color: #374151;
-        color: #f5f5f5;
-        border: 1px solid #4b5563;
-    }
-
-    body.dark-mode .radio-group input {
-        accent-color: #ff8066;
-    }
-
-    body.dark-mode .result-container {
-        background-color: #1f2937;
-        color: #f5f5f5;
-        padding: 1rem;
-        border-radius: 0.5rem;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission Chance Predictor</title>
+    <link rel="stylesheet" href="/static/prediction.css">
 </head>
 <body>
-<div class="container slider-one-active">
-    <!-- Step Indicators -->
-    <div class="steps">
-        <div class="step step-one"><div class="liner"></div><span>Scores</span></div>
-        <div class="step step-two"><div class="liner"></div><span>Profile</span></div>
-        <div class="step step-three"><div class="liner"></div><span>Prediction</span></div>
-    </div>
+    <div class="container slider-one-active">
+        <!-- Step Indicators -->
+        <div class="steps">
+            <div class="step step-one">
+                <div class="liner"></div>
+                <span>Scores</span>
+            </div>
+            <div class="step step-two">
+                <div class="liner"></div>
+                <span>Profile</span>
+            </div>
+            <div class="step step-three">
+                <div class="liner"></div>
+                <span>Prediction</span>
+            </div>
+        </div>
+        <!-- Progress Bar -->
+        <div class="line">
+            <div class="dot-move"></div>
+            <div class="dot zero"></div>
+            <div class="dot center"></div>
+            <div class="dot full"></div>
+        </div>
+        <!-- Form Slider -->
+        <div class="slider-ctr">
+            <div class="slider">
+                <!-- Step 1: Academic Scores -->
+                <form class="slider-form slider-one">
+                    <h2>Enter Your Academic Scores</h2>
+                    <label class="input">
+                        <input type="number" id="gre" placeholder="GRE Score (out of 340)" required>
+                    </label>
+                    <label class="input">
+                        <input type="number" id="toefl" placeholder="TOEFL Score (out of 120)" required>
+                    </label>
+                    <label class="input">
+                        <input type="number" id="cgpa" placeholder="CGPA (out of 10)" step="0.01" required>
+                    </label>
+                    <button type="button" class="first next">Next Step</button>
+                </form>
 
-    <!-- Progress Bar -->
-    <div class="line">
-        <div class="dot-move"></div>
-        <div class="dot zero"></div>
-        <div class="dot center"></div>
-        <div class="dot full"></div>
-    </div>
+                <!-- Step 2: Profile Details -->
+                <form class="slider-form slider-two">
+                    <h2>Tell Us About Your Profile</h2>
+                    <label class="input">
+                        <input type="number" id="lor" placeholder="Letter of Recommendation Strength (1-5)" step="0.5" required>
+                    </label>
+                    <label class="input">
+                        <input type="number" id="uni_rating" placeholder="University Rating (1-5)" required>
+                    </label>
+                    <div class="radio-group">
+                        <span>Research Experience:</span>
+                        <label><input type="radio" name="research" value="1" required> Yes</label>
+                        <label><input type="radio" name="research" value="0" required> No</label>
+                    </div>
+                    <button type="button" class="second next">Get Prediction</button>
+                </form>
 
-    <!-- Form Slider -->
-    <div class="slider-ctr">
-        <div class="slider">
-            <!-- Step 1 -->
-            <form class="slider-form slider-one">
-                <h2>Enter Your Academic Scores</h2>
-                <label class="input"><input type="number" id="gre" placeholder="GRE Score (out of 340)" required></label>
-                <label class="input"><input type="number" id="toefl" placeholder="TOEFL Score (out of 120)" required></label>
-                <label class="input"><input type="number" id="cgpa" placeholder="CGPA (out of 10)" step="0.01" required></label>
-                <button type="button" class="first next">Next Step</button>
-            </form>
-
-            <!-- Step 2 -->
-            <form class="slider-form slider-two">
-                <h2>Tell Us About Your Profile</h2>
-                <label class="input"><input type="number" id="lor" placeholder="Letter of Recommendation Strength (1-5)" step="0.5" required></label>
-                <label class="input"><input type="number" id="uni_rating" placeholder="University Rating (1-5)" required></label>
-                <div class="radio-group">
-                    <span>Research Experience:</span>
-                    <label><input type="radio" name="research" value="1" required> Yes</label>
-                    <label><input type="radio" name="research" value="0" required> No</label>
+                <!-- Step 3: Prediction Result -->
+                <div class="slider-form slider-three">
+                    <h2>Your Admission Prediction</h2>
+                    <div class="result-container">
+                        <h3 id="prediction-text">Calculating...</h3>
+                        <p>This is an estimate based on the provided data.</p>
+                    </div>
+                    <button type="button" class="reset">Start Over</button>
                 </div>
-                <button type="button" class="second next">Get Prediction</button>
-            </form>
-
-            <!-- Step 3 -->
-            <div class="slider-form slider-three">
-                <h2>Your Admission Prediction</h2>
-                <div class="result-container">
-                    <h3 id="prediction-text">Calculating...</h3>
-                    <p>This is an estimate based on the provided data.</p>
-                </div>
-                <button type="button" class="reset">Start Over</button>
             </div>
         </div>
     </div>
-</div>
-
-<script>
-    // Detect system dark mode
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.body.classList.add('dark-mode');
-    }
-</script>
-
-<script src="/static/prediction.js"></script>
+    <script src="/static/prediction.js"></script>
 </body>
 </html>

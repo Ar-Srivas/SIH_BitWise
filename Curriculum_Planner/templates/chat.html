@@ -1,94 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EduHelp Pro - AI Assistant</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="/static/chat.css">
-</head>
-<body class="bg-gray-100 dark:bg-gray-900 dark:text-white text-gray-600 h-screen flex flex-col">
+{% extends "template.html" %}
 
-<!-- Header / Top Navigation -->
-<header class="h-16 bg-white dark:bg-gray-900 dark:border-gray-800 border-b border-gray-200 flex items-center justify-between px-6">
-  <div class="flex items-center space-x-3">
-    <div class="logo-icon text-2xl font-bold w-10 h-10 bg-[#ff8066] text-white rounded-full flex items-center justify-center">EH</div>
-    <span class="text-xl font-semibold text-gray-900 dark:text-white">EduHelp Pro</span>
-  </div>
-  <button onclick="signOut()" class="text-gray-600 dark:text-gray-400 hover:text-red-500 flex items-center">
-    <span>Sign Out</span>
-    <svg viewBox="0 0 24 24" class="w-4 ml-1 flex-shrink-0" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-      <polyline points="16 17 21 12 16 7"></polyline>
-      <line x1="21" y1="12" x2="9" y2="12"></line>
-    </svg>
-  </button>
-</header>
+{% block title %}AI Assistant - EduHelp Pro{% endblock %}
 
-<!-- Chat Content -->
-<div class="flex-grow flex flex-col overflow-hidden">
-  <div class="flex-grow overflow-y-auto p-6">
+{% block chat_active %}dark:bg-gray-700 dark:text-white bg-[#ff8066]/20 text-[#ff8066]{% endblock %}
 
-    <!-- Welcome Section -->
-    <div id="welcomeContainer" class="border-l-4 border-[#ff8066] bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6 text-center">
-      <div class="text-4xl mb-4">🤖</div>
-      <h1 class="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Welcome to EduHelp Pro</h1>
-      <p class="text-gray-600 dark:text-gray-400 mb-6">How can I assist you with your learning today?</p>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="border-l-4 border-[#ff8066] bg-white dark:bg-gray-800 p-4 rounded-lg cursor-pointer hover:shadow-md transition"
+{% block page_icon %}🤖{% endblock %}
+{% block page_title %}AI Assistant{% endblock %}
+{% block page_description %}Get instant help with your academic questions{% endblock %}
+
+{% block tab_navigation %}
+<div class="flex items-center space-x-3 sm:mt-7 mt-4">
+    <a href="#" class="px-3 border-b-2 border-[#ff8066] text-[#ff8066] dark:text-white dark:border-white pb-1.5">Chat</a>
+    <a href="#" class="px-3 border-b-2 border-transparent text-gray-600 dark:text-gray-400 pb-1.5">History</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- Welcome Section -->
+<div id="welcomeContainer" class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6 text-center border border-gray-200 dark:border-gray-700">
+    <div class="text-4xl mb-4">🤖</div>
+    <h1 class="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Welcome to EduHelp Pro</h1>
+    <p class="text-gray-600 dark:text-gray-400 mb-6">How can I assist you with your learning today?</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg cursor-pointer hover:shadow-md transition border border-gray-200 dark:border-gray-700"
              onclick="sendSuggestion('Explain quantum physics concepts')">
-          <h3 class="font-medium text-[#ff8066] mb-1">Study Help</h3>
-          <p class="text-gray-700 dark:text-gray-300 text-sm">Explain quantum physics concepts</p>
+            <h3 class="font-medium text-[#ff8066] mb-1">Study Help</h3>
+            <p class="text-gray-700 dark:text-gray-300 text-sm">Explain quantum physics concepts</p>
         </div>
-        <div class="border-l-4 border-[#ff8066] bg-white dark:bg-gray-800 p-4 rounded-lg cursor-pointer hover:shadow-md transition"
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg cursor-pointer hover:shadow-md transition border border-gray-200 dark:border-gray-700"
              onclick="sendSuggestion('Help me solve this math problem')">
-          <h3 class="font-medium text-[#ff8066] mb-1">Math Assistance</h3>
-          <p class="text-gray-700 dark:text-gray-300 text-sm">Help me solve this math problem</p>
+            <h3 class="font-medium text-[#ff8066] mb-1">Math Assistance</h3>
+            <p class="text-gray-700 dark:text-gray-300 text-sm">Help me solve this math problem</p>
         </div>
-        <div class="border-l-4 border-[#ff8066] bg-white dark:bg-gray-800 p-4 rounded-lg cursor-pointer hover:shadow-md transition"
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg cursor-pointer hover:shadow-md transition border border-gray-200 dark:border-gray-700"
              onclick="sendSuggestion('Create a study schedule for finals')">
-          <h3 class="font-medium text-[#ff8066] mb-1">Study Planning</h3>
-          <p class="text-gray-700 dark:text-gray-300 text-sm">Create a study schedule for finals</p>
+            <h3 class="font-medium text-[#ff8066] mb-1">Study Planning</h3>
+            <p class="text-gray-700 dark:text-gray-300 text-sm">Create a study schedule for finals</p>
         </div>
-        <div class="border-l-4 border-[#ff8066] bg-white dark:bg-gray-800 p-4 rounded-lg cursor-pointer hover:shadow-md transition"
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg cursor-pointer hover:shadow-md transition border border-gray-200 dark:border-gray-700"
              onclick="sendSuggestion('Review my essay for grammar')">
-          <h3 class="font-medium text-[#ff8066] mb-1">Writing Help</h3>
-          <p class="text-gray-700 dark:text-gray-300 text-sm">Review my essay for grammar</p>
+            <h3 class="font-medium text-[#ff8066] mb-1">Writing Help</h3>
+            <p class="text-gray-700 dark:text-gray-300 text-sm">Review my essay for grammar</p>
         </div>
-      </div>
     </div>
-
-    <!-- Chat Messages -->
-    <div id="chatMessages" class="flex flex-col space-y-4"></div>
-  </div>
-
-  <!-- Input Area -->
-  <div class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 p-4 flex items-center">
-    <form id="inputForm" class="flex flex-grow">
-      <textarea
-        id="userInput"
-        class="flex-grow resize-none border border-gray-300 dark:border-gray-700 rounded-md px-3 py-2 text-gray-900 dark:text-white bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#ff8066]"
-        placeholder="Send a message..."
-        rows="1"
-        autocomplete="off"
-      ></textarea>
-      <button type="submit" class="ml-2 bg-[#ff8066] hover:bg-[#ff8066]/80 text-white px-4 py-2 rounded-md flex items-center">
-        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-        </svg>
-      </button>
-    </form>
-  </div>
 </div>
 
-<script>
+<!-- Chat Messages -->
+<div id="chatMessages" class="flex flex-col space-y-4 mb-6"></div>
+
+<!-- Input Area -->
+<div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+    <form id="inputForm" class="flex items-end space-x-3">
+        <textarea
+            id="userInput"
+            class="flex-grow resize-none border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 text-gray-900 dark:text-white bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-[#ff8066]"
+            placeholder="Send a message..."
+            rows="1"
+            autocomplete="off"
+        ></textarea>
+        <button type="submit" class="bg-[#ff8066] hover:bg-[#ff8066]/80 text-white px-4 py-2 rounded-md flex items-center">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+            </svg>
+        </button>
+    </form>
+</div>
+{% endblock %}
+
+{% block page_scripts %}
 const chatMessages = document.getElementById('chatMessages');
 const welcomeContainer = document.getElementById('welcomeContainer');
 const inputForm = document.getElementById('inputForm');
 const userInput = document.getElementById('userInput');
 let isThinking = false;
 
-// Auto-resize textarea
 if (userInput) {
     userInput.addEventListener('input', function() {
         this.style.height = 'auto';
@@ -101,10 +86,9 @@ function addMessage(sender, content) {
     messageDiv.className = `flex flex-col ${sender === 'user' ? 'items-end' : 'items-start'}`;
 
     const contentDiv = document.createElement('div');
-    contentDiv.className = 'border-l-4 border-[#ff8066] bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm max-w-lg';
+    contentDiv.className = 'bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm max-w-lg border border-gray-200 dark:border-gray-700';
     contentDiv.innerHTML = content.replace(/\n/g, '<br>');
 
-    // Header with avatar
     const headerDiv = document.createElement('div');
     headerDiv.className = 'flex items-center mb-1 space-x-2 text-sm';
     const avatar = document.createElement('div');
@@ -139,7 +123,7 @@ function showTypingIndicator() {
     headerDiv.appendChild(label);
 
     const contentDiv = document.createElement('div');
-    contentDiv.className = 'border-l-4 border-[#ff8066] bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm';
+    contentDiv.className = 'bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700';
     contentDiv.innerHTML = '<span>Thinking...</span>';
 
     typingDiv.appendChild(headerDiv);
@@ -193,14 +177,6 @@ async function sendMessage(message) {
     }
 }
 
-function signOut() {
-    window.location.href = '/';
-}
-
-// Event listeners
 if (inputForm) inputForm.addEventListener('submit', e => { e.preventDefault(); sendMessage(); });
 if (userInput) userInput.addEventListener('keypress', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } });
-
-</script>
-</body>
-</html>
+{% endblock %}

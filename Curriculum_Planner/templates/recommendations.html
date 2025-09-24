@@ -1,118 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Recommendations</title>
-<link rel="stylesheet" href="/static/style_recommend.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-    /* Accent button styling */
-    .btn-primary {
-        background-color: #ff8066;
-        color: white;
-        padding: 0.6rem 1.2rem;
-        border-radius: 0.5rem;
-        font-weight: 600;
-        border: none;
-        cursor: pointer;
-        transition: background-color 0.2s ease;
-    }
+{% extends "template.html" %}
 
-    .btn-primary:hover {
-        background-color: #ff8066cc;
-    }
+{% block title %}Recommendations - EduHelp Pro{% endblock %}
 
-    /* Dark mode support for body, cards, text */
-    body.dark-mode {
-        background-color: #111827;
-        color: #f5f5f5;
-    }
+{% block recommendations_active %}dark:bg-gray-700 dark:text-white bg-[#ff8066]/20 text-[#ff8066]{% endblock %}
 
-    body.dark-mode .main-container {
-        background-color: #1f2937;
-        color: #f5f5f5;
-    }
+{% block page_icon %}📚{% endblock %}
+{% block page_title %}Tailored Resources{% endblock %}
+{% block page_description %}Recommendations for {{ selected_subject }}{% endblock %}
 
-    body.dark-mode .card {
-        background-color: #111827;
-        color: #f5f5f5;
-        border-color: #374151;
-    }
+{% block tab_navigation %}
+<div class="flex items-center space-x-3 sm:mt-7 mt-4">
+    <a href="#" class="px-3 border-b-2 border-transparent text-gray-600 dark:text-gray-400 pb-1.5" onclick="goBackToSelection()">Select Subject</a>
+    <a href="#" class="px-3 border-b-2 border-[#ff8066] text-[#ff8066] dark:text-white dark:border-white pb-1.5">Recommendations</a>
+</div>
+{% endblock %}
 
-    body.dark-mode .header-title,
-    body.dark-mode .header-subtitle,
-    body.dark-mode .card-title,
-    body.dark-mode .difficulty-heading,
-    body.dark-mode .resource-item h3,
-    body.dark-mode .resource-item p {
-        color: #f5f5f5;
-    }
-
-    body.dark-mode .resource-btn {
-        background-color: #ff8066;
-        color: white;
-    }
-
-    body.dark-mode .resource-btn:hover {
-        background-color: #ff8066cc;
-    }
-</style>
-</head>
-<body>
-<div class="main-container">
-    <header class="header">
-        <h1 class="header-title">Student Recommendation System</h1>
-        <p class="header-subtitle">Tailored Resources for You</p>
-    </header>
-    <div class="card recommendations-card">
-        <div class="header-actions">
-            <button onclick="goBackToDashboard()" class="btn-primary">Back to Dashboard</button>
-            <button onclick="goBackToSelection()" class="btn-primary">Back to Selection Page</button>
-        </div>
-        <h2 class="card-title">Recommendations for {{ selected_subject }}</h2>
-
-        {% if recommendations.Easy or recommendations.Medium or recommendations.Difficult %}
-            {% for difficulty, recs in recommendations.items() %}
-                {% if recs %}
-                    <h3 class="difficulty-heading">{{ difficulty }}</h3>
-                    <div class="resources-list">
-                        {% for rec in recs %}
-                        <div class="resource-item">
-                            <h3>{{ rec.title }}</h3>
-                            <p><strong>Subject:</strong> {{ rec.subject }}</p>
-                            <p><strong>Difficulty:</strong> {{ rec.difficulty }}</p>
-                            <div class="resource-links">
-                                <a href="{{ rec.article_link }}" target="_blank" class="resource-btn article-btn">Article</a>
-                                <a href="{{ rec.youtube_link }}" target="_blank" class="resource-btn youtube-btn">YouTube</a>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            {% endfor %}
-        {% else %}
-            <p>No recommendations found for this subject.</p>
-        {% endif %}
-    </div>
+{% block content %}
+<div class="mb-4">
+    <button class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition mr-2" onclick="goBackToSelection()">
+        Back to Selection
+    </button>
 </div>
 
-<script>
-    const studentId = "{{ student.id }}";
+{% if recommendations %}
+    {% for difficulty, recs in recommendations.items() %}
+        {% if recs %}
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">{{ difficulty }}</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {% for rec in recs %}
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+                        <h4 class="text-lg font-medium text-gray-900 dark:text-white mb-2">{{ rec.title }}</h4>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4"><strong>Subject:</strong> {{ rec.subject }}</p>
+                        <div class="flex space-x-2">
+                            <a href="{{ rec.article_link }}" target="_blank" class="px-4 py-2 bg-[#ff8066] text-white rounded-md hover:bg-[#ff8066]/80 transition text-sm">
+                                📖 Article
+                            </a>
+                            <a href="{{ rec.youtube_link }}" target="_blank" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition text-sm">
+                                🎥 YouTube
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% else %}
+    <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 text-center">
+        <div class="text-6xl mb-4">📚</div>
+        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">No Recommendations Found</h3>
+        <p class="text-gray-600 dark:text-gray-400">No recommendations found for this subject.</p>
+    </div>
+{% endif %}
+{% endblock %}
 
-    function goBackToDashboard() {
-        window.location.href = `/dashboard?email=${studentId}`;
-    }
+{% block page_scripts %}
+const studentId = "{{ student.id }}";
 
-    function goBackToSelection() {
-        window.location.href = `/select_subject/${studentId}`;
-    }
-
-    // Apply dark/light mode based on system preference
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (prefersDark) {
-        document.body.classList.add('dark-mode');
-    }
-</script>
-</body>
-</html>
+function goBackToSelection() {
+    window.location.href = `/select_subject/${studentId}`;
+}
+{% endblock %}

@@ -1,4 +1,3 @@
-// Highlight "Easy" resources on the recommendations page
 function highlightResources() {
     const items = document.querySelectorAll("#recommendations li");
     items.forEach(item => {
@@ -8,7 +7,6 @@ function highlightResources() {
     });
 }
 
-// Run highlightResources if recommendations div exists
 document.addEventListener("DOMContentLoaded", () => {
     if (document.getElementById("recommendations")) {
         highlightResources();

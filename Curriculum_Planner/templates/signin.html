@@ -1,73 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduHelp Pro - Sign In / Sign Up</title>
-    <link rel="stylesheet" href="/static/signin.css">
-    <!-- Font Awesome for social icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EduHelp Pro - Sign In / Sign Up</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body { font-family: 'Montserrat', sans-serif; }
+
+    /* Smooth slide effect */
+    .transition-transform { transition: transform 0.6s ease-in-out; }
+
+    /* Main container */
+    #container {
+      position: relative;
+      width: 768px;
+      max-width: 100%;
+      min-height: 480px;
+      overflow: hidden;
+    }
+
+    /* Panels */
+    .form-panel {
+      position: absolute;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 40px;
+      text-align: center;
+      transition: all 0.6s ease-in-out;
+      z-index: 5;
+    }
+
+    /* Left panel (Sign In) */
+    .sign-in {
+      left: 0;
+      z-index: 10;
+    }
+
+    /* Right panel (Sign Up) */
+    .sign-up {
+      left: 0;
+      opacity: 0;
+      z-index: 5;
+    }
+
+    /* When toggled */
+    #container.right-panel-active .sign-in {
+      transform: translateX(100%);
+    }
+    #container.right-panel-active .sign-up {
+      transform: translateX(100%);
+      opacity: 1;
+      z-index: 10;
+    }
+
+    /* Overlay wrapper */
+    .overlay-container {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+      transition: transform 0.6s ease-in-out;
+      z-index: 20;
+    }
+    #container.right-panel-active .overlay-container {
+      transform: translateX(-100%);
+    }
+
+    /* Overlay gradient */
+    .overlay {
+      background: linear-gradient(to right, #ff8066, #ff9a80);
+      background-size: cover;
+      background-repeat: no-repeat;
+      position: relative;
+      left: -100%;
+      width: 200%;
+      height: 100%;
+      transition: transform 0.6s ease-in-out;
+    }
+    #container.right-panel-active .overlay {
+      transform: translateX(50%);
+    }
+
+    /* Overlay inner sections */
+    .overlay-panel {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0 40px;
+      text-align: center;
+      transition: transform 0.6s ease-in-out;
+    }
+
+    .overlay-left { transform: translateX(-20%); left: 0; }
+    .overlay-right { right: 0; }
+    #container.right-panel-active .overlay-left { transform: translateX(0); }
+    #container.right-panel-active .overlay-right { transform: translateX(20%); }
+  </style>
 </head>
-<body class="signin-page">
-    <div class="container" id="container">
 
-        <!-- Sign Up Panel -->
-        <div class="form-container sign-up-container">
-            <form action="/signup" method="post" class="auth-form">
-                <h1>Create Account</h1>
-                <span>Use your email for registration</span>
+<body class="bg-gray-100 dark:bg-gray-900 flex items-center justify-center min-h-screen">
 
-                <input type="text" name="name" placeholder="Full Name" required>
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="password" name="password" placeholder="Password" required>
-                <button type="submit" class="btn-primary">Sign Up</button>
-            </form>
-        </div>
+  <div id="container" class="bg-white dark:bg-gray-800 rounded-xl shadow-xl">
 
-        <!-- Sign In Panel -->
-        <div class="form-container sign-in-container">
-            <form action="/login" method="post" class="auth-form">
-                <h1>Sign In</h1>
-
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="password" name="password" placeholder="Password" required>
-                <a href="#">Forgot your password?</a>
-                <button type="submit" class="btn-primary">Sign In</button>
-            </form>
-        </div>
-
-        <!-- Overlay for smooth sliding animation -->
-        <div class="overlay-container">
-            <div class="overlay">
-                <div class="overlay-panel overlay-left">
-                    <h1>Welcome Back!</h1>
-                    <p>To keep connected with us please login with your personal info</p>
-                    <button class="ghost" id="signIn">Sign In</button>
-                </div>
-                <div class="overlay-panel overlay-right">
-                    <h1>Hello, Friend!</h1>
-                    <p>Enter your personal details and start your journey with us</p>
-                    <button class="ghost" id="signUp">Sign Up</button>
-                </div>
-            </div>
-        </div>
+    <!-- Sign In Panel -->
+    <div class="form-panel sign-in bg-white dark:bg-gray-800">
+      <form action="/login" method="post" class="w-full max-w-xs">
+        <h1 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">Sign In</h1>
+        <input name="email" type="email" placeholder="Email"
+          class="w-full p-3 mb-3 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded focus:outline-none" />
+        <input name="password" type="password" placeholder="Password"
+          class="w-full p-3 mb-3 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded focus:outline-none" />
+        <a href="#" class="text-sm text-gray-500 dark:text-gray-300 block mb-3">Forgot your password?</a>
+        <button type="submit"
+          class="w-full px-6 py-3 bg-[#ff8066] hover:bg-[#ff9a80] text-white uppercase text-sm rounded-full font-bold tracking-wide">
+          Sign In
+        </button>
+      </form>
     </div>
 
-    <footer>
-        <p>
-            Created with <i class="fa fa-heart"></i> by BitWise
-        </p>
-    </footer>
-    <script>
-        const signUpButton = document.getElementById('signUp');
-        const signInButton = document.getElementById('signIn');
-        const container = document.getElementById('container');
+    <!-- Sign Up Panel -->
+    <div class="form-panel sign-up bg-white dark:bg-gray-800">
+      <form action="/signup" method="post" class="w-full max-w-xs">
+        <h1 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Create Account</h1>
+        <span class="text-xs text-gray-500 dark:text-gray-300">Use your email for registration</span>
+        <input name="name" type="text" placeholder="Full Name"
+          class="w-full p-3 mt-4 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded focus:outline-none" />
+        <input name="email" type="email" placeholder="Email"
+          class="w-full p-3 mt-2 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded focus:outline-none" />
+        <input name="password" type="password" placeholder="Password"
+          class="w-full p-3 mt-2 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded focus:outline-none" />
+        <button type="submit"
+          class="w-full mt-4 px-6 py-3 bg-[#ff8066] hover:bg-[#ff9a80] text-white uppercase text-sm rounded-full font-bold tracking-wide">
+          Sign Up
+        </button>
+      </form>
+    </div>
 
-        signUpButton.addEventListener('click', () => container.classList.add('right-panel-active'));
-        signInButton.addEventListener('click', () => container.classList.remove('right-panel-active'));
+    <!-- Overlay -->
+    <div class="overlay-container">
+      <div class="overlay">
 
-    </script>
+        <!-- Left Overlay (for returning users) -->
+        <div class="overlay-panel overlay-left text-white">
+          <h1 class="text-3xl font-bold mb-2">Welcome Back!</h1>
+          <p class="text-sm mb-4">To stay connected, login with your personal info</p>
+          <button id="signIn"
+            class="border border-white px-6 py-2 rounded-full text-white uppercase text-sm font-bold hover:bg-white hover:text-pink-500 transition">
+            Sign In
+          </button>
+        </div>
 
-    <script src="/static/signin.js"></script>
+        <!-- Right Overlay (for new users) -->
+        <div class="overlay-panel overlay-right text-white">
+          <h1 class="text-3xl font-bold mb-2">Hello, Friend!</h1>
+          <p class="text-sm mb-4">Enter your details and start your journey with us</p>
+          <button id="signUp"
+            class="border border-white px-6 py-2 rounded-full text-white uppercase text-sm font-bold hover:bg-white hover:text-pink-500 transition">
+            Sign Up
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="fixed bottom-0 left-0 right-0 text-center text-sm py-3 bg-gray-800 text-white dark:bg-gray-950">
+    Created with <i class="fa fa-heart text-red-500"></i> by BitWise
+  </footer>
+
+  <script>
+    const signUpButton = document.getElementById('signUp');
+    const signInButton = document.getElementById('signIn');
+    const container = document.getElementById('container');
+
+    signUpButton.addEventListener('click', () =>
+      container.classList.add('right-panel-active')
+    );
+    signInButton.addEventListener('click', () =>
+      container.classList.remove('right-panel-active')
+    );
+  </script>
 </body>
 </html>

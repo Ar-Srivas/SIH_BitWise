@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}EduHelp Pro{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/style.css">
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="dashboard-page bg-gray-100 dark:bg-gray-900 dark:text-white text-gray-600 h-screen flex overflow-hidden text-sm">
+
+    <script>
+        // Dark mode detection
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
+
+    <!-- Sidebar -->
+    <div class="bg-white dark:bg-gray-900 dark:border-gray-800 w-20 flex-shrink-0 border-r border-gray-200 flex-col hidden sm:flex">
+        <div class="h-16 text-[#ff8066] flex items-center justify-center">
+            <div class="logo-icon text-2xl font-bold">EH</div>
+        </div>
+        <div class="flex mx-auto flex-grow mt-4 flex-col text-gray-400 space-y-4">
+            <button onclick="goToDashboard()" class="h-10 w-12 {% block dashboard_active %}dark:text-gray-500{% endblock %} rounded-md flex items-center justify-center" title="Dashboard">
+                <svg viewBox="0 0 24 24" class="h-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </button>
+            <button onclick="goToAcademic()" class="h-10 w-12 {% block academic_active %}dark:text-gray-500{% endblock %} rounded-md flex items-center justify-center" title="Academic Resources">
+                <svg viewBox="0 0 24 24" class="h-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                </svg>
+            </button>
+            <button onclick="goToChat()" class="h-10 w-12 {% block chat_active %}dark:text-gray-500{% endblock %} rounded-md flex items-center justify-center" title="Chat">
+                <svg viewBox="0 0 24 24" class="h-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                </svg>
+            </button>
+            <button onclick="goToProfile()" class="h-10 w-12 {% block profile_active %}dark:text-gray-500{% endblock %} rounded-md flex items-center justify-center" title="Profile">
+                <svg viewBox="0 0 24 24" class="h-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </button>
+            <button onclick="goToQuiz()" class="h-10 w-12 {% block quiz_active %}dark:text-gray-500{% endblock %} rounded-md flex items-center justify-center" title="Take Assessment">
+                <svg viewBox="0 0 24 24" class="h-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-grow overflow-hidden h-full flex flex-col">
+        <!-- Top Navigation -->
+        <div class="h-16 lg:flex w-full border-b border-gray-200 dark:border-gray-800 hidden px-10">
+            <div class="flex h-full text-gray-600 dark:text-gray-400"></div>
+            <div class="ml-auto flex items-center space-x-7">
+                {% block top_nav_buttons %}{% endblock %}
+                <button onclick="signOut()" class="flex items-center text-gray-600 dark:text-gray-400 hover:text-red-500">
+                    <span class="ml-2">Sign Out</span>
+                    <svg viewBox="0 0 24 24" class="w-4 ml-1 flex-shrink-0" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
+            <!-- Page Header -->
+            <div class="sm:px-7 sm:pt-7 px-4 pt-4 flex flex-col w-full border-b border-gray-200 bg-white dark:bg-gray-900 dark:text-white dark:border-gray-800 sticky top-0">
+                <div class="flex w-full items-center">
+                    <div class="flex items-center text-3xl text-gray-900 dark:text-white">
+                        <div class="logo-icon text-2xl font-bold mr-4 w-12 h-12 bg-[#ff8066] text-white rounded-full flex items-center justify-center">{% block page_icon %}EH{% endblock %}</div>
+                        <div>
+                            <h1 class="text-2xl font-bold">{% block page_title %}Dashboard{% endblock %}</h1>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">{% block page_description %}Welcome to EduHelp Pro{% endblock %}</p>
+                        </div>
+                    </div>
+                </div>
+                {% block tab_navigation %}{% endblock %}
+            </div>
+
+            <!-- Page Content -->
+            <div class="sm:p-7 p-4">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get email from URL parameters
+        function getEmailFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('email');
+        }
+
+        // Navigation functions
+        function goToDashboard() {
+            const email = getEmailFromURL();
+            window.location.href = `/dashboard?email=${email}`;
+        }
+
+        function goToProfile() {
+            const email = getEmailFromURL();
+            window.location.href = `/profile?email=${email}`;
+        }
+
+        function goToRecommendations() {
+            const email = getEmailFromURL();
+            window.location.href = `/select_subject/${email}`;
+        }
+
+        function goToSlotBooking() {
+            const email = getEmailFromURL();
+            window.location.href = `/slot_booking_students?email=${email}`;
+        }
+
+        function goToQuiz() {
+            const email = getEmailFromURL();
+            window.location.href = `/quiz?email=${email}`;
+        }
+
+        function goToPrediction() {
+            window.location.href = `/predict`;
+        }
+
+        function goToAcademic() {
+            const email = getEmailFromURL();
+            window.location.href = `/academic?email=${email}`;
+        }
+
+        function goToChat() {
+            const email = getEmailFromURL();
+            window.location.href = `/chat?email=${email}`;
+        }
+
+        function signOut() {
+            window.location.href = '/';
+        }
+
+        {% block page_scripts %}{% endblock %}
+    </script>
+
+    <style>
+        :root {
+            --accent-color: #ff8066;
+            --accent-hover: #ff9a80;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color) !important;
+            color: white !important;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover) !important;
+        }
+    </style>
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
