@@ -12,14 +12,19 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/roundedcorner"
-        app:title="Attendance App"
         android:layout_margin="10dp"
-        app:titleTextColor="@color/black"
-        android:titleTextColor="@android:color/black"
         android:elevation="8dp"
-
-        android:layout_gravity="top"
-        android:gravity="center"/>
+        android:layout_gravity="top">
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Attendance App"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"/>
+    </androidx.appcompat.widget.Toolbar>
     <TextClock
         android:fontFamily="serif"
         android:textColor="@color/white"
@@ -45,7 +50,7 @@
             android:layout_margin="8dp"
             android:backgroundTint="@color/black"
             app:cardCornerRadius="12dp"
-            app:cardElevation="6dp">
+            app:cardElevation="60dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -101,26 +106,26 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:gravity="center"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="33dp"
         android:orientation="horizontal"
         android:padding="16dp">
 
         <ImageButton
             android:id="@+id/main_qr"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginEnd="32dp"
             android:hapticFeedbackEnabled="true"
             android:scaleType="centerInside"
             android:background="@drawable/boxbox"
-            android:backgroundTint="#373737"
-            android:src="@drawable/qr2" />
+            android:backgroundTint="#ff8066"
+            android:src="@drawable/qrcode" />
 
         <ImageButton
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:background="@drawable/boxbox"
-            android:backgroundTint="#373737"
+            android:backgroundTint="#ff8066"
             android:scaleType="centerInside"
             android:clickable="false"
             android:src="@drawable/img_3"/>

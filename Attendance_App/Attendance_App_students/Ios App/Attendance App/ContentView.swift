@@ -26,7 +26,7 @@ struct ContentView: View {
         NavigationStack{
             ZStack{
                 LinearGradient(
-                                    colors: [Color.black, Color.gray.opacity(0.6)],
+                    colors: [Color.black.opacity(30), Color.gray.opacity(0.6)],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 )
@@ -34,17 +34,17 @@ struct ContentView: View {
                 VStack{
                     Image("Image").resizable().scaledToFit().frame(width: 100,height: 100)
                     Spacer().frame(height: 50)
-                    TextField("Username",text: $username).padding().textFieldStyle(RoundedBorderTextFieldStyle()).frame(width: 300, height: 50).autocorrectionDisabled().textInputAutocapitalization(.never)
-                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(wrongcred || emptynameorpass ? Color.red : Color.black, lineWidth: 3).frame(width: 270,height: 30))
+                    TextField("Username",text: $username).padding().foregroundColor(Color.myasset).textFieldStyle(RoundedBorderTextFieldStyle()).frame(width: 300, height: 50).autocorrectionDisabled().textInputAutocapitalization(.never)
+                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(wrongcred || emptynameorpass ? Color.red : Color.black, lineWidth: 3).frame(width: 270,height: 35))
                     if showpass{
-                        TextField("Passowrd",text: $password).padding().frame(width: 300, height: 50).textFieldStyle(RoundedBorderTextFieldStyle())
+                        TextField("Passowrd",text: $password).padding().frame(width: 300, height: 50).foregroundColor(Color.myasset).textFieldStyle(RoundedBorderTextFieldStyle())
                             .autocorrectionDisabled().textInputAutocapitalization(.never)
-                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(wrongcred || emptynameorpass ? Color.red : Color.black, lineWidth: 3).frame(width: 270,height: 30))
+                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(wrongcred || emptynameorpass ? Color.red : Color.black, lineWidth: 3).frame(width: 270,height: 35))
                     }
                     else{
-                        SecureField("Passowrd",text: $password).padding().frame(width: 300, height: 50).textFieldStyle(RoundedBorderTextFieldStyle())
+                        SecureField("Passowrd",text: $password).padding().frame(width: 300, height: 50).foregroundColor(Color.myasset).textFieldStyle(RoundedBorderTextFieldStyle())
                             .autocorrectionDisabled().textInputAutocapitalization(.never)
-                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(wrongcred || emptynameorpass ? Color.red : Color.black, lineWidth: 3).frame(width: 270,height: 30))
+                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(wrongcred || emptynameorpass ? Color.red : Color.black, lineWidth: 3).frame(width: 270,height: 35))
                     }
                     if (!wrongcred && !usernotfound && !emptynameorpass){
                         Text("Enter Credentials").foregroundColor(Color.white)
@@ -70,8 +70,8 @@ struct ContentView: View {
                         }
                     }
                     Toggle(isOn: $showpass) {
-                        Text("Show Password").padding()
-                    }.padding().frame(minWidth: 10,minHeight: 80)
+                        Text("Show Password").padding().foregroundColor(Color.white)
+                    }.padding().frame(minWidth: 10,minHeight: 80).tint(Color.mycolor)
                     
                     Button(action: {
                         if (username=="" && password==""){
@@ -81,17 +81,17 @@ struct ContentView: View {
                         checkPassword(username: username, password: password)
                     }) {
                         HStack {
-                            Image(systemName: "arrowshape.right.fill")
                             Text("Login")
                         }
-                        .foregroundColor(.blue)
+                        .foregroundColor(.black)
                     }
                     .padding()
-                    .background(Color.white)
+                    .background(Color.mycolor)
                     .cornerRadius(25)
                 }.padding().foregroundColor(Color.blue).cornerRadius(65)
                 
             }.navigationDestination(isPresented: $isloggedin) { Mainpage(username:username,deviceregistered: deviceregistered)}
+                .hideKeyboardOnTap()
             
         }.navigationBarHidden(true)
     }
@@ -156,14 +156,14 @@ struct Mainpage: View {
             ZStack{
                 
                 LinearGradient(
-                                    colors: [Color.black, Color.gray.opacity(0.6)],
+                    colors: [Color.black.opacity(30), Color.gray.opacity(0.6)],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 )
                                 .ignoresSafeArea()
                 VStack{
                     if(deviceregistered){
-                        Text("Your Device was Registered for the first time").foregroundColor(Color.purple)
+                        Text("Your Device was Registered for the first time").foregroundColor(Color.mycolor)
                         }
                     Text(currenttime.formatted(date: .numeric, time: .standard)).foregroundColor(Color.white).onAppear{
                         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true){ Timer in
@@ -205,7 +205,7 @@ struct Mainpage: View {
                         }.frame(height: .infinity,alignment: .leading)
                         Spacer().frame(width: 50,height: 50)
                         Button(action: {}){
-                            Image(systemName: "person.crop.circle.fill").resizable().frame(width: 50,height: 50).foregroundColor(Color.blue).disabled(true)
+                            Image(systemName: "person.crop.circle.fill").resizable().frame(width: 50,height: 50).foregroundColor(Color.mycolor).disabled(true)
                         }.frame(height: .infinity,alignment: .trailing)
                     }
                 }
@@ -223,7 +223,7 @@ struct Mainpage: View {
                     ToolbarItem(placement: .principal) {
                         Text("Attendance App")
                             .font(.title2.bold())
-                            .foregroundColor(.white)
+                            .foregroundColor(Color.mycolor)
                             .padding(.horizontal, 12)
                             .padding(.vertical, 6)
                             .background(
@@ -234,16 +234,16 @@ struct Mainpage: View {
                     }
                     ToolbarItem(placement: .topBarTrailing) {
                         Menu {
-                            Button("Logout") {
-                                dismiss()
-                            }
                             NavigationLink("Change Password") {
                                 changepass(username: username, useractualname: useractualname)
                             }
+                            Button("Logout") {
+                                dismiss()
+                            }
                         } label: {
-                            Image(systemName: "ellipsis.circle.fill")
+                            Image(systemName: "ellipsis.circle")
                                 .font(.title2)
-                                .foregroundColor(.white)
+                                .foregroundColor(Color.mycolor)
                         }
                     }
                 }
@@ -289,7 +289,7 @@ struct changepass: View {
         NavigationStack{
             ZStack{
                 LinearGradient(
-                                    colors: [Color.black, Color.gray.opacity(0.6)],
+                    colors: [Color.black.opacity(30), Color.gray.opacity(0.6)],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 )
@@ -297,14 +297,14 @@ struct changepass: View {
                 VStack{
                     Text("Username: \(username)").foregroundColor(.white)
                     TextField("Enter Current Password",text: $currentpassword).padding()
-                        .foregroundColor(.blue).frame(width: 400, height: 50).textFieldStyle(RoundedBorderTextFieldStyle()).autocorrectionDisabled().textInputAutocapitalization(.never)
+                        .foregroundColor(Color.myasset).frame(width: 400, height: 50).textFieldStyle(RoundedBorderTextFieldStyle()).autocorrectionDisabled().textInputAutocapitalization(.never)
                         .overlay(RoundedRectangle(cornerRadius : 8).stroke(wrongcurrentpassword || enterallfeilds ? Color.red : Color.black, lineWidth: 3).frame(maxWidth: 370,maxHeight: 36))
-                    TextField("Enter New Password",text: $newpassword).padding().foregroundColor(.blue).frame(width: 400, height: 50).textFieldStyle(RoundedBorderTextFieldStyle()).autocorrectionDisabled().textInputAutocapitalization(.never)
+                    TextField("Enter New Password",text: $newpassword).padding().foregroundColor(Color.myasset).frame(width: 400, height: 50).textFieldStyle(RoundedBorderTextFieldStyle()).autocorrectionDisabled().textInputAutocapitalization(.never)
                         .overlay(RoundedRectangle(cornerRadius : 8).stroke(passwordnotmatching || enterallfeilds ? Color.red : Color.black, lineWidth: 3).frame(maxWidth: 370,maxHeight: 36))
-                    TextField("Confirm Password",text: $confirmnewpassword).padding().foregroundColor(.blue).frame(width: 400, height: 50).textFieldStyle(RoundedBorderTextFieldStyle()).autocorrectionDisabled().textInputAutocapitalization(.never)
+                    TextField("Confirm Password",text: $confirmnewpassword).padding().foregroundColor(Color.myasset).frame(width: 400, height: 50).textFieldStyle(RoundedBorderTextFieldStyle()).autocorrectionDisabled().textInputAutocapitalization(.never)
                         .overlay(RoundedRectangle(cornerRadius : 8).stroke(passwordnotmatching || enterallfeilds ? Color.red : Color.black, lineWidth: 3).frame(maxWidth: 370,maxHeight: 36))
                     if (cannotchange){
-                        Text("Enter a different password").foregroundColor(Color.purple).onAppear{
+                        Text("Enter a different password").foregroundColor(Color.mycolor).onAppear{
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2){ cannotchange = false}
                         }
                     }
@@ -312,17 +312,17 @@ struct changepass: View {
                         Text("Enter Credentials").foregroundColor(Color.white)
                     }
                     if (wrongcurrentpassword){
-                        Text("Wrong Current Password").foregroundColor(Color.red).onAppear{
+                        Text("Wrong Current Password").foregroundColor(Color.mycolor).onAppear{
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2){ wrongcurrentpassword = false}
                         }
                     }
                     if (passwordnotmatching){
-                        Text("Your passwords do not match").foregroundColor(Color.red).onAppear{
+                        Text("Your passwords do not match").foregroundColor(Color.mycolor).onAppear{
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2){ passwordnotmatching = false}
                         }
                     }
                     if (enterallfeilds){
-                        Text("All feild are mandatory").foregroundColor(Color.red).onAppear{
+                        Text("All feild are mandatory").foregroundColor(Color.mycolor).onAppear{
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2){ enterallfeilds = false}
                             
                         }}
@@ -332,7 +332,7 @@ struct changepass: View {
                         }
                     }
                     if (somethingwentwrong){
-                        Text("Something Went Wrong, Please try again later or Re-login").foregroundColor(Color.yellow).onAppear{
+                        Text("Something Went Wrong, Please try again later or Re-login").foregroundColor(Color.mycolor).onAppear{
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2){ somethingwentwrong = false}
                         }
                     }
@@ -351,12 +351,11 @@ struct changepass: View {
                         setnewpassword(username: username, currentpassword: currentpassword, newpassword: newpassword, confirmpassword: confirmnewpassword)
                     }){
                         HStack{
-                            Image(systemName: "hand.thumbsup.fill")
                             Text("Confirm")
-                        }.padding().foregroundColor(Color.blue)
+                        }.padding().foregroundColor(Color.black).background(Color.mycolor).cornerRadius(40)
                     }
                 }
-            }.navigationBarBackButtonHidden(false)
+            }.navigationBarBackButtonHidden(false).hideKeyboardOnTap()
                 }
             }
         
@@ -413,15 +412,14 @@ struct qrpage: View {
     @State private var documentnotfound=false
     @State private var issessionactive=true
     var body: some View {
-        //let db = Firestore.firestore()
         NavigationStack {
             ZStack {
                 LinearGradient(
-                    colors: [Color.black, Color.gray.opacity(0.6)],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-                .ignoresSafeArea()
+                    colors: [Color.black.opacity(30), Color.gray.opacity(0.6)],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                                .ignoresSafeArea()
                 VStack {
                     VStack {
                         Text("Marking Attendance for:")
@@ -447,6 +445,7 @@ struct qrpage: View {
                     .frame(width: 350, height: 350)
                     .cornerRadius(12)
                     .clipped()
+                    .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.white,lineWidth: 2))
                     VStack {
                         if attendancemarked {
                             Text("Attendance Marked Successfully")
@@ -460,7 +459,7 @@ struct qrpage: View {
                         }
                         if invalidqrcode {
                             Text("Invalid QR Code")
-                                .foregroundColor(.yellow)
+                                .foregroundColor(Color.mycolor)
                                 .font(.title3)
                                 .onAppear {
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
@@ -470,7 +469,7 @@ struct qrpage: View {
                         }
                         if unknownerror {
                             Text("An Error Occurred")
-                                .foregroundColor(.yellow)
+                                .foregroundColor(Color.mycolor)
                                 .font(.title3)
                                 .onAppear {
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
@@ -480,7 +479,7 @@ struct qrpage: View {
                         }
                         if studentnotfound {
                             Text("Student Not Found, ask your faculty to add you")
-                                .foregroundColor(.yellow)
+                                .foregroundColor(Color.mycolor)
                                 .font(.title3)
                                 .onAppear {
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
@@ -490,7 +489,7 @@ struct qrpage: View {
                         }
                         if documentnotfound {
                             Text("Invalid QR Code")
-                                .foregroundColor(.yellow)
+                                .foregroundColor(Color.mycolor)
                                 .font(.title3)
                                 .onAppear {
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
@@ -500,7 +499,7 @@ struct qrpage: View {
                         }
                         if looseinternet {
                             Text("Unable to Connect to Database, Check your connection")
-                                .foregroundColor(.yellow)
+                                .foregroundColor(Color.mycolor)
                                 .font(.title3)
                                 .onAppear {
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
@@ -510,7 +509,7 @@ struct qrpage: View {
                         }
                         if cameranotfoundorpermissiondenied {
                             Text("There was an issue connecting to the camera or permission was not provided")
-                                .foregroundColor(.yellow)
+                                .foregroundColor(Color.mycolor)
                                 .font(.title3)
                                 .onAppear {
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
@@ -520,7 +519,7 @@ struct qrpage: View {
                         }
                         if !issessionactive{
                             Text("The Session is no longer active, ask your faculty to activate to mark your attendance")
-                                .foregroundColor(.yellow)
+                                .foregroundColor(Color.mycolor)
                                 .font(.title3)
                                 .onAppear {
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
@@ -535,7 +534,7 @@ struct qrpage: View {
                             Image(systemName: "qrcode")
                                 .resizable()
                                 .frame(width: 50, height: 50)
-                                .foregroundColor(.blue)
+                                .foregroundColor(Color.mycolor)
                         }
                         .disabled(true)
                         
@@ -700,10 +699,17 @@ extension initializeQRScanner:AVCaptureMetadataOutputObjectsDelegate{
         }
     }
 }
+extension View {
+    func hideKeyboardOnTap() -> some View {
+        self.onTapGesture {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        }
+    }
+}
 
 #Preview {
     //ContentView()
-    //Mainpage(username: "Def")
+    //Mainpage(username: "Def", deviceregistered: true)
     qrpage(username: "Def",useractualname: "def")
     //changepass(username: "def@ex", useractualname: "def")
 }

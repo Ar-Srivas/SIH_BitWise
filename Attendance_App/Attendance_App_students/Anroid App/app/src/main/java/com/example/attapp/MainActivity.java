@@ -71,11 +71,17 @@ public class MainActivity extends AppCompatActivity {
                                 String dbPass=dc.getString("password");
                                 String name=dc.getString("name");
                                 String deviceid=dc.getString("deviceid");
-                                if (deviceid.isBlank()){
+                                if (Objects.equals(deviceid, "")){
                                     db.collection("students").document(username).update("deviceid",androidid);
+                                    Toast.makeText(MainActivity.this, "Your Device was registered for the first time", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                    Intent intent=new Intent(MainActivity.this, mainpage.class);
+                                    intent.putExtra("username",username);
+                                    intent.putExtra("name",name);
+                                    startActivity(intent);
+                                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                                 }
                                 else if (Objects.equals(deviceid, androidid)){
-                                    Toast.makeText(MainActivity.this, "Your Device was registered for the first time", Toast.LENGTH_LONG).show();
                                 if (Objects.equals(dbPass, password)){
                                         Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                                         Intent intent=new Intent(MainActivity.this, mainpage.class);

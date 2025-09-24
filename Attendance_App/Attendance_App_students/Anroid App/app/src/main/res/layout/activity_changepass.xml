@@ -62,50 +62,65 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:backgroundTint="#333232"
             app:cardCornerRadius="12dp"
             app:cardElevation="6dp">
+
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 android:background="@drawable/boxbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="top|center">
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Current Password"
-            android:background="@drawable/boxbox"
-            android:fontFamily="serif"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
-            android:id="@+id/currentpassword"
-            android:layout_margin="10dp"/>
-        <EditText
-            android:id="@+id/newpassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="serif"
-            android:background="@drawable/boxbox"
-            android:hint="New Password"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
-            android:layout_margin="10dp"/>
-        <EditText
-            android:id="@+id/confirmpassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Confirm New Password"
-            android:background="@drawable/boxbox"
-            android:fontFamily="serif"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
-            android:layout_margin="10dp"/>
+                android:padding="12dp"
+                android:gravity="top|center_horizontal">
+
+                <EditText
+                    android:id="@+id/currentpassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:hint="Current Password"
+                    android:background="@drawable/boxbox"
+                    android:fontFamily="serif"
+                    android:textColorHint="@color/white"
+                    android:textColor="@color/white"
+                    android:inputType="textPassword"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:layout_marginBottom="12dp"/>
+
+                <EditText
+                    android:id="@+id/newpassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:hint="New Password"
+                    android:background="@drawable/boxbox"
+                    android:fontFamily="serif"
+                    android:textColorHint="@color/white"
+                    android:textColor="@color/white"
+                    android:inputType="textPassword"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:layout_marginBottom="12dp"/>
+
+                <EditText
+                    android:id="@+id/confirmpassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:hint="Confirm New Password"
+                    android:background="@drawable/boxbox"
+                    android:fontFamily="serif"
+                    android:textColorHint="@color/white"
+                    android:textColor="@color/white"
+                    android:inputType="textPassword"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -116,7 +131,7 @@
             android:id="@+id/confirm"
             android:layout_marginTop="100dp"
             android:layout_gravity="center"
-            android:backgroundTint="@color/white"/>
+            android:backgroundTint="#ff8066"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -126,6 +141,7 @@
         android:padding="10dp"
         android:gravity="top|center">
         <CheckBox
+            android:layout_marginTop="20dp"
             android:id="@+id/visibility"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -133,6 +149,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Show Password"
+            android:layout_marginTop="20dp"
             android:fontFamily="serif"
             android:textColor="@color/white"
             android:textSize="16sp"

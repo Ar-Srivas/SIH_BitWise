@@ -39,8 +39,7 @@ public class mainpage extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         time=findViewById(R.id.time);
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
-        getSupportActionBar().setTitle("Attendance App");
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         qr = findViewById(R.id.main_qr);
 
