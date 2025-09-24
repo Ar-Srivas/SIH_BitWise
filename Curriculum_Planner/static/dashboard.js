@@ -92,3 +92,7 @@ function goToChatBot(){
 function goToPrediction() {
     location.href = "/predict";
 }
+
+function goToAcademic() {
+    location.href = `/academic?email=${userEmail}`;
+}

@@ -6,8 +6,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from backend.db import Base, engine, SessionLocal
 from backend.models import User
 from backend.routers import (
-    auth_routes, student_routes, quiz_routes, 
-    slot_routes, recommend_routes, chat_routes, prediction_routes
+    auth_routes, student_routes, quiz_routes,
+    slot_routes, recommend_routes, chat_routes, prediction_routes, academic_routes
 )
 
 app = FastAPI()
@@ -30,6 +30,7 @@ app.include_router(slot_routes.router)
 app.include_router(recommend_routes.create_router(templates))
 app.include_router(chat_routes.router)
 app.include_router(prediction_routes.router)
+app.include_router(academic_routes.router)
 
 @app.on_event("startup")
 def seed_data():
