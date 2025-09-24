@@ -1,54 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Subject</title>
-    <link rel="stylesheet" href="/static/style_recommend.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Select Subject</title>
+<link rel="stylesheet" href="/static/style_recommend.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    /* Accent button styling */
+    .btn-primary {
+        background-color: #ff8066;
+        color: white;
+        padding: 0.6rem 1.2rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #ff8066cc;
+    }
+
+    /* Dark mode support for container background and text */
+    body.dark-mode {
+        background-color: #111827; /* dark gray */
+        color: #f5f5f5;
+    }
+
+    body.dark-mode .main-container {
+        background-color: #1f2937;
+        color: #f5f5f5;
+    }
+
+    body.dark-mode .card {
+        background-color: #111827;
+        color: #f5f5f5;
+        border-color: #374151;
+    }
+
+    body.dark-mode .form-select {
+        background-color: #1f2937;
+        color: #f5f5f5;
+        border-color: #374151;
+    }
+
+    body.dark-mode .header-title,
+    body.dark-mode .header-subtitle {
+        color: #f5f5f5;
+    }
+</style>
 </head>
 <body>
-    <div class="main-container">
-        <header class="header">
-            <h1 class="header-title">Student Recommendation System</h1>
-            <p class="header-subtitle">Your personalized learning path starts here.</p>
-        </header>
-        <div class="card subject-card">
-            <div class="header-actions">
-                <button onclick="goBackToDashboard()" class="btn-primary">Back to Dashboard</button>
-            </div>
-            <h2 class="card-title">Choose a Subject</h2>
-            <p class="card-subtitle">Select a subject to get tailored recommendations.</p>
-            <div class="form-group">
-                <label for="subjectSelect" class="form-label">Subject:</label>
-                <select id="subjectSelect" class="form-select">
-                    <option value="">-- Select a Subject --</option>
-                    {% for subject in subjects %}
-                    <option value="{{ subject }}">{{ subject }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <button type="button" class="btn btn-primary" onclick="goToRecommendations()">Get Recommendations</button>
+<div class="main-container">
+    <header class="header">
+        <h1 class="header-title">Student Recommendation System</h1>
+        <p class="header-subtitle">Your personalized learning path starts here.</p>
+    </header>
+    <div class="card subject-card">
+        <div class="header-actions">
+            <button onclick="goBackToDashboard()" class="btn-primary">Back to Dashboard</button>
         </div>
+        <h2 class="card-title">Choose a Subject</h2>
+        <p class="card-subtitle">Select a subject to get tailored recommendations.</p>
+        <div class="form-group">
+            <label for="subjectSelect" class="form-label">Subject:</label>
+            <select id="subjectSelect" class="form-select">
+                <option value="">-- Select a Subject --</option>
+                {% for subject in subjects %}
+                <option value="{{ subject }}">{{ subject }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="button" class="btn-primary" onclick="goToRecommendations()">Get Recommendations</button>
     </div>
-    <script>
-        // The student ID is passed correctly from the back end template
-        const studentId = "{{ student_id }}";
-        
-        function goBackToDashboard() {
-            // Correctly builds the URL with the student ID
-            window.location.href = `/dashboard?email=${studentId}`;
-        }
+</div>
 
-        function goToRecommendations() {
-            const subject = document.getElementById('subjectSelect').value;
-            if (subject) {
-                // Correctly builds the URL for the next page
-                window.location.href = `/recommend/${studentId}/${subject}`;
-            } else {
-                alert("Please select a subject.");
-            }
+<script>
+    const studentId = "{{ student_id }}";
+
+    function goBackToDashboard() {
+        window.location.href = `/dashboard?email=${studentId}`;
+    }
+
+    function goToRecommendations() {
+        const subject = document.getElementById('subjectSelect').value;
+        if (subject) {
+            window.location.href = `/recommend/${studentId}/${subject}`;
+        } else {
+            alert("Please select a subject.");
         }
-    </script>
+    }
+
+    // Apply dark/light mode dynamically based on system preference
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (prefersDark) {
+        document.body.classList.add('dark-mode');
+    } else {
+        document.body.classList.remove('dark-mode');
+    }
+</script>
 </body>
 </html>

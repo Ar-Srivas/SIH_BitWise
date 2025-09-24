@@ -10,11 +10,11 @@
 <body class="dashboard-page bg-gray-100 dark:bg-gray-900 dark:text-white text-gray-600 h-screen flex overflow-hidden text-sm">
     <!-- Sidebar -->
     <div class="bg-white dark:bg-gray-900 dark:border-gray-800 w-20 flex-shrink-0 border-r border-gray-200 flex-col hidden sm:flex">
-        <div class="h-16 text-blue-500 flex items-center justify-center">
+        <div class="h-16 text-[#ff8066] flex items-center justify-center">
             <div class="logo-icon text-2xl font-bold">EH</div>
         </div>
         <div class="flex mx-auto flex-grow mt-4 flex-col text-gray-400 space-y-4">
-            <button class="h-10 w-12 dark:bg-gray-700 dark:text-white rounded-md flex items-center justify-center bg-blue-100 text-blue-500" title="Dashboard">
+            <button class="h-10 w-12 dark:bg-gray-700 dark:text-white rounded-md flex items-center justify-center bg-[#ff8066]/20 text-[#ff8066]" title="Dashboard">
                 <svg viewBox="0 0 24 24" class="h-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
@@ -46,10 +46,9 @@
     <div class="flex-grow overflow-hidden h-full flex flex-col">
         <!-- Top Navigation -->
         <div class="h-16 lg:flex w-full border-b border-gray-200 dark:border-gray-800 hidden px-10">
-            <div class="flex h-full text-gray-600 dark:text-gray-400">
-            </div>
+            <div class="flex h-full text-gray-600 dark:text-gray-400"></div>
             <div class="ml-auto flex items-center space-x-7">
-                <button onclick="goToPrediction()" class="h-8 px-3 rounded-md shadow text-white bg-blue-500">Predict Admission</button>
+                <button onclick="goToPrediction()" class="h-8 px-3 rounded-md shadow text-white bg-[#ff8066] hover:bg-[#ff9a80]">Predict Admission</button>
                 <button onclick="signOut()" class="flex items-center text-gray-600 dark:text-gray-400 hover:text-red-500">
                     <span class="ml-2">Sign Out</span>
                     <svg viewBox="0 0 24 24" class="w-4 ml-1 flex-shrink-0" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -67,7 +66,7 @@
             <div class="sm:px-7 sm:pt-7 px-4 pt-4 flex flex-col w-full border-b border-gray-200 bg-white dark:bg-gray-900 dark:text-white dark:border-gray-800 sticky top-0">
                 <div class="flex w-full items-center">
                     <div class="flex items-center text-3xl text-gray-900 dark:text-white">
-                        <div class="logo-icon text-2xl font-bold mr-4 w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center">EH</div>
+                        <div class="logo-icon text-2xl font-bold mr-4 w-12 h-12 bg-[#ff8066] text-white rounded-full flex items-center justify-center">EH</div>
                         <div>
                             <h1 class="text-2xl font-bold">Student Dashboard</h1>
                             <p class="text-sm text-gray-500 dark:text-gray-400" id="greeting">Welcome back! Ready to continue your learning journey?</p>
@@ -75,7 +74,7 @@
                     </div>
                 </div>
                 <div class="flex items-center space-x-3 sm:mt-7 mt-4">
-                    <a href="#" class="px-3 border-b-2 border-blue-500 text-blue-500 dark:text-white dark:border-white pb-1.5">Overview</a>
+                    <a href="#" class="px-3 border-b-2 border-[#ff8066] text-[#ff8066] dark:text-white dark:border-white pb-1.5">Overview</a>
                     <a href="#" class="px-3 border-b-2 border-transparent text-gray-600 dark:text-gray-400 pb-1.5">Assessments</a>
                     <a href="#" class="px-3 border-b-2 border-transparent text-gray-600 dark:text-gray-400 pb-1.5 sm:block hidden">Results</a>
                     <a href="#" class="px-3 border-b-2 border-transparent text-gray-600 dark:text-gray-400 pb-1.5 sm:block hidden">Progress</a>
@@ -93,17 +92,18 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow cursor-pointer" onclick="document.getElementById('take-quiz-btn').click()">
                             <div class="flex items-center mb-4">
-                                <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mr-3">
-                                    <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div class="w-10 h-10 bg-[#ff8066]/20 dark:bg-[#ff8066]/30 rounded-lg flex items-center justify-center mr-3">
+                                    <svg class="w-5 h-5 text-[#ff8066]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                     </svg>
                                 </div>
                                 <h3 class="text-lg font-medium text-gray-900 dark:text-white">Take Assessment</h3>
                             </div>
                             <p class="text-gray-600 dark:text-gray-400 mb-4">Start a new quiz to test your knowledge and track your progress</p>
-                            <button id="take-quiz-btn" class="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors">Start Quiz</button>
+                            <button id="take-quiz-btn" class="w-full bg-[#ff8066] text-white px-4 py-2 rounded-md hover:bg-[#ff9a80] transition-colors">Start Quiz</button>
                         </div>
 
+                        <!-- Other action cards remain unchanged -->
                         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow cursor-pointer" onclick="goToRecommendations()">
                             <div class="flex items-center mb-4">
                                 <div class="w-10 h-10 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mr-3">
@@ -134,7 +134,7 @@
                             <div class="flex items-center mb-4">
                                 <div class="w-10 h-10 bg-orange-100 dark:bg-orange-900 rounded-lg flex items-center justify-center mr-3">
                                     <svg class="w-5 h-5 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
                                     </svg>
                                 </div>
                                 <h3 class="text-lg font-medium text-gray-900 dark:text-white">ChatBot</h3>
@@ -155,6 +155,19 @@
                             <p class="text-gray-600 dark:text-gray-400 mb-4">Predict your chances of getting into university based on your academic performance</p>
                             <button class="w-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">Predict</button>
                         </div>
+                        <!-- Add this card after the Admission Chances card -->
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow cursor-pointer" onclick="goToAcademic()">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mr-3">
+                                    <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="text-lg font-medium text-gray-900 dark:text-white">Academic Resources</h3>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4">Find official documentation and video tutorials for learning</p>
+                            <button class="w-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">Browse Resources</button>
+                        </div>
                     </div>
                 </div>
 
@@ -167,7 +180,7 @@
                     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
                         <div id="quiz-results">
                             <div class="flex items-center justify-center py-8">
-                                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+                                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[#ff8066]"></div>
                                 <p class="ml-3 text-gray-600 dark:text-gray-400">Loading your results...</p>
                             </div>
                         </div>

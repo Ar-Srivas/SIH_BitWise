@@ -1,59 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recommendations</title>
-    <link rel="stylesheet" href="/static/style_recommend.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recommendations</title>
+<link rel="stylesheet" href="/static/style_recommend.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    /* Accent button styling */
+    .btn-primary {
+        background-color: #ff8066;
+        color: white;
+        padding: 0.6rem 1.2rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #ff8066cc;
+    }
+
+    /* Dark mode support for body, cards, text */
+    body.dark-mode {
+        background-color: #111827;
+        color: #f5f5f5;
+    }
+
+    body.dark-mode .main-container {
+        background-color: #1f2937;
+        color: #f5f5f5;
+    }
+
+    body.dark-mode .card {
+        background-color: #111827;
+        color: #f5f5f5;
+        border-color: #374151;
+    }
+
+    body.dark-mode .header-title,
+    body.dark-mode .header-subtitle,
+    body.dark-mode .card-title,
+    body.dark-mode .difficulty-heading,
+    body.dark-mode .resource-item h3,
+    body.dark-mode .resource-item p {
+        color: #f5f5f5;
+    }
+
+    body.dark-mode .resource-btn {
+        background-color: #ff8066;
+        color: white;
+    }
+
+    body.dark-mode .resource-btn:hover {
+        background-color: #ff8066cc;
+    }
+</style>
 </head>
 <body>
-    <div class="main-container">
-        <header class="header">
-            <h1 class="header-title">Student Recommendation System</h1>
-            <p class="header-subtitle">Tailored Resources for You</p>
-        </header>
-        <div class="card recommendations-card">
-            <div class="header-actions">
-                <button onclick="goBackToDashboard()" class="btn-primary">Back to Dashboard</button>
-                <button onclick="goBackToSelection()" class="btn-primary">Back to Selection Page</button>
-            </div>
-            <h2 class="card-title">Recommendations for {{ selected_subject }}</h2>
-            
-            {% if recommendations.Easy or recommendations.Medium or recommendations.Difficult %}
-                {% for difficulty, recs in recommendations.items() %}
-                    {% if recs %}
-                        <h3 class="difficulty-heading">{{ difficulty }}</h3>
-                        <div class="resources-list">
-                            {% for rec in recs %}
-                            <div class="resource-item">
-                                <h3>{{ rec.title }}</h3>
-                                <p><strong>Subject:</strong> {{ rec.subject }}</p>
-                                <p><strong>Difficulty:</strong> {{ rec.difficulty }}</p>
-                                <div class="resource-links">
-                                    <a href="{{ rec.article_link }}" target="_blank" class="resource-btn article-btn">Article</a>
-                                    <a href="{{ rec.youtube_link }}" target="_blank" class="resource-btn youtube-btn">YouTube</a>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            {% else %}
-            <p>No recommendations found for this subject.</p>
-            {% endif %}
+<div class="main-container">
+    <header class="header">
+        <h1 class="header-title">Student Recommendation System</h1>
+        <p class="header-subtitle">Tailored Resources for You</p>
+    </header>
+    <div class="card recommendations-card">
+        <div class="header-actions">
+            <button onclick="goBackToDashboard()" class="btn-primary">Back to Dashboard</button>
+            <button onclick="goBackToSelection()" class="btn-primary">Back to Selection Page</button>
         </div>
+        <h2 class="card-title">Recommendations for {{ selected_subject }}</h2>
+
+        {% if recommendations.Easy or recommendations.Medium or recommendations.Difficult %}
+            {% for difficulty, recs in recommendations.items() %}
+                {% if recs %}
+                    <h3 class="difficulty-heading">{{ difficulty }}</h3>
+                    <div class="resources-list">
+                        {% for rec in recs %}
+                        <div class="resource-item">
+                            <h3>{{ rec.title }}</h3>
+                            <p><strong>Subject:</strong> {{ rec.subject }}</p>
+                            <p><strong>Difficulty:</strong> {{ rec.difficulty }}</p>
+                            <div class="resource-links">
+                                <a href="{{ rec.article_link }}" target="_blank" class="resource-btn article-btn">Article</a>
+                                <a href="{{ rec.youtube_link }}" target="_blank" class="resource-btn youtube-btn">YouTube</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>No recommendations found for this subject.</p>
+        {% endif %}
     </div>
-    <script>
-        const studentId = "{{ student.id }}";
-        
-        function goBackToDashboard() {
-            window.location.href = `/dashboard?email=${studentId}`;
-        }
-        
-        function goBackToSelection() {
-            window.location.href = `/select_subject/${studentId}`;
-        }
-    </script>
+</div>
+
+<script>
+    const studentId = "{{ student.id }}";
+
+    function goBackToDashboard() {
+        window.location.href = `/dashboard?email=${studentId}`;
+    }
+
+    function goBackToSelection() {
+        window.location.href = `/select_subject/${studentId}`;
+    }
+
+    // Apply dark/light mode based on system preference
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (prefersDark) {
+        document.body.classList.add('dark-mode');
+    }
+</script>
 </body>
 </html>
