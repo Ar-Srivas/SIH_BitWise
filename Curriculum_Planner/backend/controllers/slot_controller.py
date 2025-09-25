@@ -24,10 +24,10 @@ def get_teachers():
     db.close()
     return [{"id": t.id, "name": t.name, "subject": t.subject} for t in teachers]
 
-def available_slots(date: str, teacher_id: int, db: Session):
+def available_slots(date: str, teacher_id: str, db: Session):
     d = datetime.strptime(date, "%Y-%m-%d").date()
     db = SessionLocal()
-    slots = db.query(Slot).filter_by(date=d, teacher_id=teacher_id, booked=False).all()
+    slots = db.query(Slot).filter(Slot.date==d, Slot.teacher_id==teacher_id, Slot.booked==False).all()
     db.close()
     return [{"id": s.id, "start": s.start_time.strftime("%H:%M"), "end": s.end_time.strftime("%H:%M")} for s in slots]
 

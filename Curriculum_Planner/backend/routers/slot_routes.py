@@ -9,7 +9,7 @@ def get_teachers_route():
     return get_teachers()
 
 @router.get("/available_slots/{date}/{teacher_id}")
-def available_slots_route(date: str, teacher_id: int, db: Session = Depends(get_db)):
+def available_slots_route(date: str, teacher_id: str, db: Session = Depends(get_db)):
     return available_slots(date, teacher_id, db)
 
 @router.post("/book_slot")

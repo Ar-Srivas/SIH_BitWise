@@ -1,5 +1,5 @@
-from db import SessionLocal, engine
-from models import Base, User, Slot
+from backend.db import SessionLocal, engine
+from backend.models import Base, Teacher, Slot
 from datetime import date, time
 
 # Create all database tables
@@ -9,23 +9,25 @@ db = SessionLocal()
 
 # --- Create Dummy Teachers ---
 # Check if teachers already exist to avoid duplicates
-if db.query(User).filter_by(role="teacher").count() == 0:
+if db.query(Teacher).count() == 0:
     print("Creating dummy teachers...")
-    teacher1 = User(userid="prof.snape@hogwarts.edu", password="password", role="teacher", name="Prof. Severus Snape")
-    teacher2 = User(userid="prof.mcgonagall@hogwarts.edu", password="password", role="teacher", name="Prof. Minerva McGonagall")
+    # This now uses the Teacher model directly
+    teacher1 = Teacher(id="prof.snape@hogwarts.edu", name="Prof. Severus Snape", subject="Potions")
+    teacher2 = Teacher(id="prof.mcgonagall@hogwarts.edu", name="Prof. Minerva McGonagall", subject="Transfiguration")
     db.add_all([teacher1, teacher2])
     db.commit()
     print("Dummy teachers created.")
 else:
     print("Teachers already exist.")
-    teacher1 = db.query(User).filter_by(userid="prof.snape@hogwarts.edu").first()
-    teacher2 = db.query(User).filter_by(userid="prof.mcgonagall@hogwarts.edu").first()
+    teacher1 = db.query(Teacher).filter_by(id="prof.snape@hogwarts.edu").first()
+    teacher2 = db.query(Teacher).filter_by(id="prof.mcgonagall@hogwarts.edu").first()
 
 
 # --- Create Dummy Slots ---
 # Check if slots exist to avoid duplicates
 if db.query(Slot).count() == 0:
     print("Creating dummy slots...")
+    # This now correctly uses the string ID from the Teacher objects
     slots_to_add = [
         # Snape's slots
         Slot(teacher_id=teacher1.id, date=date(2025, 9, 29), start_time=time(10, 0), end_time=time(10, 30)),
@@ -41,3 +43,4 @@ else:
     print("Slots already exist.")
 
 db.close()
+
