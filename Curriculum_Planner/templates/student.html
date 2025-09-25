@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Book Slots - EduHelp Pro</title>
-<link rel="stylesheet" href="/static/style.css">
+<link rel="stylesheet" href="/static/studentstyle.css">
 <style>
     /* Accent buttons */
     .btn-primary {
@@ -142,7 +142,7 @@
     function goBackToDashboard() {
         const urlParams = new URLSearchParams(window.location.search);
         const email = urlParams.get('email');
-        location.href = /dashboard?email=${email};
+        location.href = `/dashboard?email=${email}`;
     }
 
     function signOut() {

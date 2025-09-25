@@ -64,7 +64,7 @@ def profile(request: Request):
 
 @app.get("/slot_booking_students", response_class=HTMLResponse)
 def slot_booking_students(request: Request):
-    return templates.TemplateResponse("slot_booking_students.html", {"request": request})
+    return templates.TemplateResponse("student.html", {"request": request})
 
 @app.get("/chat", response_class=HTMLResponse)
 async def chat_page(request: Request):
