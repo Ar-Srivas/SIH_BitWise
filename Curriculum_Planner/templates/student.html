@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Slot</title>
+    <link rel="stylesheet" href="/static/studentstyle.css">
+</head>
+<body>
+    <div class="booking-container">
+        <header>
+            <h1>Book a Consultation Slot</h1>
+        </header>
+        <main>
+            <div class="controls">
+                <div class="form-group">
+                    <label for="teacher-select">Select a Teacher:</label>
+                    <!-- This is the crucial element your JS is looking for -->
+                    <select id="teacher-select">
+                        <option value="">--Please choose a teacher--</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date-picker">Select a Date:</label>
+                    <input type="date" id="date-picker">
+                </div>
+            </div>
+            <div id="slots-container">
+                <h2>Available Slots</h2>
+                <div id="slots-list">
+                    <p>Please select a teacher and a date to see available slots.</p>
+                </div>
+            </div>
+            <p id="message"></p>
+        </main>
+    </div>
+    <script src="/static/student.js"></script>
+</body>
+</html>
+
