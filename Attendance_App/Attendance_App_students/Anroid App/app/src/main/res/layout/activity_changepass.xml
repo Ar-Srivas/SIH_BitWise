@@ -122,7 +122,7 @@
         </androidx.cardview.widget.CardView>
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:text="Confirm"
             android:textColor="@color/black"
@@ -141,6 +141,7 @@
         android:padding="10dp"
         android:gravity="top|center">
         <CheckBox
+            app:buttonIconTint="#ff8066"
             android:layout_marginTop="20dp"
             android:id="@+id/visibility"
             android:layout_width="wrap_content"

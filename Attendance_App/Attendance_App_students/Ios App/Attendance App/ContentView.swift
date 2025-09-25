@@ -35,16 +35,16 @@ struct ContentView: View {
                     Image("Image").resizable().scaledToFit().frame(width: 100,height: 100)
                     Spacer().frame(height: 50)
                     TextField("Username",text: $username).padding().foregroundColor(Color.myasset).textFieldStyle(RoundedBorderTextFieldStyle()).frame(width: 300, height: 50).autocorrectionDisabled().textInputAutocapitalization(.never)
-                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(wrongcred || emptynameorpass ? Color.red : Color.black, lineWidth: 3).frame(width: 270,height: 35))
+                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(wrongcred || emptynameorpass ? Color.red : Color.white, lineWidth: 3).frame(width: 270,height: 35))
                     if showpass{
                         TextField("Passowrd",text: $password).padding().frame(width: 300, height: 50).foregroundColor(Color.myasset).textFieldStyle(RoundedBorderTextFieldStyle())
                             .autocorrectionDisabled().textInputAutocapitalization(.never)
-                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(wrongcred || emptynameorpass ? Color.red : Color.black, lineWidth: 3).frame(width: 270,height: 35))
+                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(wrongcred || emptynameorpass ? Color.red : Color.white, lineWidth: 3).frame(width: 270,height: 35))
                     }
                     else{
                         SecureField("Passowrd",text: $password).padding().frame(width: 300, height: 50).foregroundColor(Color.myasset).textFieldStyle(RoundedBorderTextFieldStyle())
                             .autocorrectionDisabled().textInputAutocapitalization(.never)
-                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(wrongcred || emptynameorpass ? Color.red : Color.black, lineWidth: 3).frame(width: 270,height: 35))
+                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(wrongcred || emptynameorpass ? Color.red : Color.white, lineWidth: 3).frame(width: 270,height: 35))
                     }
                     if (!wrongcred && !usernotfound && !emptynameorpass){
                         Text("Enter Credentials").foregroundColor(Color.white)
@@ -298,11 +298,11 @@ struct changepass: View {
                     Text("Username: \(username)").foregroundColor(.white)
                     TextField("Enter Current Password",text: $currentpassword).padding()
                         .foregroundColor(Color.myasset).frame(width: 400, height: 50).textFieldStyle(RoundedBorderTextFieldStyle()).autocorrectionDisabled().textInputAutocapitalization(.never)
-                        .overlay(RoundedRectangle(cornerRadius : 8).stroke(wrongcurrentpassword || enterallfeilds ? Color.red : Color.black, lineWidth: 3).frame(maxWidth: 370,maxHeight: 36))
+                        .overlay(RoundedRectangle(cornerRadius : 8).stroke(wrongcurrentpassword || enterallfeilds ? Color.red : Color.white, lineWidth: 3).frame(maxWidth: 370,maxHeight: 36))
                     TextField("Enter New Password",text: $newpassword).padding().foregroundColor(Color.myasset).frame(width: 400, height: 50).textFieldStyle(RoundedBorderTextFieldStyle()).autocorrectionDisabled().textInputAutocapitalization(.never)
-                        .overlay(RoundedRectangle(cornerRadius : 8).stroke(passwordnotmatching || enterallfeilds ? Color.red : Color.black, lineWidth: 3).frame(maxWidth: 370,maxHeight: 36))
+                        .overlay(RoundedRectangle(cornerRadius : 8).stroke(passwordnotmatching || enterallfeilds ? Color.red : Color.white, lineWidth: 3).frame(maxWidth: 370,maxHeight: 36))
                     TextField("Confirm Password",text: $confirmnewpassword).padding().foregroundColor(Color.myasset).frame(width: 400, height: 50).textFieldStyle(RoundedBorderTextFieldStyle()).autocorrectionDisabled().textInputAutocapitalization(.never)
-                        .overlay(RoundedRectangle(cornerRadius : 8).stroke(passwordnotmatching || enterallfeilds ? Color.red : Color.black, lineWidth: 3).frame(maxWidth: 370,maxHeight: 36))
+                        .overlay(RoundedRectangle(cornerRadius : 8).stroke(passwordnotmatching || enterallfeilds ? Color.red : Color.white, lineWidth: 3).frame(maxWidth: 370,maxHeight: 36))
                     if (cannotchange){
                         Text("Enter a different password").foregroundColor(Color.mycolor).onAppear{
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2){ cannotchange = false}
@@ -708,9 +708,9 @@ extension View {
 }
 
 #Preview {
-    //ContentView()
+    ContentView()
     //Mainpage(username: "Def", deviceregistered: true)
-    qrpage(username: "Def",useractualname: "def")
+    //qrpage(username: "Def",useractualname: "def")
     //changepass(username: "def@ex", useractualname: "def")
 }
 import Foundation
